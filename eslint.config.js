@@ -18,19 +18,11 @@ module.exports = defineConfig([
     rules: {
       '@angular-eslint/directive-selector': [
         'error',
-        {
-          type: 'attribute',
-          prefix: 'app',
-          style: 'camelCase',
-        },
+        { type: 'attribute', prefix: 'xas', style: 'camelCase' },
       ],
       '@angular-eslint/component-selector': [
         'error',
-        {
-          type: 'element',
-          prefix: 'app',
-          style: 'kebab-case',
-        },
+        { type: 'element', prefix: 'xas', style: 'kebab-case' },
       ],
     },
   },
