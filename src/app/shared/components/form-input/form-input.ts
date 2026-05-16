@@ -1,4 +1,4 @@
-import { Component, input, signal, WritableSignal, OnInit } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import { Field, FormField } from '@angular/forms/signals';
 
 @Component({
@@ -14,12 +14,12 @@ export class FormInput implements OnInit {
   errorMessage = input<string>('');
   inputId = input.required<string>();
   formField = input.required<Field<string>>();
-  inputType: WritableSignal<string> = signal('');
+  inputType: string | undefined;
   togglePasswordVisibility(): void {
-    this.inputType.set(this.inputType() === 'password' ? 'text' : 'password');
+    this.inputType = this.inputType === 'password' ? 'text' : 'password';
   }
 
   ngOnInit(): void {
-    this.inputType.set(this.incomingType());
+    this.inputType = this.incomingType();
   }
 }
