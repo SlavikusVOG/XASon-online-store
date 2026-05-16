@@ -1,0 +1,7 @@
+@for (product of products(); track product.id) {
+  <xas-product-card
+    [product]="product"
+    (addedToCart)="addToCart($event)"
+    (removedFromCart)="removeFromCart($event)"
+  />
+}
