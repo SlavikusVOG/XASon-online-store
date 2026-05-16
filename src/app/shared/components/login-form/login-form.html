@@ -1,5 +1,5 @@
 <div class="container">
-  <form formGroup="form">
+  <form (submit)="onSubmit($event)">
     <xas-form-input
       [formField]="loginForm.email"
       [incomingType]="'email'"

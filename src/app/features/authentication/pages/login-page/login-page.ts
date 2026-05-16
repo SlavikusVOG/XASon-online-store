@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoginForm } from '../../../../shared/components/login-form/login-form';
+import { LoginCredentials, LoginForm } from '../../../../shared/components/login-form/login-form';
 
 @Component({
   selector: 'xas-login-page',
@@ -8,7 +8,10 @@ import { LoginForm } from '../../../../shared/components/login-form/login-form';
   styleUrl: './login-page.scss',
 })
 export class LoginPage {
-  onLogin(): void {
-    // TODO: login user
+  onLogin({ email, password }: LoginCredentials): void {
+    if (!email || !password) {
+      return;
+    }
+    // TODO: call auth service
   }
 }
