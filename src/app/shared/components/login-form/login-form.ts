@@ -1,18 +1,23 @@
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, signal } from '@angular/core';
+import { form } from '@angular/forms/signals';
+import { FormInput } from '../form-input/form-input';
 
 @Component({
   selector: 'xas-login-form',
-  imports: [],
+  imports: [FormInput],
   templateUrl: './login-form.html',
   styleUrl: './login-form.scss',
 })
 export class LoginForm {
-  form = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-  });
+  private readonly INITIAL_LOGIN_MODEL = {
+    email: '',
+    password: '',
+  };
+  loginModel = signal({ ...this.INITIAL_LOGIN_MODEL });
+  loginForm = form(this.loginModel);
   clearForm(): void {
-    this.form.reset();
+    this.loginForm().reset({
+      ...this.INITIAL_LOGIN_MODEL,
+    });
   }
 }
