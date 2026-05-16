@@ -2,16 +2,16 @@
   <form formGroup="form">
     <xas-form-input
       [formField]="loginForm.email"
-      type="email"
-      placeholder="example@example.com"
-      id="email"
-      label="Email"
+      [incomingType]="'email'"
+      [inputPlaceholder]="'example@example.com'"
+      [inputId]="'email'"
+      [inputLabel]="'Email'"
     />
     <xas-form-input
       [formField]="loginForm.password"
-      type="password"
-      id="password"
-      label="Password"
+      [incomingType]="'password'"
+      [inputId]="'password'"
+      [inputLabel]="'Password'"
     />
     <button type="submit">Login</button>
     <button type="button" (click)="clearForm()">Clear</button>

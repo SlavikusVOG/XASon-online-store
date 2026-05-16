@@ -11,4 +11,12 @@
   input {
     width: 100%;
   }
+
+  .toggle-password-container {
+    display: flex;
+    justify-content: flex-start;
+    input {
+      width: fit-content;
+    }
+  }
 }
