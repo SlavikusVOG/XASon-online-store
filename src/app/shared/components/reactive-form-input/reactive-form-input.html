@@ -1,10 +1,15 @@
 <div class="container">
   <label for="{{ inputId() }}">{{ inputLabel() }}</label>
   <input
-    [type]="incomingInputType()"
+    [type]="inputType"
     [placeholder]="inputPlaceholder()"
     [id]="inputId()"
     [formControl]="control()"
   />
-  <p>{{ errorMessage() }}</p>
+  <span class="error-message">{{ errorMessage() }}</span>
+  @if (incomingInputType() === 'password') {
+    <div class="toggle-password-container">
+      <input type="checkbox" (change)="togglePasswordVisibility()" /> Show Password
+    </div>
+  }
 </div>
