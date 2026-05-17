@@ -1,1 +1,38 @@
-<p>header works!</p>
+<header>
+  <div class="header__container">
+    <div class="header__left">
+      <a routerLink="/" class="header__logo">XASon Store</a>
+      <nav class="header__nav">
+        <a routerLink="/catalog" class="header__nav-link">Catalog</a>
+        <a routerLink="/about" class="header__nav-link">About Us</a>
+      </nav>
+    </div>
+
+    <input
+      type="text"
+      placeholder="Search..."
+      class="header__search"
+      aria-label="Search products"
+      (input)="onSearch($event)"
+    />
+
+    <div class="header__nav">
+      <a routerLink="/cart" class="header__cart" aria-label="Cart">
+        &#x1F6D2;
+        @if (cartItemCount() > 0) {
+          <span class="header__cart-badge">{{ cartItemCount() }}</span>
+        }
+      </a>
+
+      @if (isAuthenticated()) {
+        <a routerLink="/profile" class="header__nav-link">Profile</a>
+        <button class="header__nav-link header__nav-link--button" (click)="onLogout()">
+          Logout
+        </button>
+      } @else {
+        <a routerLink="/login" class="header__nav-link">Login</a>
+        <a routerLink="/register" class="header__nav-link">Register</a>
+      }
+    </div>
+  </div>
+</header>
