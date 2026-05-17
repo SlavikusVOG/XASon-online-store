@@ -13,8 +13,9 @@ export class FormInput implements OnInit {
   inputPlaceholder = input<string>('');
   errorMessage = input<string>('');
   inputId = input.required<string>();
-  formField = input.required<Field<string>>();
+  formField = input<Field<string> | undefined>(undefined);
   inputType: string | undefined;
+
   togglePasswordVisibility(): void {
     this.inputType = this.inputType === 'password' ? 'text' : 'password';
   }
