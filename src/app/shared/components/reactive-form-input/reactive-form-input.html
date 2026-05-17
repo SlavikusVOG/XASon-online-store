@@ -1,0 +1,10 @@
+<div class="container">
+  <label for="{{ inputId() }}">{{ inputLabel() }}</label>
+  <input
+    [type]="incomingInputType()"
+    [placeholder]="inputPlaceholder()"
+    [id]="inputId()"
+    [formControl]="control()"
+  />
+  <p>{{ errorMessage() }}</p>
+</div>
