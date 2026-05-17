@@ -1,0 +1,13 @@
+@if (product(); as product) {
+  <div>
+    <div>Name: {{ product.name }}</div>
+    <div>Description: {{ product.description }}</div>
+    <div>Is in cart: {{ product.isInCart | yesNo }}</div>
+
+    @if (product.isInCart) {
+      <button (click)="removeFromCart()">Remove from cart</button>
+    } @else {
+      <button (click)="addToCart()">Add to cart</button>
+    }
+  </div>
+}

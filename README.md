@@ -1,6 +1,10 @@
 # XASonOnlineStore
 
-The project description (in progress)
+XASon is an online store for items from different cartoons, movies and games.
+
+Looking for a mistic diary with six-finger hand on it? We have it.
+
+Want to learn how to cook the best Krabby Patty in the ocean? Here is the formula. (note: do NOT sell it to Plankton)
 
 ## Team members
 
