@@ -2,6 +2,7 @@ import { Component, model } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ReactiveFormInput } from '../reactive-form-input/reactive-form-input';
 
+// TODO: move to models folder
 export type User = {
   id: string;
   email: string;

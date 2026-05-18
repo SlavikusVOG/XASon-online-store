@@ -15,6 +15,8 @@ export class ReactiveFormInput implements OnInit {
   errorMessage = input<string>('');
   inputId = input.required<string>();
   inputType = 'text';
+  // TODO: fix type
+  // TODO: fix value binding
   value = input<string | Date, string>('', {
     transform: (v: string) => this.transformValue(v),
   });
