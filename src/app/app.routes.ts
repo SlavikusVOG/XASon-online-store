@@ -5,6 +5,7 @@ import { LoginPage } from './features/authentication/pages/login-page/login-page
 import { RegistrationPage } from '../app/features/authentication/pages/registration-page/registration-page';
 import { Catalog } from './features/catalog/pages/catalog/catalog';
 import { UserProfilePage } from './features/user-profile/pages/user-profile-page/user-profile-page';
+import { CartPage } from './features/cart/pages/cart-page/cart-page';
 
 export const routes: Routes = [
   {
@@ -21,6 +22,7 @@ export const routes: Routes = [
     children: [
       { path: 'catalog', component: Catalog },
       { path: 'userprofile', component: UserProfilePage },
+      { path: 'cart', component: CartPage },
     ],
   },
 ];
