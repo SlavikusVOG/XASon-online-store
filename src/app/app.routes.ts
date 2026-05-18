@@ -18,10 +18,9 @@ export const routes: Routes = [
   {
     path: '',
     component: MainLayout,
-    children: [{ path: 'catalog', component: Catalog }],
+    children: [
+      { path: 'catalog', component: Catalog },
+      { path: 'userprofile', component: UserProfilePage },
+    ],
   },
-  {
-    path: '/userprofile',
-    component: UserProfilePage,
-  }
 ];
