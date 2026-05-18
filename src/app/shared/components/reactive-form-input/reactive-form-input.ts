@@ -15,6 +15,9 @@ export class ReactiveFormInput implements OnInit {
   errorMessage = input<string>('');
   inputId = input.required<string>();
   inputType = 'text';
+  value = input<string | Date, string>('', {
+    transform: (v: string) => this.transformValue(v),
+  });
 
   togglePasswordVisibility(): void {
     this.inputType = this.inputType === 'password' ? 'text' : 'password';
@@ -22,5 +25,12 @@ export class ReactiveFormInput implements OnInit {
 
   ngOnInit(): void {
     this.inputType = this.incomingInputType();
+  }
+
+  transformValue(value: string): string | Date {
+    if (this.incomingInputType() === 'date') {
+      return new Date(value);
+    }
+    return value;
   }
 }
