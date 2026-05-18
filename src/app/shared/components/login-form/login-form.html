@@ -1,0 +1,20 @@
+<div class="container">
+  <form (submit)="onSubmit($event)">
+    <xas-form-input
+      [formField]="loginForm.email"
+      [incomingType]="'email'"
+      [inputPlaceholder]="'example@example.com'"
+      [inputId]="'email'"
+      [inputLabel]="'Email'"
+    />
+    <xas-form-input
+      [formField]="loginForm.password"
+      [incomingType]="'password'"
+      [inputId]="'password'"
+      [inputLabel]="'Password'"
+    />
+    <button type="submit">Login</button>
+    <button type="button" (click)="clearForm()">Clear</button>
+    <p>Don't have an account? <a href="/register">Register</a></p>
+  </form>
+</div>

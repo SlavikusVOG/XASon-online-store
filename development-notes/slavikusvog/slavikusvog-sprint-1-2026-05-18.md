@@ -1,0 +1,21 @@
+# Sprint 1: Components
+
+- **What was done:**
+  - generate project
+  - generate components for Login, Register and User Profile pages
+- **Problems:**
+  - I do not understand why the project was being generated without interactive mode.
+    - **Solution:** use attributes when generating the project
+  - Input data is not displayed
+    - **Solution:** check documentation about templates and forms
+- **What I learned:**:
+  - signal forms
+  - reviewed components, forms, and signals
+- **Plans in Sprint 2:**
+  - finish all necessary pages components
+  - clarify architecture vision
+  - clarify business architecture
+  - connect to the API, create services
+  - configure routes
+  - read the documentation on topics related to the Sprint 2
+- **Time spent:** ~20 hours
