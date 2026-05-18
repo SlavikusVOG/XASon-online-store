@@ -1,0 +1,18 @@
+<div class="container">
+  <label for="{{ inputId() }}">{{ inputLabel() }}</label>
+  @if (formField(); as field) {
+    <input
+      [formField]="field"
+      [type]="inputType"
+      [placeholder]="inputPlaceholder()"
+      [id]="inputId()"
+    />
+  } @else {
+    <input [type]="inputType" [placeholder]="inputPlaceholder()" [id]="inputId()" />
+  }
+  @if (incomingType() === 'password') {
+    <div class="toggle-password-container">
+      <input type="checkbox" (change)="togglePasswordVisibility()" /> Show Password
+    </div>
+  }
+</div>
