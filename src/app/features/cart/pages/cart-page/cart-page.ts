@@ -1,19 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
-type TypedMoney = {
+export type TypedMoney = {
   type: string;
   currencyCode: string;
   centAmount: number;
   fractionDigits: number;
 };
 
-type Price = {
+export type Price = {
   id: string;
   key: string;
   value: TypedMoney;
 };
 
-type LineItem = {
+export type LineItem = {
   id: string;
   key: string;
   productId: string;
@@ -23,7 +23,7 @@ type LineItem = {
   price: Price;
 };
 
-type CartItem = {
+export type Cart = {
   id: string;
   version: number;
   key: string;
@@ -40,7 +40,16 @@ type CartItem = {
   styleUrl: './cart-page.scss',
 })
 export class CartPage {
-  fetchCartItems(): CartItem[] {
-    return [];
+  protected readonly cartItems = signal<Cart>([]);
+  private fetchCartItems(): Cart {
+    return {
+      id: '1',
+      version: 1,
+      key: '1',
+      customerId: '1',
+      customerEmail: 'test@test.com',
+      store: 'test',
+      lineItems: [],
+    };
   }
 }
