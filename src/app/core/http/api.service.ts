@@ -5,6 +5,9 @@ import { DeleteRequest, GetRequest, PatchRequest, PostRequest, PutRequest } from
 import { Observable } from 'rxjs';
 import { ExampleGetQueries } from '../../types/http-request/example.types';
 import { ExampleGetResponse } from '../../types/http-response/example.types';
+import { AppCredentialsAccessTokenPostQueries } from '../../types/http-request/app-credentials.types';
+import { environment } from '../../../environments/environment';
+import { AppCredentialsAccessTokenPostResponse } from '../../types/http-response/app-credentials.types';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -12,6 +15,12 @@ export class ApiService {
 
   exampleGet(request: GetRequest<{ Q: ExampleGetQueries }>): Observable<ExampleGetResponse> {
     return this.get('example/{{id}}', request);
+  }
+
+  appCredentialsAccessTokenPost(
+    request: PostRequest<{ Q: AppCredentialsAccessTokenPostQueries }>,
+  ): Observable<AppCredentialsAccessTokenPostResponse> {
+    return this.post(`${environment.commercetools.authUrl}/oauth/token`, request);
   }
 
   private get<R>(url: string, request: GetRequest): Observable<R> {
