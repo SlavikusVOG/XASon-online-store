@@ -1,5 +1,5 @@
-import { Category } from '../types/features/main/category.types';
-import { PromoCode, Banner } from '../types/features/main/promo.types';
+import { Category } from '../types/features/home/category.types';
+import { PromoCode, Banner } from '../types/features/home/promo.types';
 
 export const banners: Banner[] = [
   {
