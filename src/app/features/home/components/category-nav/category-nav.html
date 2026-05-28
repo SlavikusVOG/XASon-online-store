@@ -1,0 +1,18 @@
+<section class="categories">
+  <h2 class="categories__title">Category</h2>
+
+  <div class="categories__grid">
+    @for (category of categories(); track category.id) {
+      <a
+        [routerLink]="['/catalog']"
+        [queryParams]="{ category: category.slug }"
+        class="categories__card"
+      >
+        <div class="categories__card-info">
+          <h3 class="categories__card-name">{{ category.name }}</h3>
+          <span class="categories__card-count">{{ category.productCount }} items</span>
+        </div>
+      </a>
+    }
+  </div>
+</section>
