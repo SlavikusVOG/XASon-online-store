@@ -10,7 +10,7 @@ import { AnonymousSessionAccessTokenPostResponse } from '../../types/http-reques
 export class AnonymousSessionService {
   private readonly localStorageService = inject(LocalStorage);
   private readonly apiService = inject(ApiService);
-  private readonly accessToken = this.localStorageService.getValue<string>(
+  private accessToken = this.localStorageService.getValue<string>(
     environment.LOCAL_STORAGE_KEYS.anonymousToken,
   );
   private readonly refreshToken = this.localStorageService.getValue<string>(
@@ -27,6 +27,7 @@ export class AnonymousSessionService {
           environment.LOCAL_STORAGE_KEYS.refreshToken,
           response['refresh_token'],
         );
+        this.accessToken = response['access_token'];
       });
     }
   }
@@ -57,5 +58,9 @@ export class AnonymousSessionService {
           response['access_token'],
         );
       });
+  }
+
+  getAccessToken() {
+    return this.accessToken;
   }
 }
