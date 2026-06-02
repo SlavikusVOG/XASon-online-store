@@ -16,6 +16,7 @@ import {
   RefreshTokenPostQueries,
   RefreshTokenPostResponse,
 } from '../../types/http-request/refresh-token.type';
+import { LoginPostResponse } from '../../types/http-request/login.type';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
