@@ -43,6 +43,10 @@ export class ApiService {
     return this.post(`${environment.commercetools.authUrl}/oauth/token`, request);
   }
 
+  public loginPost(request: PostRequest): Observable<LoginPostResponse> {
+    return this.post(`${environment.commercetools.apiUrl}/login`, request);
+  }
+
   private get<R>(url: string, request: GetRequest): Observable<R> {
     return this.httpClient.get<R>(buildUrl(url, request.params, request.queries));
   }
