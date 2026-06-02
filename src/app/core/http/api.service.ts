@@ -12,6 +12,10 @@ import {
   AnonymousSessionAccessTokenPostQueries,
   AnonymousSessionAccessTokenPostResponse,
 } from '../../types/http-request/anonymous-token.type';
+import {
+  RefreshTokenPostQueries,
+  RefreshTokenPostResponse,
+} from '../../types/http-request/refresh-token.type';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -31,6 +35,12 @@ export class ApiService {
     request: PostRequest<{ Q: AnonymousSessionAccessTokenPostQueries }>,
   ): Observable<AnonymousSessionAccessTokenPostResponse> {
     return this.post(`${environment.commercetools.authUrl}/anonymous/token`, request);
+  }
+
+  public refreshTokenPost(
+    request: PostRequest<{ Q: RefreshTokenPostQueries }>,
+  ): Observable<RefreshTokenPostResponse> {
+    return this.post(`${environment.commercetools.authUrl}/oauth/token`, request);
   }
 
   private get<R>(url: string, request: GetRequest): Observable<R> {
