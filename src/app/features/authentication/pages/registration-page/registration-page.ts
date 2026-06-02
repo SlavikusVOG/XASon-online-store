@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RegistrationForm } from '../../../../shared/components/registration-form/registration-form';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CustomerSessionService } from '../../../../core/auth/customer-session.service';
+import { RegisterCredentials } from '../../../../types/features/authentication/credentials.type';
 
 @Component({
   selector: 'xas-registration-page',
@@ -9,9 +10,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrl: './registration-page.scss',
 })
 export class RegistrationPage {
-  protected readonly registrationForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
-  });
+  private readonly customerSessionService = inject(CustomerSessionService);
+  onRegister(credentials: RegisterCredentials) {
+    // TODO: implement
+    this.customerSessionService.register(credentials);
+  }
 }

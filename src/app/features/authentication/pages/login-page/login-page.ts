@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { LoginCredentials, LoginForm } from '../../../../shared/components/login-form/login-form';
+import { LoginForm } from '../../../../shared/components/login-form/login-form';
+import { LoginCredentials } from '../../../../types/features/authentication/credentials.type';
 
 @Component({
   selector: 'xas-login-page',

@@ -1,69 +1,14 @@
-<form [formGroup]="registrationForm">
-  <xas-reactive-form-input
-    [inputLabel]="'Email'"
-    [incomingInputType]="'email'"
-    [inputId]="'email'"
-    [control]="registrationForm.controls.email"
-    [errorMessage]="registrationForm.controls.email.errors?.['required'] ? 'Email is required' : ''"
-    [inputPlaceholder]="'Enter your email'"
-  />
-  <xas-reactive-form-input
-    [inputLabel]="'Password'"
-    [incomingInputType]="'password'"
-    [inputId]="'password'"
-    [control]="registrationForm.controls.password"
-    [errorMessage]="
-      registrationForm.controls.password.errors?.['required'] ? 'Password is required' : ''
-    "
-  />
-  <xas-reactive-form-input
-    [inputLabel]="'Confirm Password'"
-    [incomingInputType]="'password'"
-    [inputId]="'confirmPassword'"
-    [control]="registrationForm.controls.confirmPassword"
-  />
-  <xas-reactive-form-input
-    [inputLabel]="'First Name'"
-    [incomingInputType]="'text'"
-    [inputId]="'firstName'"
-    [control]="registrationForm.controls.firstName"
-  />
-  <xas-reactive-form-input
-    [inputLabel]="'Last Name'"
-    [incomingInputType]="'text'"
-    [inputId]="'lastName'"
-    [control]="registrationForm.controls.lastName"
-  />
-  <xas-reactive-form-input
-    [inputLabel]="'Date of Birth'"
-    [incomingInputType]="'date'"
-    [inputId]="'dateOfBirth'"
-    [control]="registrationForm.controls.dateOfBirth"
-  />
-  <xas-reactive-form-input
-    [inputLabel]="'Street'"
-    [incomingInputType]="'text'"
-    [inputId]="'street'"
-    [control]="registrationForm.controls.street"
-  />
-  <xas-reactive-form-input
-    [inputLabel]="'City'"
-    [incomingInputType]="'text'"
-    [inputId]="'city'"
-    [control]="registrationForm.controls.city"
-  />
-  <xas-reactive-form-input
-    [inputLabel]="'Postal Code'"
-    [incomingInputType]="'text'"
-    [inputId]="'postalCode'"
-    [control]="registrationForm.controls.postalCode"
-  />
-  <xas-reactive-form-input
-    [inputLabel]="'Country'"
-    [incomingInputType]="'text'"
-    [inputId]="'country'"
-    [control]="registrationForm.controls.country"
-  />
+<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+  @for (field of fields; track field.label) {
+    <xas-reactive-form-input
+      [inputLabel]="field.label"
+      [incomingInputType]="field.type"
+      [inputId]="field.label"
+      [control]="field.control"
+      [errorMessage]="field.control.errors?.['required'] ? field.errorMessage : ''"
+      [inputPlaceholder]="field.placeholder"
+    />
+  }
   <button type="submit">Register</button>
   <p>Have an account? <a href="/login">Login</a></p>
 </form>
