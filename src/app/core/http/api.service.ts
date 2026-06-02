@@ -26,7 +26,8 @@ export class ApiService {
     return this.get('example/{{id}}', request);
   }
 
-  appCredentialsAccessTokenPost(
+  // TODO: move to backend for frontend
+  public appCredentialsAccessTokenPost(
     request: PostRequest<{ Q: AppCredentialsAccessTokenPostQueries }>,
   ): Observable<AppCredentialsAccessTokenPostResponse> {
     return this.post(`${environment.commercetools.authUrl}/oauth/token`, request);
