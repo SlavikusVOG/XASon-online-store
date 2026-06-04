@@ -17,11 +17,12 @@ export class RegistrationForm {
     confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
-    dateOfBirth: new FormControl('', [Validators.required]),
-    street: new FormControl('', [Validators.required]),
-    city: new FormControl('', [Validators.required]),
-    postalCode: new FormControl('', [Validators.required]),
-    country: new FormControl('', [Validators.required]),
+    // TODO: move to user profile page
+    // dateOfBirth: new FormControl('', [Validators.required]),
+    // street: new FormControl('', [Validators.required]),
+    // city: new FormControl('', [Validators.required]),
+    // postalCode: new FormControl('', [Validators.required]),
+    // country: new FormControl('', [Validators.required]),
   });
   protected readonly fields = [
     {
@@ -64,49 +65,60 @@ export class RegistrationForm {
       validators: [Validators.required],
       errorMessage: 'Last Name is required',
     },
-    {
-      label: 'Date of Birth',
-      control: this.registrationForm.controls.dateOfBirth,
-      type: 'date',
-      placeholder: 'Enter your date of birth',
-      validators: [Validators.required],
-      errorMessage: 'Date of Birth is required',
-    },
-    {
-      label: 'Street',
-      control: this.registrationForm.controls.street,
-      type: 'text',
-      placeholder: 'Enter your street',
-      validators: [Validators.required],
-      errorMessage: 'Street is required',
-    },
-    {
-      label: 'City',
-      control: this.registrationForm.controls.city,
-      type: 'text',
-      placeholder: 'Enter your city',
-      validators: [Validators.required],
-      errorMessage: 'City is required',
-    },
-    {
-      label: 'Postal Code',
-      control: this.registrationForm.controls.postalCode,
-      type: 'text',
-      placeholder: 'Enter your postal code',
-      validators: [Validators.required],
-      errorMessage: 'Postal Code is required',
-    },
-    {
-      label: 'Country',
-      control: this.registrationForm.controls.country,
-      type: 'text',
-      placeholder: 'Enter your country',
-      validators: [Validators.required],
-      errorMessage: 'Country is required',
-    },
+    // TODO: move to user profile page
+    // {
+    //   label: 'Date of Birth',
+    //   control: this.registrationForm.controls.dateOfBirth,
+    //   type: 'date',
+    //   placeholder: 'Enter your date of birth',
+    //   validators: [Validators.required],
+    //   errorMessage: 'Date of Birth is required',
+    // },
+    // {
+    //   label: 'Street',
+    //   control: this.registrationForm.controls.street,
+    //   type: 'text',
+    //   placeholder: 'Enter your street',
+    //   validators: [Validators.required],
+    //   errorMessage: 'Street is required',
+    // },
+    // {
+    //   label: 'City',
+    //   control: this.registrationForm.controls.city,
+    //   type: 'text',
+    //   placeholder: 'Enter your city',
+    //   validators: [Validators.required],
+    //   errorMessage: 'City is required',
+    // },
+    // {
+    //   label: 'Postal Code',
+    //   control: this.registrationForm.controls.postalCode,
+    //   type: 'text',
+    //   placeholder: 'Enter your postal code',
+    //   validators: [Validators.required],
+    //   errorMessage: 'Postal Code is required',
+    // },
+    // {
+    //   label: 'Country',
+    //   control: this.registrationForm.controls.country,
+    //   type: 'text',
+    //   placeholder: 'Enter your country',
+    //   validators: [Validators.required],
+    //   errorMessage: 'Country is required',
+    // },
   ];
   onSubmit() {
-    const credentials: RegisterCredentials = this.registrationForm.value as RegisterCredentials;
+    if (this.registrationForm.invalid) {
+      return;
+    }
+
+    const { email, password, firstName, lastName } = this.registrationForm.value;
+    const credentials: RegisterCredentials = {
+      email: email ?? '',
+      password: password ?? '',
+      firstName: firstName ?? '',
+      lastName: lastName ?? '',
+    };
     this.register.emit(credentials);
   }
 }

@@ -47,13 +47,15 @@ export class CustomerSessionService {
   }
 
   register(credentials: RegisterCredentials) {
-    this.apiService.customersPost({
-      queries: { ...credentials },
+    const anonymousAccessToken = this.anonymousSessionService.getAccessToken();
+    const response = this.apiService.customersPost({
+      body: JSON.stringify(credentials),
       headers: {
-        Authorization: getBasicAuthHeader(),
+        Authorization: getBearerAuthHeader(anonymousAccessToken),
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     });
+    return response;
   }
 
   logout() {

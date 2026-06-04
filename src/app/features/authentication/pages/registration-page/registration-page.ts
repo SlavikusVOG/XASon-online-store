@@ -1,18 +1,25 @@
 import { Component, inject } from '@angular/core';
 import { RegistrationForm } from '../../../../shared/components/registration-form/registration-form';
-import { CustomerSessionService } from '../../../../core/auth/customer-session.service';
 import { RegisterCredentials } from '../../../../types/features/authentication/credentials.type';
+import { AuthService } from '../../../../core/auth/auth.service';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'xas-registration-page',
-  imports: [RegistrationForm],
+  imports: [RegistrationForm, RouterLink],
   templateUrl: './registration-page.html',
   styleUrl: './registration-page.scss',
 })
 export class RegistrationPage {
-  private readonly customerSessionService = inject(CustomerSessionService);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
   onRegister(credentials: RegisterCredentials) {
-    // TODO: implement
-    this.customerSessionService.register(credentials);
+    this.authService.register(credentials).subscribe((response) => {
+      if (response.id) {
+        this.router.navigate(['/login']);
+      } else {
+        alert('Failed to register');
+      }
+    });
   }
 }

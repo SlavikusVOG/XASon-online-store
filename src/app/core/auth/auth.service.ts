@@ -23,6 +23,7 @@ export class AuthService {
   }
 
   register(credentials: RegisterCredentials) {
-    this.customerSessionService.register(credentials);
+    const response = this.customerSessionService.register(credentials);
+    return response;
   }
 }
