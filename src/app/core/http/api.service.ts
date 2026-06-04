@@ -54,11 +54,17 @@ export class ApiService {
   }
 
   public loginPost(request: PostRequest): Observable<LoginPostResponse> {
-    return this.post(`${environment.commercetools.apiUrl}/login`, request);
+    return this.post(
+      `${environment.commercetools.apiUrl}/${environment.commercetools.projectKey}/login`,
+      request,
+    );
   }
 
   public customersPost(request: PostRequest): Observable<CustomersPostResponse> {
-    return this.post(`${environment.commercetools.apiUrl}/customers`, request);
+    return this.post(
+      `${environment.commercetools.apiUrl}/${environment.commercetools.projectKey}/customers`,
+      request,
+    );
   }
 
   public customersTokenPost(
