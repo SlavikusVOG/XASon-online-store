@@ -1,6 +1,7 @@
 export type LoginCredentials = {
   email: string;
   password: string;
+  // TODO: add anonymous cart
 };
 
 export type RegisterCredentials = {

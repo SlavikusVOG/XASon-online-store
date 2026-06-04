@@ -42,7 +42,7 @@ export function getBasicAuthHeader(): string {
   return `Basic ${encoded}`;
 }
 
-export function getBearerAuthHeader() {
-  const accessToken = localStorage.getItem(environment.LOCAL_STORAGE_KEYS.accessToken);
+export function getBearerAuthHeader(token: string): string {
+  const accessToken = token;
   return `Bearer ${accessToken}`;
 }

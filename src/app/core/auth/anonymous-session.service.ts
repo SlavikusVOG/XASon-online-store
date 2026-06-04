@@ -3,6 +3,7 @@ import { LocalStorage } from '../local-storage/local-storage';
 import { ApiService } from '../http/api.service';
 import { environment } from '../../../environments/environment';
 import { AnonymousSessionAccessTokenPostResponse } from '../../types/http-request/anonymous-token.type';
+import { getBasicAuthHeader } from '../http/api.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -19,15 +20,16 @@ export class AnonymousSessionService {
   constructor() {
     if (!this.accessToken) {
       this.fetchAccessToken().subscribe((response: AnonymousSessionAccessTokenPostResponse) => {
+        const { access_token, refresh_token } = response;
         this.localStorageService.setValue(
           environment.LOCAL_STORAGE_KEYS.anonymousToken,
-          response['access_token'],
+          access_token,
         );
         this.localStorageService.setValue(
           environment.LOCAL_STORAGE_KEYS.refreshToken,
-          response['refresh_token'],
+          refresh_token,
         );
-        this.accessToken = response['access_token'];
+        this.accessToken = access_token;
       });
     }
   }
@@ -41,6 +43,10 @@ export class AnonymousSessionService {
       params: {
         credentials: 'include',
       },
+      headers: {
+        Authorization: getBasicAuthHeader(),
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
     });
   }
 
@@ -50,6 +56,10 @@ export class AnonymousSessionService {
         queries: {
           grant_type: 'refresh_token',
           refresh_token: this.refreshToken ?? '',
+        },
+        headers: {
+          Authorization: getBasicAuthHeader(),
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
       })
       .subscribe((response) => {
