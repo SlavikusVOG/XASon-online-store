@@ -1,3 +1,4 @@
+import { environment } from '../../../environments/environment';
 import { isPresent } from '../../shared/utils/is-present.util';
 import { HttpParams, HttpQueries } from './api.types';
 
@@ -34,3 +35,14 @@ const createQueries = (queries: HttpQueries): string => {
     .map((key) => `${key}=${encodeURIComponent(queries[key])}`)
     .join('&');
 };
+
+export function getBasicAuthHeader(): string {
+  const { clientId, clientSecret } = environment.commercetools;
+  const encoded = btoa(`${clientId}:${clientSecret}`);
+  return `Basic ${encoded}`;
+}
+
+export function getBearerAuthHeader() {
+  const accessToken = localStorage.getItem(environment.LOCAL_STORAGE_KEYS.accessToken);
+  return `Bearer ${accessToken}`;
+}
