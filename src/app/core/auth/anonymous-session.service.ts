@@ -4,6 +4,7 @@ import { ApiService } from '../http/api.service';
 import { environment } from '../../../environments/environment';
 import { AnonymousSessionAccessTokenPostResponse } from '../../types/http-request/anonymous-token.type';
 import { getBasicAuthHeader } from '../http/api.utils';
+import { uniqueTimeBasedId } from '../../shared/utils/unique-time-based-id';
 
 @Injectable({
   providedIn: 'root',
@@ -35,13 +36,12 @@ export class AnonymousSessionService {
   }
 
   fetchAccessToken() {
+    const anonymousId = uniqueTimeBasedId();
     return this.apiService.anonymousSessionAccessTokenPost({
       queries: {
         grant_type: 'client_credentials',
         scope: environment.commercetools.scopes.join(' '),
-      },
-      params: {
-        credentials: 'include',
+        anonymous_id: anonymousId,
       },
       headers: {
         Authorization: getBasicAuthHeader(),

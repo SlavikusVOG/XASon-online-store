@@ -9,4 +9,5 @@ export type AnonymousSessionAccessTokenPostResponse = {
 export type AnonymousSessionAccessTokenPostQueries = {
   grant_type: 'client_credentials';
   scope: string;
+  anonymous_id: string;
 };
