@@ -42,7 +42,10 @@ export function getBasicAuthHeader(): string {
   return `Basic ${encoded}`;
 }
 
-export function getBearerAuthHeader(token: string): string {
+export function getBearerAuthHeader(token: string | null): string {
+  if (!token) {
+    throw new Error('Token is required');
+  }
   const accessToken = token;
   return `Bearer ${accessToken}`;
 }
