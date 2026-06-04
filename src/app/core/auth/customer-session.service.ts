@@ -2,7 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { LocalStorage } from '../local-storage/local-storage';
 import { ApiService } from '../http/api.service';
 import { environment } from '../../../environments/environment';
-// import { LoginCredentials } from '../../types/features/authentication/credentials.type';
+import { LoginCredentials } from '../../types/features/authentication/credentials.type';
+import { RegisterCredentials } from '../../types/features/authentication/credentials.type';
 
 @Injectable({
   providedIn: 'root',
@@ -17,12 +18,18 @@ export class CustomerSessionService {
     environment.LOCAL_STORAGE_KEYS.refreshToken,
   );
 
-  login(/* credentials: LoginCredentials */) {
-    // TODO: implement login
+  login(credentials: LoginCredentials) {
+    this.apiService.loginPost({
+      // TODO: data binary
+      body: credentials,
+    });
   }
 
-  register(/* credentials: RegisterCredentials */) {
-    // TODO: implement registration
+  register(credentials: RegisterCredentials) {
+    // TODO: data binary
+    this.apiService.customersPost({
+      body: credentials,
+    });
   }
 
   logout() {

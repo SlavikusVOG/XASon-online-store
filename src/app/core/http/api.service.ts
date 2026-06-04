@@ -17,6 +17,7 @@ import {
   RefreshTokenPostResponse,
 } from '../../types/http-request/refresh-token.type';
 import { LoginPostResponse } from '../../types/http-request/login.type';
+import { CustomersPostResponse } from '../../types/http-request/customers.type';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -47,6 +48,10 @@ export class ApiService {
 
   public loginPost(request: PostRequest): Observable<LoginPostResponse> {
     return this.post(`${environment.commercetools.apiUrl}/login`, request);
+  }
+
+  public customersPost(request: PostRequest): Observable<CustomersPostResponse> {
+    return this.post(`${environment.commercetools.apiUrl}/customers`, request);
   }
 
   private get<R>(url: string, request: GetRequest): Observable<R> {
