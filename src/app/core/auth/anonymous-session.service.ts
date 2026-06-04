@@ -12,6 +12,9 @@ import { uniqueTimeBasedId } from '../../shared/utils/unique-time-based-id';
 export class AnonymousSessionService {
   private readonly localStorageService = inject(LocalStorage);
   private readonly apiService = inject(ApiService);
+  private anonymousId = this.localStorageService.getValue<string>(
+    environment.LOCAL_STORAGE_KEYS.anonymousId,
+  );
   private accessToken = this.localStorageService.getValue<string>(
     environment.LOCAL_STORAGE_KEYS.anonymousToken,
   );
@@ -19,24 +22,30 @@ export class AnonymousSessionService {
     environment.LOCAL_STORAGE_KEYS.refreshToken,
   );
   constructor() {
-    if (!this.accessToken) {
-      this.fetchAccessToken().subscribe((response: AnonymousSessionAccessTokenPostResponse) => {
-        const { access_token, refresh_token } = response;
-        this.localStorageService.setValue(
-          environment.LOCAL_STORAGE_KEYS.anonymousToken,
-          access_token,
-        );
-        this.localStorageService.setValue(
-          environment.LOCAL_STORAGE_KEYS.refreshToken,
-          refresh_token,
-        );
-        this.accessToken = access_token;
-      });
+    if (!this.anonymousId) {
+      this.anonymousId = uniqueTimeBasedId();
+      this.fetchAccessToken(this.anonymousId).subscribe(
+        (response: AnonymousSessionAccessTokenPostResponse) => {
+          const { access_token, refresh_token } = response;
+          this.localStorageService.setValue(
+            environment.LOCAL_STORAGE_KEYS.anonymousToken,
+            access_token,
+          );
+          this.localStorageService.setValue(
+            environment.LOCAL_STORAGE_KEYS.refreshToken,
+            refresh_token,
+          );
+          this.accessToken = access_token;
+          this.localStorageService.setValue(
+            environment.LOCAL_STORAGE_KEYS.anonymousId,
+            this.anonymousId,
+          );
+        },
+      );
     }
   }
 
-  fetchAccessToken() {
-    const anonymousId = uniqueTimeBasedId();
+  fetchAccessToken(anonymousId: string) {
     return this.apiService.anonymousSessionAccessTokenPost({
       queries: {
         grant_type: 'client_credentials',
