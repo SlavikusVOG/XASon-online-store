@@ -33,4 +33,9 @@ export const environment = {
       `manage_customers${import.meta.env['NG_APP_PROJECT_KEY']}`,
     ],
   },
+  LOCAL_STORAGE_KEYS: {
+    accessToken: 'accessToken',
+    refreshToken: 'refreshToken',
+    anonymousToken: 'anonymousToken',
+  },
 };
