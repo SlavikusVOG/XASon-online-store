@@ -41,7 +41,10 @@ export class ApiService {
   public anonymousSessionAccessTokenPost(
     request: PostRequest<{ Q: AnonymousSessionAccessTokenPostQueries }>,
   ): Observable<AnonymousSessionAccessTokenPostResponse> {
-    return this.post(`${environment.commercetools.authUrl}/anonymous/token`, request);
+    return this.post(
+      `${environment.commercetools.authUrl}/oauth/${environment.commercetools.projectKey}/anonymous/token`,
+      request,
+    );
   }
 
   public refreshTokenPost(
@@ -68,22 +71,32 @@ export class ApiService {
   }
 
   private get<R>(url: string, request: GetRequest): Observable<R> {
-    return this.httpClient.get<R>(buildUrl(url, request.params, request.queries));
+    return this.httpClient.get<R>(buildUrl(url, request.params, request.queries), {
+      headers: request.headers,
+    });
   }
 
   private post<R>(url: string, request: PostRequest): Observable<R> {
-    return this.httpClient.post<R>(buildUrl(url, request.params, request.queries), request.body);
+    return this.httpClient.post<R>(buildUrl(url, request.params, request.queries), request.body, {
+      headers: request.headers,
+    });
   }
 
   private patch<R>(url: string, request: PatchRequest): Observable<R> {
-    return this.httpClient.patch<R>(buildUrl(url, request.params, request.queries), request.body);
+    return this.httpClient.patch<R>(buildUrl(url, request.params, request.queries), request.body, {
+      headers: request.headers,
+    });
   }
 
   private put<R>(url: string, request: PutRequest): Observable<R> {
-    return this.httpClient.put<R>(buildUrl(url, request.params, request.queries), request.body);
+    return this.httpClient.put<R>(buildUrl(url, request.params, request.queries), request.body, {
+      headers: request.headers,
+    });
   }
 
   private delete<R>(url: string, request: DeleteRequest): Observable<R> {
-    return this.httpClient.delete<R>(buildUrl(url, request.params, request.queries));
+    return this.httpClient.delete<R>(buildUrl(url, request.params, request.queries), {
+      headers: request.headers,
+    });
   }
 }
