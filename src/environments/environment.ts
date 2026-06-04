@@ -31,8 +31,10 @@ export const environment = {
     ],
   },
   LOCAL_STORAGE_KEYS: {
+    customerId: 'customerId',
     accessToken: 'accessToken',
     refreshToken: 'refreshToken',
     anonymousToken: 'anonymousToken',
+    anonymousId: 'anonymousId',
   },
 };
