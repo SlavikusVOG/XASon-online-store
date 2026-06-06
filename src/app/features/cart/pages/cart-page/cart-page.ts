@@ -40,7 +40,7 @@ export type Cart = {
   styleUrl: './cart-page.scss',
 })
 export class CartPage {
-  protected readonly cartItems = signal<Cart>([]);
+  protected readonly cartItems = signal<Cart[]>([]);
   private fetchCartItems(): Cart {
     return {
       id: '1',
