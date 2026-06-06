@@ -1,8 +1,8 @@
 @switch (catalogStore.loadStatus()) {
-  @case (dataLoadStatuses.LOADING) {
+  @case (DATA_LOAD_STATUSES.LOADING) {
     <!-- скелетон -->
   }
-  @case (dataLoadStatuses.WITH_DATA) {
+  @case (DATA_LOAD_STATUSES.WITH_DATA) {
     @for (product of catalogStore.products(); track product.id) {
       <xas-product-card
         [product]="product"
@@ -11,10 +11,10 @@
       />
     }
   }
-  @case (dataLoadStatuses.NO_DATA) {
+  @case (DATA_LOAD_STATUSES.NO_DATA) {
     <!-- заглушка "продукты не найдены" -->
   }
-  @case (dataLoadStatuses.ERROR) {
+  @case (DATA_LOAD_STATUSES.ERROR) {
     <!-- заглушка "ошибка при загрузке" -->
   }
 }

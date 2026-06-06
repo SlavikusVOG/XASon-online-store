@@ -1,37 +1,5 @@
 import { Component, signal } from '@angular/core';
-
-export type TypedMoney = {
-  type: string;
-  currencyCode: string;
-  centAmount: number;
-  fractionDigits: number;
-};
-
-export type Price = {
-  id: string;
-  key: string;
-  value: TypedMoney;
-};
-
-export type LineItem = {
-  id: string;
-  key: string;
-  productId: string;
-  productKey: string;
-  name: string;
-  productType: string;
-  price: Price;
-};
-
-export type Cart = {
-  id: string;
-  version: number;
-  key: string;
-  customerId: string;
-  customerEmail: string;
-  store: string;
-  lineItems: LineItem[];
-};
+import { CartModel } from '@models/features/cart';
 
 @Component({
   selector: 'xas-cart-page',
@@ -40,8 +8,8 @@ export type Cart = {
   styleUrl: './cart-page.scss',
 })
 export class CartPage {
-  protected readonly cartItems = signal<Cart[]>([]);
-  private fetchCartItems(): Cart {
+  protected readonly cartItems = signal<CartModel[]>([]);
+  private fetchCartItems(): CartModel {
     return {
       id: '1',
       version: 1,

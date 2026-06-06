@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { Product } from '../../../../types/features/catalog/product.types';
-import { YesNoPipe } from '../../../../shared/pipes/yes-no.pipe';
+import { Product } from '@models/features/catalog';
+import { YesNoPipe } from '@shared/pipes';
 
 @Component({
   selector: 'xas-product-card',

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Product } from '../../../../types/features/catalog/product.types';
+import { Product } from '@models/features/catalog';
 import { ProductCard } from './product-card';
 
 describe('ProductCard', () => {

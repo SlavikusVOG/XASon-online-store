@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { RegistrationForm } from '../../../../shared/components/registration-form/registration-form';
-import { RegisterCredentials } from '../../../../types/features/authentication/credentials.type';
-import { AuthService } from '../../../../core/auth/auth.service';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '@core/auth';
+import { RegistrationForm } from '@features/authentication/components';
+import { RegisterCredentials } from '@models/features/authentication';
 
 @Component({
   selector: 'xas-registration-page',
