@@ -1,17 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RegistrationForm } from '../../../../shared/components/registration-form/registration-form';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { RegisterCredentials } from '../../../../types/features/authentication/credentials.type';
+import { AuthService } from '../../../../core/auth/auth.service';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'xas-registration-page',
-  imports: [RegistrationForm],
+  imports: [RegistrationForm, RouterLink],
   templateUrl: './registration-page.html',
   styleUrl: './registration-page.scss',
 })
 export class RegistrationPage {
-  protected readonly registrationForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
-  });
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  onRegister(credentials: RegisterCredentials) {
+    this.authService.register(credentials).subscribe((response) => {
+      if (response.id) {
+        this.router.navigate(['/login']);
+      } else {
+        alert('Failed to register');
+      }
+    });
+  }
 }

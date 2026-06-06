@@ -1,11 +1,7 @@
 import { Component, output, signal } from '@angular/core';
 import { form } from '@angular/forms/signals';
 import { FormInput } from '../form-input/form-input';
-
-export type LoginCredentials = {
-  email: string;
-  password: string;
-};
+import { LoginCredentials } from '../../../types/features/authentication/credentials.type';
 
 @Component({
   selector: 'xas-login-form',
