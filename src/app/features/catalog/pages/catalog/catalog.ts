@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { ProductCard } from '@features/catalog/components';
+import { CatalogStore } from '@features/catalog/store';
 import { Product } from '@models/features/catalog';
 import { DATA_LOAD_STATUSES } from '@shared/const';
-import { CatalogStore } from '../../state/catalog.store';
 
 @Component({
   selector: 'xas-catalog',
