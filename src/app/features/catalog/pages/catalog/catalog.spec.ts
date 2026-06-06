@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CatalogStore } from '@features/catalog/state/catalog.store';
+import { CatalogStore } from '@features/catalog/store';
 import { Catalog } from './catalog';
 
 describe('Catalog', () => {
