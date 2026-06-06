@@ -1,7 +1,20 @@
-@for (product of products(); track product.id) {
-  <xas-product-card
-    [product]="product"
-    (addedToCart)="addToCart($event)"
-    (removedFromCart)="removeFromCart($event)"
-  />
+@switch (catalogStore.loadStatus()) {
+  @case (dataLoadStatuses.LOADING) {
+    <!-- скелетон -->
+  }
+  @case (dataLoadStatuses.WITH_DATA) {
+    @for (product of catalogStore.products(); track product.id) {
+      <xas-product-card
+        [product]="product"
+        (addedToCart)="addToCart($event)"
+        (removedFromCart)="removeFromCart($event)"
+      />
+    }
+  }
+  @case (dataLoadStatuses.NO_DATA) {
+    <!-- заглушка "продукты не найдены" -->
+  }
+  @case (dataLoadStatuses.ERROR) {
+    <!-- заглушка "ошибка при загрузке" -->
+  }
 }
