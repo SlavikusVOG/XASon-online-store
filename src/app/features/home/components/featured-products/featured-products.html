@@ -1,0 +1,16 @@
+<section class="featured">
+  <div class="featured__header">
+    <h2 class="featured__title">Featured Products</h2>
+    <a routerLink="/catalog" class="featured__view-all">View All</a>
+  </div>
+
+  <div class="featured__grid">
+    @for (product of products(); track product.id) {
+      <xas-product-card
+        [product]="product"
+        (addedToCart)="addToCart($event)"
+        (removedFromCart)="removeFromCart($event)"
+      />
+    }
+  </div>
+</section>
