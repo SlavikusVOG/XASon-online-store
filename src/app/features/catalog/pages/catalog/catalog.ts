@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { CatalogService } from '../../state/catalog.service';
-import { ProductCard } from '../../components/product-card/product-card';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { dataLoadStatuses } from '../../../../shared/const/data-load-statuses.const';
 import { Product } from '../../../../types/features/catalog/product.types';
+import { ProductCard } from '../../components/product-card/product-card';
+import { CatalogStore } from '../../state/catalog.store';
 
 @Component({
   selector: 'xas-catalog',
@@ -10,16 +11,20 @@ import { Product } from '../../../../types/features/catalog/product.types';
   styleUrl: './catalog.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Catalog {
-  private readonly catalogService = inject(CatalogService);
+export class Catalog implements OnInit {
+  public readonly dataLoadStatuses = dataLoadStatuses;
 
-  readonly products = this.catalogService.products.asReadonly();
+  public readonly catalogStore = inject(CatalogStore);
 
-  addToCart(product: Product): void {
-    this.catalogService.addToCart(product);
+  public ngOnInit(): void {
+    this.catalogStore.loadProducts();
   }
 
-  removeFromCart(product: Product): void {
-    this.catalogService.removeFromCart(product);
+  public addToCart(product: Product): void {
+    this.catalogStore.addToCart(product);
+  }
+
+  public removeFromCart(product: Product): void {
+    this.catalogStore.removeFromCart(product);
   }
 }

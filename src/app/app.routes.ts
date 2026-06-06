@@ -1,10 +1,8 @@
 import { Routes } from '@angular/router';
-import { AuthLayout } from './core/layouts/auth-layout/auth-layout';
-import { MainLayout } from './core/layouts/main-layout/main-layout';
-import { LoginPage } from './features/authentication/pages/login-page/login-page';
-import { RegistrationPage } from '../app/features/authentication/pages/registration-page/registration-page';
-import { Catalog } from './features/catalog/pages/catalog/catalog';
-import { UserProfilePage } from './features/user-profile/pages/user-profile-page/user-profile-page';
+import { AuthLayout, MainLayout } from './core/layouts';
+import { LoginPage, RegistrationPage } from './features/authentication';
+import { Catalog, CatalogStore } from './features/catalog';
+import { UserProfilePage } from './features/user-profile';
 import { CartPage } from './features/cart/pages/cart-page/cart-page';
 
 export const routes: Routes = [
@@ -20,7 +18,7 @@ export const routes: Routes = [
     path: '',
     component: MainLayout,
     children: [
-      { path: 'catalog', component: Catalog },
+      { path: 'catalog', component: Catalog, providers: [CatalogStore] },
       { path: 'userprofile', component: UserProfilePage },
       { path: 'cart', component: CartPage },
     ],

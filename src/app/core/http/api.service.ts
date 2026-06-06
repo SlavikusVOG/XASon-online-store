@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { buildUrl } from './api.utils';
-import { DeleteRequest, GetRequest, PatchRequest, PostRequest, PutRequest } from './api.types';
-import { Observable } from 'rxjs';
+import { delay, Observable, of } from 'rxjs';
+import { catalogProducts } from '../../mocks/catalog.mocks';
+import { Product } from '../../types/features/catalog/product.types';
 import { ExampleGetQueries } from '../../types/http-request/example.types';
 import { ExampleGetResponse } from '../../types/http-response/example.types';
 import { AppCredentialsAccessTokenPostQueries } from '../../types/http-request/app-credentials.types';
@@ -22,6 +22,8 @@ import {
   CustomersTokenPostQueries,
   CustomersTokenPostResponse,
 } from '../../types/http-request/customers-token.type';
+import { DeleteRequest, GetRequest, PatchRequest, PostRequest, PutRequest } from './api.types';
+import { buildUrl } from './api.utils';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -74,6 +76,10 @@ export class ApiService {
       `${environment.commercetools.authUrl}/oauth/${environment.commercetools.projectKey}/customers/token`,
       request,
     );
+  }
+
+  getCatalogProducts(): Observable<Product[]> {
+    return of(catalogProducts).pipe(delay(5_000));
   }
 
   private get<R>(url: string, request: GetRequest): Observable<R> {
