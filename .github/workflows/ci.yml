@@ -14,8 +14,8 @@ env:
   NODE_VERSION: 22.x
 
 jobs:
-  ci:
-    name: Continuous Integration
+  setup:
+    name: Setup
     runs-on: ubuntu-latest
 
     steps:
@@ -31,15 +31,80 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        id: cache-node-modules
+        with:
+          path: node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
+
+  format:
+    name: Formatting
+    needs: setup
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Restore node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
+
       - name: Check code formatting
         run: npx prettier --check .
         continue-on-error: true
 
+  lint:
+    name: Lint
+    needs: setup
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Restore node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
+
       - name: Run lint
         run: npm run lint
+
+  test:
+    name: Tests
+    needs: setup
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Restore node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
 
       - name: Run tests
         run: npm test -- --watch=false
 
+  build:
+    name: Build
+    needs: setup
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Restore node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
       - name: Build application
         run: npm run build
