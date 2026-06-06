@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { TuiSkeleton } from '@taiga-ui/kit/directives';
 import { CatalogService } from '../../../catalog/state/catalog.service';
 import { Product } from '../../../../types/features/catalog/product.types';
 import { banners, categories, promoCodes } from '../../../../mocks/main.mocks';
@@ -9,7 +10,7 @@ import { PromoCodesDisplay } from '../../components/promo-codes-display/promo-co
 
 @Component({
   selector: 'xas-home-page',
-  imports: [PromoBanner, CategoryNav, FeaturedProducts, PromoCodesDisplay],
+  imports: [PromoBanner, CategoryNav, FeaturedProducts, PromoCodesDisplay, TuiSkeleton],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
