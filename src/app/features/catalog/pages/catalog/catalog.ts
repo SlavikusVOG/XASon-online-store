@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { dataLoadStatuses } from '../../../../shared/const/data-load-statuses.const';
-import { Product } from '../../../../types/features/catalog/product.types';
-import { ProductCard } from '../../components/product-card/product-card';
+import { ProductCard } from '@features/catalog/components';
+import { Product } from '@models/features/catalog';
+import { DATA_LOAD_STATUSES } from '@shared/const';
 import { CatalogStore } from '../../state/catalog.store';
 
 @Component({
@@ -12,7 +12,7 @@ import { CatalogStore } from '../../state/catalog.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Catalog implements OnInit {
-  public readonly dataLoadStatuses = dataLoadStatuses;
+  public readonly DATA_LOAD_STATUSES = DATA_LOAD_STATUSES;
 
   public readonly catalogStore = inject(CatalogStore);
 

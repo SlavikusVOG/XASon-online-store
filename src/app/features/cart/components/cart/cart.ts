@@ -1,6 +1,5 @@
 import { Component, computed, input } from '@angular/core';
-import { LineItem } from '../../pages/cart-page/cart-page';
-import { Cart as CartType } from '../../pages/cart-page/cart-page';
+import { CartModel, LineItem } from '@models/features/cart';
 
 @Component({
   selector: 'xas-cart',
@@ -9,7 +8,7 @@ import { Cart as CartType } from '../../pages/cart-page/cart-page';
   styleUrl: './cart.scss',
 })
 export class Cart {
-  protected readonly cart = input.required<CartType>();
+  protected readonly cart = input.required<CartModel>();
   protected readonly totalPrice = computed(() =>
     this.cart().lineItems.reduce((acc, item) => acc + this.getItemPrice(item), 0),
   );

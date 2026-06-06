@@ -1,12 +1,10 @@
-import { Injectable, inject } from '@angular/core';
-import { LocalStorage } from '../local-storage/local-storage';
-import { ApiService } from '../http/api.service';
-import { environment } from '../../../environments/environment';
-import { LoginCredentials } from '../../types/features/authentication/credentials.type';
-import { RegisterCredentials } from '../../types/features/authentication/credentials.type';
-import { getBasicAuthHeader, getBearerAuthHeader } from '../http/api.utils';
-import { AnonymousSessionService } from './anonymous-session.service';
 import { HttpParams } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { ApiService, getBasicAuthHeader, getBearerAuthHeader } from '@core/http';
+import { LocalStorage } from '@core/local-storage';
+import { environment } from '@environments/environment';
+import { LoginCredentials, RegisterCredentials } from '@models/features/authentication';
+import { AnonymousSessionService } from './anonymous-session.service';
 
 @Injectable({
   providedIn: 'root',

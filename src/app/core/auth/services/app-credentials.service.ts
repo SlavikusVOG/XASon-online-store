@@ -1,9 +1,7 @@
-import { Injectable, inject } from '@angular/core';
-import { environment } from '../../../environments/environment';
-import { ApiService } from '../http/api.service';
-import { PostRequest } from '../http/api.types';
-import { AppCredentialsAccessTokenPostQueries } from '../../types/http-request/app-credentials.types';
-import { getBasicAuthHeader } from '../http/api.utils';
+import { inject, Injectable } from '@angular/core';
+import { ApiService, getBasicAuthHeader, PostRequest } from '@core/http';
+import { environment } from '@environments/environment';
+import { AppCredentialsAccessTokenPostQueries } from '@models/http';
 
 @Injectable({
   providedIn: 'root',

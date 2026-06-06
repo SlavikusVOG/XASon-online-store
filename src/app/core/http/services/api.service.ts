@@ -1,29 +1,31 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { delay, Observable, of } from 'rxjs';
-import { catalogProducts } from '../../mocks/catalog.mocks';
-import { Product } from '../../types/features/catalog/product.types';
-import { ExampleGetQueries } from '../../types/http-request/example.types';
-import { ExampleGetResponse } from '../../types/http-response/example.types';
-import { AppCredentialsAccessTokenPostQueries } from '../../types/http-request/app-credentials.types';
-import { environment } from '../../../environments/environment';
-import { AppCredentialsAccessTokenPostResponse } from '../../types/http-response/app-credentials.types';
+import { environment } from '@environments/environment';
+import { Product } from '@models/features/catalog';
 import {
   AnonymousSessionAccessTokenPostQueries,
   AnonymousSessionAccessTokenPostResponse,
-} from '../../types/http-request/anonymous-token.type';
-import {
-  RefreshTokenPostQueries,
-  RefreshTokenPostResponse,
-} from '../../types/http-request/refresh-token.type';
-import { LoginPostResponse } from '../../types/http-request/login.type';
-import { CustomersPostResponse } from '../../types/http-request/customers.type';
-import {
+  AppCredentialsAccessTokenPostQueries,
+  AppCredentialsAccessTokenPostResponse,
+  CustomersPostResponse,
   CustomersTokenPostQueries,
   CustomersTokenPostResponse,
-} from '../../types/http-request/customers-token.type';
-import { DeleteRequest, GetRequest, PatchRequest, PostRequest, PutRequest } from './api.types';
-import { buildUrl } from './api.utils';
+  ExampleGetQueries,
+  ExampleGetResponse,
+  LoginPostResponse,
+  RefreshTokenPostQueries,
+  RefreshTokenPostResponse,
+} from '@models/http';
+import { delay, Observable, of } from 'rxjs';
+import { catalogProducts } from '../../../mocks/catalog.mocks';
+import {
+  DeleteRequest,
+  GetRequest,
+  PatchRequest,
+  PostRequest,
+  PutRequest,
+} from '../types/api.types';
+import { buildUrl } from '../utils/api.utils';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {

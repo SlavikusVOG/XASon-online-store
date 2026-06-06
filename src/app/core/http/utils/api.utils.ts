@@ -1,6 +1,6 @@
-import { environment } from '../../../environments/environment';
-import { isPresent } from '../../shared/utils/is-present.util';
-import { HttpParams, HttpQueries } from './api.types';
+import { isPresent } from '@shared/utils';
+import { HttpParams, HttpQueries } from '../types/api.types';
+import { environment } from '@environments/environment';
 
 export const buildUrl = (
   url: string,

@@ -1,11 +1,11 @@
+import { inject } from '@angular/core';
+import { ApiService } from '@core/http';
+import { Product } from '@models/features/catalog';
+import { tapResponse } from '@ngrx/operators';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { DataLoadStatus, dataLoadStatuses } from '../../../shared/const/data-load-statuses.const';
-import { Product } from '../../../types/features/catalog/product.types';
-import { inject } from '@angular/core';
-import { ApiService } from '../../../core/http/api.service';
+import { DATA_LOAD_STATUSES, DataLoadStatus } from '@shared/const';
 import { pipe, switchMap, tap } from 'rxjs';
-import { tapResponse } from '@ngrx/operators';
 
 type CatalogState = {
   products: Product[];
@@ -14,7 +14,7 @@ type CatalogState = {
 
 const initialState: CatalogState = {
   products: [],
-  loadStatus: dataLoadStatuses.INIT,
+  loadStatus: DATA_LOAD_STATUSES.INIT,
 };
 
 export const CatalogStore = signalStore(
@@ -22,18 +22,20 @@ export const CatalogStore = signalStore(
   withMethods((store, apiService = inject(ApiService)) => ({
     loadProducts: rxMethod<void>(
       pipe(
-        tap(() => patchState(store, { loadStatus: dataLoadStatuses.LOADING })),
+        tap(() => patchState(store, { loadStatus: DATA_LOAD_STATUSES.LOADING })),
         switchMap(() =>
           apiService.getCatalogProducts().pipe(
             tapResponse({
               next: (res) => {
                 patchState(store, {
                   products: res,
-                  loadStatus: res.length ? dataLoadStatuses.WITH_DATA : dataLoadStatuses.NO_DATA,
+                  loadStatus: res.length
+                    ? DATA_LOAD_STATUSES.WITH_DATA
+                    : DATA_LOAD_STATUSES.NO_DATA,
                 });
               },
               error: () => {
-                patchState(store, { loadStatus: dataLoadStatuses.ERROR });
+                patchState(store, { loadStatus: DATA_LOAD_STATUSES.ERROR });
               },
             }),
           ),

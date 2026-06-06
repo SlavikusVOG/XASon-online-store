@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TypedMoney } from '../../features/cart/pages/cart-page/cart-page';
+import { TypedMoney } from '@models/features/cart';
 
 @Pipe({
   name: 'price',

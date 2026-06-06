@@ -1,9 +1,6 @@
 import { inject, Injectable } from '@angular/core';
+import { LoginCredentials, RegisterCredentials } from '@models/features/authentication';
 import { CustomerSessionService } from './customer-session.service';
-import {
-  LoginCredentials,
-  RegisterCredentials,
-} from '../../types/features/authentication/credentials.type';
 
 @Injectable({
   providedIn: 'root',

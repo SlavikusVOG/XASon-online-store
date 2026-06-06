@@ -1,10 +1,8 @@
 import { Injectable, inject } from '@angular/core';
-import { LocalStorage } from '../local-storage/local-storage';
-import { ApiService } from '../http/api.service';
-import { environment } from '../../../environments/environment';
-import { AnonymousSessionAccessTokenPostResponse } from '../../types/http-request/anonymous-token.type';
-import { getBasicAuthHeader } from '../http/api.utils';
-import { uniqueTimeBasedId } from '../../shared/utils/unique-time-based-id';
+import { ApiService, getBasicAuthHeader } from '@core/http';
+import { LocalStorage } from '@core/local-storage';
+import { environment } from '@environments/environment';
+import { timeBasedId } from '@shared/utils';
 
 @Injectable({
   providedIn: 'root',
@@ -23,25 +21,23 @@ export class AnonymousSessionService {
   );
   constructor() {
     if (!this.anonymousId) {
-      this.anonymousId = uniqueTimeBasedId();
-      this.fetchAccessToken(this.anonymousId).subscribe(
-        (response: AnonymousSessionAccessTokenPostResponse) => {
-          const { access_token, refresh_token } = response;
-          this.localStorageService.setValue(
-            environment.LOCAL_STORAGE_KEYS.anonymousToken,
-            access_token,
-          );
-          this.localStorageService.setValue(
-            environment.LOCAL_STORAGE_KEYS.refreshToken,
-            refresh_token,
-          );
-          this.accessToken = access_token;
-          this.localStorageService.setValue(
-            environment.LOCAL_STORAGE_KEYS.anonymousId,
-            this.anonymousId,
-          );
-        },
-      );
+      this.anonymousId = timeBasedId();
+      this.fetchAccessToken(this.anonymousId).subscribe((response) => {
+        const { access_token, refresh_token } = response;
+        this.localStorageService.setValue(
+          environment.LOCAL_STORAGE_KEYS.anonymousToken,
+          access_token,
+        );
+        this.localStorageService.setValue(
+          environment.LOCAL_STORAGE_KEYS.refreshToken,
+          refresh_token,
+        );
+        this.accessToken = access_token;
+        this.localStorageService.setValue(
+          environment.LOCAL_STORAGE_KEYS.anonymousId,
+          this.anonymousId,
+        );
+      });
     }
   }
 
