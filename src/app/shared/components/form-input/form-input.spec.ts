@@ -12,6 +12,9 @@ describe('FormInput', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(FormInput);
+    fixture.componentRef.setInput('inputLabel', 'Email');
+    fixture.componentRef.setInput('incomingType', 'text');
+    fixture.componentRef.setInput('inputId', 'email');
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
