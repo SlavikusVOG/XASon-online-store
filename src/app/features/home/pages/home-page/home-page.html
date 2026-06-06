@@ -1,0 +1,11 @@
+<xas-promo-banner [banners]="banners" />
+
+<xas-category-nav [categories]="categories" />
+
+<xas-featured-products
+  [products]="products()"
+  (addedToCart)="addToCart($event)"
+  (removedFromCart)="removeFromCart($event)"
+/>
+
+<xas-promo-codes-display [promoCodes]="promoCodes" />
