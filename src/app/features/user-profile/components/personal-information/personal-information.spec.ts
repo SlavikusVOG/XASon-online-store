@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PersonalInformation, User } from './personal-information';
+import { User } from '@models/features/user-profile';
+import { PersonalInformation } from './personal-information';
 
 describe('PersonalInformation', () => {
   let component: PersonalInformation;
