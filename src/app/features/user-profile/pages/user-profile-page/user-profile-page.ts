@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
+import { PersonalInformation } from '@features/user-profile/components';
 import { User } from '@models/features/user-profile';
-import { PersonalInformation } from '@shared/components';
 
 @Component({
   selector: 'xas-user-profile-page',
