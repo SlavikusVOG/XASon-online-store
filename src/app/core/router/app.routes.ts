@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { AuthLayout, MainLayout } from '@core/layouts';
 import { PAGES } from '@core/router/pages.const';
-import { authGuard, redirectIfAuthGuard } from '@core/router/auth.guard';
+import { authGuard, redirectIfAuthGuard } from '@features/authentication/guards';
 
 export const routes: Routes = [
   {
