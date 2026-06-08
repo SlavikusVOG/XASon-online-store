@@ -1,0 +1,32 @@
+# Sprint 2: Routing & Signals (@angular/router, @angular/core)
+
+- **What was done:**
+  - finished the cart page: renamed basket components to cart, implemented cart and cart-item UI, added mock data for money types, fixed cartItems signal type — [PR #23](https://github.com/SlavikusVOG/XASon-online-store/pull/23)
+  - configured environments and Angular build (env variables, file replacements) — [PR #26](https://github.com/SlavikusVOG/XASon-online-store/pull/26)
+  - created core services: local storage, credentials, anonymous session, customer session
+  - connected the app to Commercetools API: anonymous access token, refresh token, cookies, customer login and registration — [PR #29](https://github.com/SlavikusVOG/XASon-online-store/pull/29)
+  - added HTTP auth helpers, request types, and customer token response types
+  - wired login and registration pages to customer session service
+  - added a time-based ID utility for anonymous session tracking
+  - improved component tests and removed unused test files
+  - documented deployment steps in README
+- **Problems:**
+  - Commercetools OAuth did not work — wrong scopes and authUrl in environment files
+    - **Solution:** corrected scopes, authUrl, and related URLs in `environment.ts` and `environment.development.ts`
+  - development environment was incomplete and API calls failed locally
+    - **Solution:** extended `environment.development.ts` with the missing configuration
+  - inconsistent naming (basket vs cart) across components and routes
+    - **Solution:** renamed basket and basket-item to cart and cart-item
+  - wrong TypeScript type on cartItems signal after refactoring
+    - **Solution:** fixed the signal type definition
+- **What I learned:**:
+  - Commercetools auth flow: anonymous session first, then customer sign-up/sign-in on top of it
+  - how to send form-urlencoded customer credentials with a Bearer token from an anonymous session
+  - environment configuration in Angular (file replacements, local storage keys per env)
+  - structuring auth as separate services (credentials, anonymous session, customer session)
+  - working with generated API service types and custom HTTP headers
+- **Plans in Sprint 3:**
+  - Configure authorization
+  - finish remaining page components (user profile, login, registration)
+  - continue studying Signals, functional guards, and state management (NgRx Signal Store)
+- **Time spent:** ~35 hours

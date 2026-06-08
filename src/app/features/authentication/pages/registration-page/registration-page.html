@@ -1,3 +1,4 @@
 <div class="container">
-  <xas-registration-form />
+  <xas-registration-form (register)="onRegister($event)" />
+  <p>Have an account? <a routerLink="/login">Login</a></p>
 </div>

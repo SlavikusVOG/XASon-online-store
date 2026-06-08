@@ -1,0 +1,13 @@
+<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+  @for (field of fields; track field.label) {
+    <xas-reactive-form-input
+      [inputLabel]="field.label"
+      [incomingInputType]="field.type"
+      [inputId]="field.label"
+      [control]="field.control"
+      [errorMessage]="field.control.errors?.['required'] ? field.errorMessage : ''"
+      [inputPlaceholder]="field.placeholder"
+    />
+  }
+  <button type="submit">Register</button>
+</form>

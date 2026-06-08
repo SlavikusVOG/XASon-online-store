@@ -1,4 +1,4 @@
-import { Product } from '../types/features/catalog/product.types';
+import { Product } from '../models/features/catalog/product.types';
 
 export const catalogProducts: Product[] = [
   {
