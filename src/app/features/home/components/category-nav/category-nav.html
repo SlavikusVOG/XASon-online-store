@@ -4,7 +4,7 @@
   <div class="categories__grid">
     @for (category of categories(); track category.id) {
       <a
-        [routerLink]="['/catalog']"
+        [routerLink]="[PAGES.CATALOG.link]"
         [queryParams]="{ category: category.slug }"
         class="categories__card"
       >

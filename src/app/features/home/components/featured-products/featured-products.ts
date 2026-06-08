@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { PAGES } from '@core/router/pages.const';
+import { ProductCard } from '@features/catalog/components';
 import { Product } from '@models/features/catalog';
-import { ProductCard } from '../../../catalog/components/product-card/product-card';
 
 @Component({
   selector: 'xas-featured-products',
@@ -11,6 +12,8 @@ import { ProductCard } from '../../../catalog/components/product-card/product-ca
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeaturedProducts {
+  readonly PAGES = PAGES;
+
   readonly products = input.required<Product[]>();
 
   readonly addedToCart = output<Product>();
