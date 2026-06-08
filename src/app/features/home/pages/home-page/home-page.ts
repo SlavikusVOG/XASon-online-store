@@ -1,12 +1,14 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { TuiSkeleton } from '@taiga-ui/kit/directives';
-import { CatalogService } from '../../../catalog/state/catalog.service';
-import { Product } from '../../../../types/features/catalog/product.types';
+import { CatalogStore } from '@features/catalog/store';
+import { Product } from '@models/features/catalog';
 import { banners, categories, promoCodes } from '../../../../mocks/main.mocks';
-import { PromoBanner } from '../../components/promo-banner/promo-banner';
-import { CategoryNav } from '../../components/category-nav/category-nav';
-import { FeaturedProducts } from '../../components/featured-products/featured-products';
-import { PromoCodesDisplay } from '../../components/promo-codes-display/promo-codes-display';
+import {
+  CategoryNav,
+  FeaturedProducts,
+  PromoBanner,
+  PromoCodesDisplay,
+} from '@features/home/components';
 
 @Component({
   selector: 'xas-home-page',
@@ -15,19 +17,23 @@ import { PromoCodesDisplay } from '../../components/promo-codes-display/promo-co
   styleUrl: './home-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomePage {
-  private readonly catalogService = inject(CatalogService);
+export class HomePage implements OnInit {
+  private readonly catalogStore = inject(CatalogStore);
 
   readonly banners = banners;
   readonly categories = categories;
   readonly promoCodes = promoCodes;
-  readonly products = this.catalogService.products.asReadonly();
+  readonly products = this.catalogStore.products;
+
+  ngOnInit(): void {
+    this.catalogStore.loadProducts();
+  }
 
   addToCart(product: Product): void {
-    this.catalogService.addToCart(product);
+    this.catalogStore.addToCart(product);
   }
 
   removeFromCart(product: Product): void {
-    this.catalogService.removeFromCart(product);
+    this.catalogStore.removeFromCart(product);
   }
 }

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Product } from '../../../../types/features/catalog/product.types';
+import { Product } from '@models/features/catalog';
 import { ProductCard } from '../../../catalog/components/product-card/product-card';
 
 @Component({

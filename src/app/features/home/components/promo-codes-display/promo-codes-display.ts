@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { PromoCode } from '../../../../types/features/home/promo.types';
+import { PromoCode } from '@models/features/home';
 
 @Component({
   selector: 'xas-promo-codes-display',

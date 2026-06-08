@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Banner } from '../../../../types/features/home/promo.types';
+import { Banner } from '@models/features/home';
 
 @Component({
   selector: 'xas-promo-banner',

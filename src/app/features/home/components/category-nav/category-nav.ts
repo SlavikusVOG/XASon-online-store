@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Category } from '../../../../types/features/home/category.types';
+import { Category } from '@models/features/home';
 
 @Component({
   selector: 'xas-category-nav',
