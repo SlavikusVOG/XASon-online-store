@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { AuthLayout, MainLayout } from '@core/layouts';
 import { PAGES } from '@core/router/pages.const';
+import { authGuard, redirectIfAuthGuard } from '@core/router/auth.guard';
 
 export const routes: Routes = [
   {
@@ -9,10 +10,12 @@ export const routes: Routes = [
     loadChildren: () => [
       {
         path: PAGES.LOGIN.name,
+        canActivate: [redirectIfAuthGuard],
         loadChildren: () => import('@features/authentication/routes').then((r) => r.loginRoutes),
       },
       {
         path: PAGES.REGISTER.name,
+        canActivate: [redirectIfAuthGuard],
         loadChildren: () => import('@features/authentication/routes').then((r) => r.registerRoutes),
       },
     ],
@@ -31,6 +34,7 @@ export const routes: Routes = [
       },
       {
         path: PAGES.PROFILE.name,
+        canActivate: [authGuard],
         loadChildren: () =>
           import('@features/user-profile/routes').then((r) => r.userProfileRoutes),
       },
