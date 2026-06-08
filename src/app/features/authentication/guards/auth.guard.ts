@@ -19,7 +19,7 @@ export const redirectIfAuthGuard: CanActivateFn = () => {
   const router = inject(Router);
 
   if (authService.isAuthenticated()) {
-    return router.parseUrl(PAGES.CATALOG.link); // TODO: redirect to main page
+    return router.parseUrl(PAGES.HOME.link);
   }
 
   return true;
