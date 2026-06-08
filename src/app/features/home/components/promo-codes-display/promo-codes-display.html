@@ -1,0 +1,17 @@
+@if (promoCodes().length > 0) {
+  <section class="promo-codes">
+    <h2 class="promo-codes__title">Active Promo Codes</h2>
+
+    <div class="promo-codes__list">
+      @for (promo of promoCodes(); track promo.id) {
+        <div class="promo-codes__card">
+          <div class="promo-codes__code">{{ promo.code }}</div>
+          <div class="promo-codes__info">
+            <span class="promo-codes__discount">{{ promo.discount }}</span>
+            <span class="promo-codes__description">{{ promo.description }}</span>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+}
