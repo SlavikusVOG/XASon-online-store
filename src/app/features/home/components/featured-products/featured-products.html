@@ -5,7 +5,8 @@
   </div>
 
   <div class="featured__grid">
-    @for (product of products(); track product.id) {
+    <!-- TODO: Replace with actual product cards -->
+    @for (product of products().slice(0, 4); track product.id) {
       <xas-product-card
         [product]="product"
         (addedToCart)="addToCart($event)"

@@ -2,49 +2,10 @@
 
 <xas-category-nav [categories]="categories" />
 
-@defer (on viewport; prefetch on idle) {
-  <xas-featured-products
-    [products]="products()"
-    (addedToCart)="addToCart($event)"
-    (removedFromCart)="removeFromCart($event)"
-  />
-} @placeholder {
-  <div class="skeleton-featured">
-    <div class="skeleton-featured__header">
-      <div [tuiSkeleton]="true" class="skeleton-featured__title"></div>
-      <div [tuiSkeleton]="true" class="skeleton-featured__view-all"></div>
-    </div>
-    <div class="skeleton-featured__grid">
-      @for (item of [1, 2, 3, 4, 5, 6]; track item) {
-        <div class="skeleton-featured__card">
-          <div [tuiSkeleton]="true" class="skeleton-featured__card-image"></div>
-          <div [tuiSkeleton]="true" class="skeleton-featured__card-name"></div>
-          <div [tuiSkeleton]="true" class="skeleton-featured__card-desc"></div>
-          <div class="skeleton-featured__card-actions">
-            <div [tuiSkeleton]="true" class="skeleton-featured__card-btn"></div>
-            <div [tuiSkeleton]="true" class="skeleton-featured__card-btn"></div>
-          </div>
-        </div>
-      }
-    </div>
-  </div>
-}
+<xas-featured-products
+  [products]="products()"
+  (addedToCart)="addToCart($event)"
+  (removedFromCart)="removeFromCart($event)"
+/>
 
-@defer (on viewport; prefetch on idle) {
-  <xas-promo-codes-display [promoCodes]="promoCodes" />
-} @placeholder {
-  <div class="skeleton-promo">
-    <div [tuiSkeleton]="true" class="skeleton-promo__title"></div>
-    <div class="skeleton-promo__list">
-      @for (item of [1, 2, 3]; track item) {
-        <div class="skeleton-promo__card">
-          <div [tuiSkeleton]="true" class="skeleton-promo__code"></div>
-          <div class="skeleton-promo__info">
-            <div [tuiSkeleton]="true" class="skeleton-promo__discount"></div>
-            <div [tuiSkeleton]="true" class="skeleton-promo__description"></div>
-          </div>
-        </div>
-      }
-    </div>
-  </div>
-}
+<xas-promo-codes-display [promoCodes]="promoCodes" />

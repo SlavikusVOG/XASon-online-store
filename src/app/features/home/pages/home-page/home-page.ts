@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { TuiSkeleton } from '@taiga-ui/kit/directives';
 import { CatalogStore } from '@features/catalog/store';
 import { Product } from '@models/features/catalog';
 import { banners, categories, promoCodes } from '../../../../mocks/main.mocks';
@@ -12,7 +11,7 @@ import {
 
 @Component({
   selector: 'xas-home-page',
-  imports: [PromoBanner, CategoryNav, FeaturedProducts, PromoCodesDisplay, TuiSkeleton],
+  imports: [PromoBanner, CategoryNav, FeaturedProducts, PromoCodesDisplay],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
