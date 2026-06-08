@@ -1,0 +1,17 @@
+@if (banners().length > 0) {
+  <section class="banner">
+    @for (banner of banners(); track banner.id) {
+      <a [routerLink]="banner.link" class="banner__slide">
+        <div class="banner__content">
+          <h2 class="banner__title">{{ banner.title }}</h2>
+          <p class="banner__subtitle">{{ banner.subtitle }}</p>
+          <span class="banner__cta">Shop Now →</span>
+        </div>
+
+        @if (banner.image) {
+          <img [src]="banner.image" [alt]="banner.title" class="banner__image" />
+        }
+      </a>
+    }
+  </section>
+}

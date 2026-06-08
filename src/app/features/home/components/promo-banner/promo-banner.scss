@@ -1,0 +1,48 @@
+.banner {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 0;
+
+  &__slide {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 48px;
+    border-radius: 16px;
+    text-decoration: none;
+    min-height: 200px;
+    color: #000;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 60%;
+  }
+
+  &__title {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  &__subtitle {
+    font-size: 16px;
+    margin: 0;
+    opacity: 0.9;
+  }
+
+  &__cta {
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 8px;
+  }
+
+  &__image {
+    max-width: 200px;
+    max-height: 160px;
+    object-fit: contain;
+  }
+}
