@@ -1,10 +1,11 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, ChangeDetectionStrategy } from '@angular/core';
 import { CartModel, LineItem } from '@models/features/cart';
 
 @Component({
   selector: 'xas-cart',
   imports: [],
   templateUrl: './cart.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './cart.scss',
 })
 export class Cart {

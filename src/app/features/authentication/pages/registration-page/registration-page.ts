@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@core/auth';
 import { RegistrationForm } from '@features/authentication/components';
@@ -8,6 +8,7 @@ import { RegisterCredentials } from '@models/features/authentication';
   selector: 'xas-registration-page',
   imports: [RegistrationForm, RouterLink],
   templateUrl: './registration-page.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './registration-page.scss',
 })
 export class RegistrationPage {

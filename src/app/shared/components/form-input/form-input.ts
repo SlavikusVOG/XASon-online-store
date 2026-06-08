@@ -1,10 +1,11 @@
-import { Component, input, OnInit } from '@angular/core';
+import { Component, input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Field, FormField } from '@angular/forms/signals';
 
 @Component({
   selector: 'xas-form-input',
   imports: [FormField],
   templateUrl: './form-input.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './form-input.scss',
 })
 export class FormInput implements OnInit {
