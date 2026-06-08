@@ -9,4 +9,6 @@ export const PAGES = {
   CART: createPage(['cart']),
 
   PROFILE: createPage(['profile']),
+
+  HOME: createPage(['']),
 } as const;

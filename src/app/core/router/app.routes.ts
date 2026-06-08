@@ -22,6 +22,10 @@ export const routes: Routes = [
     component: MainLayout,
     loadChildren: () => [
       {
+        path: PAGES.HOME.name,
+        loadChildren: () => import('@features/home/routes').then((r) => r.homeRoutes),
+      },
+      {
         path: PAGES.CART.name,
         loadChildren: () => import('@features/cart/routes').then((r) => r.cartRoutes),
       },
