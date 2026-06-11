@@ -1,11 +1,10 @@
-import { Component, input, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'xas-reactive-form-input',
   imports: [ReactiveFormsModule],
   templateUrl: './reactive-form-input.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './reactive-form-input.scss',
 })
 export class ReactiveFormInput implements OnInit {

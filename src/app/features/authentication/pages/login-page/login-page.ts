@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { LoginForm } from '@features/authentication/components';
 import { LoginCredentials } from '@models/features/authentication';
 
@@ -6,7 +6,6 @@ import { LoginCredentials } from '@models/features/authentication';
   selector: 'xas-login-page',
   imports: [LoginForm],
   templateUrl: './login-page.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './login-page.scss',
 })
 export class LoginPage {

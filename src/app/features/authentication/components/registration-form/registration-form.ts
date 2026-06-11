@@ -1,4 +1,4 @@
-import { Component, output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RegisterCredentials } from '@models/features/authentication';
 import { ReactiveFormInput } from '@shared/components/reactive-form-input/reactive-form-input';
@@ -7,7 +7,6 @@ import { ReactiveFormInput } from '@shared/components/reactive-form-input/reacti
   selector: 'xas-registration-form',
   imports: [ReactiveFormsModule, ReactiveFormInput],
   templateUrl: './registration-form.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './registration-form.scss',
 })
 export class RegistrationForm {

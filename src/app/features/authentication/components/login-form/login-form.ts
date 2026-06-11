@@ -1,4 +1,4 @@
-import { Component, output, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, output, signal } from '@angular/core';
 import { form } from '@angular/forms/signals';
 import { LoginCredentials } from '@models/features/authentication';
 import { FormInput } from '@shared/components/form-input/form-input';
@@ -7,7 +7,6 @@ import { FormInput } from '@shared/components/form-input/form-input';
   selector: 'xas-login-form',
   imports: [FormInput],
   templateUrl: './login-form.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './login-form.scss',
 })
 export class LoginForm {

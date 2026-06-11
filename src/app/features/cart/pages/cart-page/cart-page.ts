@@ -1,11 +1,10 @@
-import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CartModel } from '@models/features/cart';
 
 @Component({
   selector: 'xas-cart-page',
   imports: [],
   templateUrl: './cart-page.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './cart-page.scss',
 })
 export class CartPage {
