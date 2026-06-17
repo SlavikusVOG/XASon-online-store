@@ -21,25 +21,19 @@ export class CustomerSessionService {
   );
 
   constructor() {
-    effect(
-      () => {
-        this.localStorageService.setValue(
-          environment.LOCAL_STORAGE_KEYS.accessToken,
-          this.accessToken(),
-        );
-      },
-      { allowSignalWrites: true },
-    );
+    effect(() => {
+      this.localStorageService.setValue(
+        environment.LOCAL_STORAGE_KEYS.accessToken,
+        this.accessToken(),
+      );
+    });
 
-    effect(
-      () => {
-        this.localStorageService.setValue(
-          environment.LOCAL_STORAGE_KEYS.refreshToken,
-          this.refreshToken(),
-        );
-      },
-      { allowSignalWrites: true },
-    );
+    effect(() => {
+      this.localStorageService.setValue(
+        environment.LOCAL_STORAGE_KEYS.refreshToken,
+        this.refreshToken(),
+      );
+    });
   }
 
   fetchAccessToken(credentials: LoginCredentials) {
@@ -105,6 +99,6 @@ export class CustomerSessionService {
   }
 
   getAccessToken() {
-    return this.accessToken() ?? null;
+    return this.accessToken();
   }
 }
