@@ -3,6 +3,7 @@ import { ApiService, getBasicAuthHeader, PostRequest } from '@core/http';
 import { environment } from '@environments/environment';
 import { AppCredentialsAccessTokenPostQueries } from '@models/http';
 
+// TODO: remove service?
 @Injectable({
   providedIn: 'root',
 })
@@ -24,6 +25,6 @@ export class AppCredentialsService {
   }
 
   public registerClient() {
-    // TODO: remove module?
+    /* empty */
   }
 }

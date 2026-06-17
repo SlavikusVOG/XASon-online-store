@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal, effect } from '@angular/core';
 import { ApiService, getBasicAuthHeader, getBearerAuthHeader } from '@core/http';
 import { LocalStorage } from '@core/local-storage';
 import { environment } from '@environments/environment';
@@ -13,12 +13,28 @@ export class CustomerSessionService {
   private readonly localStorageService = inject(LocalStorage);
   private readonly apiService = inject(ApiService);
   private readonly anonymousSessionService = inject(AnonymousSessionService);
-  private accessToken = this.localStorageService.getValue<string>(
-    environment.LOCAL_STORAGE_KEYS.accessToken,
+  private accessToken = signal<string | null>(
+    this.localStorageService.getValue<string>(environment.LOCAL_STORAGE_KEYS.accessToken),
   );
-  private refreshToken = this.localStorageService.getValue<string>(
-    environment.LOCAL_STORAGE_KEYS.refreshToken,
+  private refreshToken = signal<string | null>(
+    this.localStorageService.getValue<string>(environment.LOCAL_STORAGE_KEYS.refreshToken),
   );
+
+  constructor() {
+    effect(() => {
+      this.localStorageService.setValue(
+        environment.LOCAL_STORAGE_KEYS.accessToken,
+        this.accessToken(),
+      );
+    });
+
+    effect(() => {
+      this.localStorageService.setValue(
+        environment.LOCAL_STORAGE_KEYS.refreshToken,
+        this.refreshToken(),
+      );
+    });
+  }
 
   fetchAccessToken(credentials: LoginCredentials) {
     return this.apiService.customersTokenPost({
@@ -57,10 +73,10 @@ export class CustomerSessionService {
   }
 
   logout() {
-    this.localStorageService.removeValue(environment.LOCAL_STORAGE_KEYS.accessToken);
-    this.localStorageService.removeValue(environment.LOCAL_STORAGE_KEYS.refreshToken);
-    this.accessToken = null;
-    this.refreshToken = null;
+    // this.localStorageService.removeValue(environment.LOCAL_STORAGE_KEYS.accessToken);
+    // this.localStorageService.removeValue(environment.LOCAL_STORAGE_KEYS.refreshToken);
+    this.accessToken.set(null);
+    this.refreshToken.set(null);
   }
 
   refreshAccessToken() {
@@ -68,7 +84,7 @@ export class CustomerSessionService {
       .refreshTokenPost({
         queries: {
           grant_type: 'refresh_token',
-          refresh_token: this.refreshToken ?? '',
+          refresh_token: this.refreshToken() ?? '',
         },
         headers: {
           Authorization: getBasicAuthHeader(),
@@ -77,17 +93,12 @@ export class CustomerSessionService {
       })
       .subscribe((response) => {
         const { access_token, refresh_token } = response;
-        this.localStorageService.setValue(environment.LOCAL_STORAGE_KEYS.accessToken, access_token);
-        this.localStorageService.setValue(
-          environment.LOCAL_STORAGE_KEYS.refreshToken,
-          refresh_token,
-        );
-        this.accessToken = access_token;
-        this.refreshToken = refresh_token;
+        this.accessToken.set(access_token);
+        this.refreshToken.set(refresh_token);
       });
   }
 
   getAccessToken() {
-    return this.accessToken;
+    return this.accessToken();
   }
 }
