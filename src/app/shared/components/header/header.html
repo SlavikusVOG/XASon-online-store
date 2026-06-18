@@ -1,38 +1,36 @@
 <header>
-  <div class="header__container">
+  <div class="wrapper header__container">
     <div class="header__left">
-      <a routerLink="/" class="header__logo">XASon Store</a>
-      <nav class="header__nav">
-        <a routerLink="/catalog" class="header__nav-link">Catalog</a>
-        <a routerLink="/about" class="header__nav-link">About Us</a>
-      </nav>
+      <h1 class="header__title" routerLink="/"><span class="purple">XAS</span>on</h1>
+
+      <!-- я думаю это сделать кнопкой, чтобы при нажатии на неё поднималась модалка -->
+      <!-- и было примерно как на каталоге онлайнера -->
+      <div class="header__search">
+        <tui-icon icon="@tui.search" />
+        Search
+      </div>
     </div>
 
-    <input
-      type="text"
-      placeholder="Search..."
-      class="header__search"
-      aria-label="Search products"
-      (input)="onSearch($event)"
-    />
+    <div class="header__right">
+      <div class="header__link" routerLink="/home" routerLinkActive="header__link-active">
+        <tui-icon icon="@tui.house" />
+        Home
+      </div>
+      <div class="header__link" routerLink="/catalog" routerLinkActive="header__link-active">
+        <tui-icon icon="@tui.package" />
+        Catalog
+      </div>
+      <div class="header__link" routerLink="/about-us" routerLinkActive="header__link-active">
+        <tui-icon icon="@tui.users" />
+        About us
+      </div>
 
-    <div class="header__nav">
-      <a routerLink="/cart" class="header__cart" aria-label="Cart">
-        &#x1F6D2;
-        @if (cartItemCount() > 0) {
-          <span class="header__cart-badge">{{ cartItemCount() }}</span>
-        }
-      </a>
-
-      @if (isAuthenticated()) {
-        <a routerLink="/profile" class="header__nav-link">Profile</a>
-        <button class="header__nav-link header__nav-link--button" (click)="onLogout()">
-          Logout
-        </button>
-      } @else {
-        <a routerLink="/login" class="header__nav-link">Login</a>
-        <a routerLink="/register" class="header__nav-link">Register</a>
-      }
+      <!-- Здесь сделать открытие по клику дропдауна со списком -->
+      <!-- Залогинены - аккаунт, корзина -->
+      <!-- Незалогинены - войти (редирект на авторизацию), корзина -->
+      <div class="header__profile">
+        <tui-icon icon="@tui.user-round" />
+      </div>
     </div>
   </div>
 </header>
