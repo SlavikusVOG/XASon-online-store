@@ -1,7 +1,9 @@
 <header>
   <div class="wrapper header__container">
     <div class="header__left">
-      <h1 class="header__title" routerLink="/"><span class="purple">XAS</span>on</h1>
+      <a class="header__title" routerLink="/">
+        <h1><span class="purple">XAS</span>on</h1>
+      </a>
 
       <!-- я думаю это сделать кнопкой, чтобы при нажатии на неё поднималась модалка -->
       <!-- и было примерно как на каталоге онлайнера -->
@@ -12,18 +14,18 @@
     </div>
 
     <div class="header__right">
-      <div class="header__link" routerLink="/home" routerLinkActive="header__link-active">
+      <a class="header__link" routerLink="/home" routerLinkActive="header__link-active">
         <tui-icon icon="@tui.house" />
         Home
-      </div>
-      <div class="header__link" routerLink="/catalog" routerLinkActive="header__link-active">
+      </a>
+      <a class="header__link" routerLink="/catalog" routerLinkActive="header__link-active">
         <tui-icon icon="@tui.package" />
         Catalog
-      </div>
-      <div class="header__link" routerLink="/about-us" routerLinkActive="header__link-active">
+      </a>
+      <a class="header__link" routerLink="/about-us" routerLinkActive="header__link-active">
         <tui-icon icon="@tui.users" />
         About us
-      </div>
+      </a>
 
       <!-- Здесь сделать открытие по клику дропдауна со списком -->
       <!-- Залогинены - аккаунт, корзина -->

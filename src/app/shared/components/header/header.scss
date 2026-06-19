@@ -17,19 +17,24 @@
   }
 
   &__title {
-    cursor: pointer;
-    font-size: 36px;
+    text-decoration: none;
+    color: var(--tui-text-primary);
 
-    margin: 0;
-    padding: 0;
+    h1 {
+      cursor: pointer;
+      font-size: 36px;
 
-    span {
-      transition: 0.3s;
-    }
+      margin: 0;
+      padding: 0;
 
-    &:hover {
-      span.purple {
-        color: blueviolet;
+      span {
+        transition: 0.3s;
+      }
+
+      &:hover {
+        span.purple {
+          color: blueviolet;
+        }
       }
     }
   }
@@ -55,13 +60,19 @@
   &__right {
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: 12px;
   }
 
   &__link {
     display: flex;
     align-items: center;
     gap: 8px;
+
+    padding: 6px 10px;
+    border-radius: 8px;
+
+    text-decoration: none;
+    color: var(--tui-text-primary);
 
     font-size: 20px;
 
@@ -70,11 +81,15 @@
     transition: 0.3s;
 
     &:hover {
-      color: blueviolet;
+      background-color: rgba(138, 43, 226, 0.3);
     }
 
     &-active {
-      color: blue;
+      background-color: rgba(138, 43, 226, 0.8);
+
+      &:hover {
+        background-color: rgba(138, 43, 226, 0.8);
+      }
     }
   }
 
