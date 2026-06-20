@@ -1,9 +1,10 @@
 import { Component, input, output } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { TuiIcon } from '@taiga-ui/core';
 
 @Component({
   selector: 'xas-header',
-  imports: [RouterLink],
+  imports: [RouterLink, TuiIcon, RouterLinkActive],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })

@@ -11,4 +11,5 @@ export const PAGES = {
   PROFILE: createPage(['profile']),
 
   HOME: createPage(['']),
+  HOME_FULL: createPage(['home']),
 } as const;
