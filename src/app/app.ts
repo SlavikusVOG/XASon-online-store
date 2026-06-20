@@ -1,6 +1,7 @@
-import { TuiRoot } from '@taiga-ui/core';
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ThemeService } from '@core/theme';
+import { TuiRoot } from '@taiga-ui/core';
 
 @Component({
   selector: 'xas-root',
@@ -9,5 +10,11 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.scss',
 })
 export class App {
+  private readonly themeService = inject(ThemeService);
+
   protected readonly title = signal('XASon-online-store');
+
+  constructor() {
+    this.themeService.initTheme();
+  }
 }
