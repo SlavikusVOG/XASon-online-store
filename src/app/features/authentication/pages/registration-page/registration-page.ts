@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '@core/auth';
 import { RegistrationForm } from '@features/authentication/components';
 import { RegisterCredentials } from '@models/features/authentication';
 import { AUTH_SERVICE_TOKEN } from '../../../../tokens';
@@ -10,7 +9,6 @@ import { AUTH_SERVICE_TOKEN } from '../../../../tokens';
   imports: [RegistrationForm, RouterLink],
   templateUrl: './registration-page.html',
   styleUrl: './registration-page.scss',
-  providers: [{ provide: AUTH_SERVICE_TOKEN, useClass: AuthService }],
 })
 export class RegistrationPage {
   private readonly authService = inject(AUTH_SERVICE_TOKEN);
