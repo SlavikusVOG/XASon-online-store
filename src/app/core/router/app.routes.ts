@@ -31,6 +31,10 @@ export const routes: Routes = [
         loadChildren: () =>
           import('@features/user-profile/routes').then((r) => r.userProfileRoutes),
       },
+      {
+        path: PAGES.ABOUT_US.name,
+        loadChildren: () => import('@features/about-us/routes').then((r) => r.aboutUsRoutes),
+      },
     ],
   },
   {
