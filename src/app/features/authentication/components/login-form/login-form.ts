@@ -1,11 +1,11 @@
 import { Component, output, signal } from '@angular/core';
 import { form } from '@angular/forms/signals';
 import { LoginCredentials } from '@models/features/authentication';
-import { FormInput } from '@shared/components/form-input/form-input';
+import { SignalFormInput } from '@shared/components/signal-form/form-input/form-input';
 
 @Component({
   selector: 'xas-login-form',
-  imports: [FormInput],
+  imports: [SignalFormInput],
   templateUrl: './login-form.html',
   styleUrl: './login-form.scss',
 })

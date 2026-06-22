@@ -1,4 +1,5 @@
 <div class="container">
+  <a [routerLink]="PAGES.HOME.link" class="back-link">Back to Home</a>
   <xas-registration-form (register)="onRegister($event)" />
   <p>Have an account? <a routerLink="/login">Login</a></p>
 </div>
