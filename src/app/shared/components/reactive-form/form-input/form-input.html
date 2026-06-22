@@ -2,6 +2,7 @@
   <label for="{{ inputId() }}">{{ inputLabel() }}</label>
   @if (inputType !== 'image') {
     <input
+      xasHighlightIfEmpty
       [type]="inputType"
       [placeholder]="inputPlaceholder()"
       [id]="inputId()"
@@ -10,6 +11,7 @@
     />
   } @else {
     <input
+      xasHighlightIfEmpty
       [type]="inputType"
       [placeholder]="inputPlaceholder()"
       [id]="inputId()"
