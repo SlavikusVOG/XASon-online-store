@@ -1,18 +1,19 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { TuiIcon } from '@taiga-ui/core';
+import { AuthDirective } from '@shared/directives';
+import { TuiIcon, TuiDropdown } from '@taiga-ui/core';
 
 @Component({
   selector: 'xas-header',
-  imports: [RouterLink, TuiIcon, RouterLinkActive],
+  imports: [RouterLink, TuiIcon, RouterLinkActive, AuthDirective, TuiDropdown],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
 export class Header {
-  readonly isAuthenticated = input<boolean>(false);
   readonly cartItemCount = input<number>(0);
   readonly searchQuery = output<string>();
   readonly logoutRequested = output<void>();
+  readonly isProfileDropdownOpen = signal(false);
 
   onSearch(event: Event): void {
     const target = event.target;
