@@ -4,10 +4,10 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'xas-reactive-form-input',
   imports: [ReactiveFormsModule],
-  templateUrl: './reactive-form-input.html',
-  styleUrl: './reactive-form-input.scss',
+  templateUrl: './form-input.html',
+  styleUrl: './form-input.scss',
 })
-export class ReactiveFormInput implements OnInit {
+export class FormInput implements OnInit {
   inputLabel = input.required<string>();
   incomingInputType = input<string>('text');
   inputPlaceholder = input<string>('');
