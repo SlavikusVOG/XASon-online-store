@@ -13,7 +13,7 @@ import { AUTH_SERVICE_TOKEN } from '../../../../tokens';
   providers: [{ provide: AUTH_SERVICE_TOKEN, useClass: AuthService }],
 })
 export class RegistrationPage {
-  private readonly authService = inject(AuthService);
+  private readonly authService = inject(AUTH_SERVICE_TOKEN);
   private readonly router = inject(Router);
   onRegister(credentials: RegisterCredentials) {
     this.authService.register(credentials).subscribe((response) => {
