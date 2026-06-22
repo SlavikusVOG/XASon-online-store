@@ -2,13 +2,13 @@ import { LoginCredentials, RegisterCredentials } from '@models/features/authenti
 import { User } from '@models/features/user-profile';
 import { Observable, of } from 'rxjs';
 
-export type IAuthService = {
-  register(credentials: RegisterCredentials): Observable<User>;
-  login(credentials: LoginCredentials): Observable<User>;
-  isAuthenticated(): boolean;
-};
+export abstract class AuthServiceBase {
+  abstract register(credentials: RegisterCredentials): Observable<User>;
+  abstract login(credentials: LoginCredentials): Observable<User>;
+  abstract isAuthenticated(): boolean;
+}
 
-export class MockAuthService implements IAuthService {
+export class MockAuthService implements AuthServiceBase {
   register(
     credentials: RegisterCredentials = {
       email: 'john.doe@example.com',
