@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AuthService } from '@core/auth';
 import { LoginForm } from '@features/authentication/components';
 import { LoginCredentials } from '@models/features/authentication';
 
@@ -9,10 +10,11 @@ import { LoginCredentials } from '@models/features/authentication';
   styleUrl: './login-page.scss',
 })
 export class LoginPage {
+  private readonly authService = inject(AuthService);
   onLogin({ email, password }: LoginCredentials): void {
     if (!email || !password) {
       return;
     }
-    // TODO: call auth service
+    this.authService.login({ email, password });
   }
 }
