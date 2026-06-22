@@ -1,0 +1,39 @@
+# Sprint 3: Authentication & Backend
+
+- **What was done:**
+  - fixed deployment and updated the deploy link in README — [PR #54](https://github.com/SlavikusVOG/XASon-online-store/pull/54)
+  - upgraded the Angular application to v22 and updated dependencies with NgRx package overrides — [PR #48](https://github.com/SlavikusVOG/XASon-online-store/pull/48)
+  - refactored auth services to use signals for access and refresh tokens — [PR #49](https://github.com/SlavikusVOG/XASon-online-store/pull/49)
+  - configured Commercetools: added a client for SPA and a client for managing clients
+  - created a Backend for Frontend on NestJS: added endpoints and configured Commercetools client builders
+  - implemented login page styling and functionality, added a back-to-home link — [PR #62](https://github.com/SlavikusVOG/XASon-online-store/pull/62)
+  - reorganized shared form components into separate catalogs for signal forms and reactive forms
+  - added `highlight-if-empty` directive for empty-field inputs
+  - introduced `AUTH_SERVICE_TOKEN` with `useClass` provider, abstract auth base class, and `MockAuthService` for future tests
+  - updated TypeScript `module` setting from `preserve` to `ESNext` — [PR #57](https://github.com/SlavikusVOG/XASon-online-store/pull/57)
+- **Problems:**
+  - deployment link in README was outdated
+    - **Solution:** updated the Vercel deploy URL
+  - after upgrading to Angular v22, NgRx packages had version conflicts
+    - **Solution:** added package overrides in `package.json`
+  - `effect()` with `allowSignalWrites` option became deprecated
+    - **Solution:** removed the deprecated option from `customer-session.service.ts`
+  - form components were mixed together without a clear split between signal forms and reactive forms
+    - **Solution:** moved form components into separate catalogs and updated imports
+- **What I learned:**:
+  - how to provide services via injection tokens and swap implementations with `useClass`
+  - Angular v22 upgrade workflow and handling peer dependency conflicts
+  - signal-based token storage with `effect()` for syncing to local storage
+  - structuring a BFF layer in NestJS with Commercetools SDK client builders
+  - components lifecycle hooks and the order of their calling
+  - Smart Dumb principle on developing with Angular
+  - Deep dive into Directives, Dependency injection, Signals, Components
+- **Plans in Sprint 4:**
+  - add tests for backend
+  - configure authorization (functional guards, protected routes)
+  - configure Commercetools and fix scopes issues
+  - use Taiga UI for styling pages
+  - add 404 page
+  - finish remaining page components (user profile, registration)
+  - read Angular documentation on components, directives, signals, functional guards, HttpClient, RxJS, tests, and state management (NgRx Signal Store)
+- **Time spent:** ~60 hours
