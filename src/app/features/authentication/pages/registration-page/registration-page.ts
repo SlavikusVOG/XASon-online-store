@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '@core/auth';
+import { PAGES } from '@core/router/pages.const';
 import { RegistrationForm } from '@features/authentication/components';
 import { RegisterCredentials } from '@models/features/authentication';
+import { AUTH_SERVICE_TOKEN } from '../../../../tokens';
 
 @Component({
   selector: 'xas-registration-page',
@@ -11,7 +12,8 @@ import { RegisterCredentials } from '@models/features/authentication';
   styleUrl: './registration-page.scss',
 })
 export class RegistrationPage {
-  private readonly authService = inject(AuthService);
+  protected readonly PAGES = PAGES;
+  private readonly authService = inject(AUTH_SERVICE_TOKEN);
   private readonly router = inject(Router);
   onRegister(credentials: RegisterCredentials) {
     this.authService.register(credentials).subscribe((response) => {

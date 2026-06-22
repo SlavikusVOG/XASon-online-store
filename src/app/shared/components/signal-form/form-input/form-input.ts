@@ -1,13 +1,14 @@
 import { Component, input, OnInit } from '@angular/core';
 import { Field, FormField } from '@angular/forms/signals';
+import { HighlightIfEmptyDirective } from '@shared/directives';
 
 @Component({
   selector: 'xas-form-input',
-  imports: [FormField],
+  imports: [FormField, HighlightIfEmptyDirective],
   templateUrl: './form-input.html',
   styleUrl: './form-input.scss',
 })
-export class FormInput implements OnInit {
+export class SignalFormInput implements OnInit {
   inputLabel = input.required<string>();
   incomingType = input.required<string>();
   inputPlaceholder = input<string>('');

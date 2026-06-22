@@ -6,6 +6,22 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+    <script>
+      (function () {
+        const theme = JSON.parse(localStorage.getItem('xas-theme') || '"SYSTEM"');
+
+        const isDark =
+          theme === 'DARK' ||
+          (theme === 'SYSTEM' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+        if (isDark) {
+          document.documentElement.classList.add('dark-mode');
+        } else {
+          document.documentElement.classList.remove('dark-mode');
+        }
+      })();
+    </script>
   </head>
   <body>
     <xas-root></xas-root>

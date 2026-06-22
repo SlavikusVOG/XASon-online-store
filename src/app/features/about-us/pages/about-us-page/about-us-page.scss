@@ -1,0 +1,91 @@
+.hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 64px 0 56px;
+  margin-bottom: 48px;
+
+  &__title {
+    margin: 0 0 12px;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+  }
+
+  &__subtitle {
+    margin: 0;
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.6;
+    max-width: 560px;
+  }
+}
+
+.section {
+  padding-bottom: 48px;
+
+  &__header {
+    margin-bottom: 40px;
+    max-width: 720px;
+  }
+
+  &__title {
+    margin: 0 0 12px;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--tui-text-primary, #000);
+  }
+
+  &__description {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--tui-text-secondary, #666);
+  }
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 28px;
+}
+
+.rsschool-section {
+  display: flex;
+  justify-content: center;
+  padding: 20px 32px;
+  margin-bottom: 48px;
+  border-radius: 12px;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__logo {
+    display: block;
+    max-width: 60px;
+    height: auto;
+    flex-shrink: 0;
+  }
+
+  &__text {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--tui-text-secondary, #666);
+
+    a {
+      color: var(--tui-link, #526ed3);
+      text-decoration: none;
+      font-weight: 500;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

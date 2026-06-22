@@ -10,6 +10,11 @@ export const routes: Routes = [
     loadChildren: () => [
       {
         path: PAGES.HOME.name,
+        redirectTo: PAGES.HOME_FULL.link,
+        pathMatch: 'full',
+      },
+      {
+        path: PAGES.HOME_FULL.name,
         loadChildren: () => import('@features/home/routes').then((r) => r.homeRoutes),
       },
       {
@@ -25,6 +30,10 @@ export const routes: Routes = [
         canActivate: [authGuard],
         loadChildren: () =>
           import('@features/user-profile/routes').then((r) => r.userProfileRoutes),
+      },
+      {
+        path: PAGES.ABOUT_US.name,
+        loadChildren: () => import('@features/about-us/routes').then((r) => r.aboutUsRoutes),
       },
     ],
   },

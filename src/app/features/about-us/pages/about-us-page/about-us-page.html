@@ -1,0 +1,37 @@
+<section class="hero">
+  <div class="wrapper">
+    <h1 class="hero__title">About Us</h1>
+    <p class="hero__subtitle">
+      We are a team of frontend developers collaborating on the XASon online store project.
+    </p>
+  </div>
+</section>
+
+<section class="wrapper section">
+  <div class="section__header">
+    <h2 class="section__title">Meet the Team</h2>
+    <p class="section__description">
+      Our teamwork is built on clear communication, code reviews, pair programming, and regular
+      sprint planning. We use GitHub for version control, track tasks through issues, and hold daily
+      stand-ups to stay aligned. Every team member contributes to both architecture decisions and
+      feature development, ensuring shared ownership of the codebase.
+    </p>
+  </div>
+
+  <div class="team-grid">
+    @for (member of teamMembers; track member.id) {
+      <xas-team-member-card [member]="member" />
+    }
+  </div>
+</section>
+
+<section class="wrapper rsschool-section" tuiAppearance="floating">
+  <div class="rsschool-section__content">
+    <img src="/rsschool.png" alt="RS School" class="rsschool-section__logo" />
+    <p class="rsschool-section__text">
+      Educational project built during the
+      <a href="https://rs.school" target="_blank" rel="noopener noreferrer">RS School</a>
+      Angular course
+    </p>
+  </div>
+</section>

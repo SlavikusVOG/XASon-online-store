@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { LoginCredentials, RegisterCredentials } from '@models/features/authentication';
 import { CustomerSessionService } from './customer-session.service';
 
@@ -8,15 +8,15 @@ import { CustomerSessionService } from './customer-session.service';
 export class AuthService {
   private readonly customerSessionService = inject(CustomerSessionService);
 
-  private accessToken = this.customerSessionService.getAccessToken();
+  private accessToken = signal<string | null>(this.customerSessionService.getAccessToken());
 
   isAuthenticated() {
-    return this.accessToken !== null;
+    return this.accessToken() !== null;
   }
 
   login(credentials: LoginCredentials) {
     this.customerSessionService.login(credentials);
-    this.accessToken = this.customerSessionService.getAccessToken();
+    this.accessToken.set(this.customerSessionService.getAccessToken());
   }
 
   register(credentials: RegisterCredentials) {

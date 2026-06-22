@@ -1,7 +1,8 @@
 <div class="container">
-  <label for="{{ inputId() }}">{{ inputLabel() }}</label>
   @if (formField(); as field) {
+    <label for="{{ inputId() }}">{{ inputLabel() }}</label>
     <input
+      xasHighlightIfEmpty
       [formField]="field"
       [type]="inputType"
       [placeholder]="inputPlaceholder()"
