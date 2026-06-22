@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@core/auth';
+import { PAGES } from '@core/router/pages.const';
 import { RegistrationForm } from '@features/authentication/components';
 import { RegisterCredentials } from '@models/features/authentication';
 
@@ -11,6 +12,7 @@ import { RegisterCredentials } from '@models/features/authentication';
   styleUrl: './registration-page.scss',
 })
 export class RegistrationPage {
+  protected readonly PAGES = PAGES;
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   onRegister(credentials: RegisterCredentials) {

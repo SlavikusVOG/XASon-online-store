@@ -15,6 +15,12 @@
 
   input {
     width: 100%;
+
+    &.input-empty {
+      outline: 2px solid #e53935;
+      outline-offset: 1px;
+      background-color: #fff5f5;
+    }
   }
 
   .toggle-password-container {
