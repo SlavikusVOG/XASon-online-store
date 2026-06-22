@@ -1,11 +1,11 @@
 import { Component, model } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { User } from '@models/features/user-profile';
-import { FormInput } from '@shared/components/reactive-form/form-input/form-input';
+import { ReactiveFormInput } from '@shared/components/reactive-form/form-input/form-input';
 
 @Component({
   selector: 'xas-personal-information',
-  imports: [ReactiveFormsModule, FormInput],
+  imports: [ReactiveFormsModule, ReactiveFormInput],
   templateUrl: './personal-information.html',
   styleUrl: './personal-information.scss',
 })

@@ -1,11 +1,11 @@
 import { Component, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RegisterCredentials } from '@models/features/authentication';
-import { FormInput } from '@shared/components/reactive-form/form-input/form-input';
+import { ReactiveFormInput } from '@shared/components/reactive-form/form-input/form-input';
 
 @Component({
   selector: 'xas-registration-form',
-  imports: [ReactiveFormsModule, FormInput],
+  imports: [ReactiveFormsModule, ReactiveFormInput],
   templateUrl: './registration-form.html',
   styleUrl: './registration-form.scss',
 })

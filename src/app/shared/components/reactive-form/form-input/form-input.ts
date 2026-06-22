@@ -1,13 +1,14 @@
 import { Component, input, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { HighlightIfEmptyDirective } from '@shared/directives';
 
 @Component({
   selector: 'xas-reactive-form-input',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, HighlightIfEmptyDirective],
   templateUrl: './form-input.html',
   styleUrl: './form-input.scss',
 })
-export class FormInput implements OnInit {
+export class ReactiveFormInput implements OnInit {
   inputLabel = input.required<string>();
   incomingInputType = input<string>('text');
   inputPlaceholder = input<string>('');

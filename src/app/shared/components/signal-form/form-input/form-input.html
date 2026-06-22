@@ -1,1 +1,19 @@
-<p>form-input works!</p>
+<div class="container">
+  @if (formField(); as field) {
+    <label for="{{ inputId() }}">{{ inputLabel() }}</label>
+    <input
+      xasHighlightIfEmpty
+      [formField]="field"
+      [type]="inputType"
+      [placeholder]="inputPlaceholder()"
+      [id]="inputId()"
+    />
+  } @else {
+    <input [type]="inputType" [placeholder]="inputPlaceholder()" [id]="inputId()" />
+  }
+  @if (incomingType() === 'password') {
+    <div class="toggle-password-container">
+      <input type="checkbox" (change)="togglePasswordVisibility()" /> Show Password
+    </div>
+  }
+</div>
