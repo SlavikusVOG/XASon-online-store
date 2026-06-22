@@ -2,6 +2,7 @@ import { Component, input, output, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthDirective } from '@shared/directives';
 import { TuiIcon, TuiDropdown } from '@taiga-ui/core';
+import { PAGES } from '@core/router/pages.const';
 
 @Component({
   selector: 'xas-header',
@@ -10,6 +11,8 @@ import { TuiIcon, TuiDropdown } from '@taiga-ui/core';
   styleUrl: './header.scss',
 })
 export class Header {
+  protected readonly PAGES = PAGES;
+
   readonly cartItemCount = input<number>(0);
   readonly searchQuery = output<string>();
   readonly logoutRequested = output<void>();
