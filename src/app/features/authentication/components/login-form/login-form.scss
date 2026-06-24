@@ -1,0 +1,33 @@
+.login-title {
+  margin: 0;
+  padding: 0;
+}
+
+.register {
+  margin: 0;
+  padding: 0;
+
+  a {
+    text-decoration: none;
+
+    color: rgb(136, 136, 235);
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  margin: 16px 0;
+}
+
+.form-buttons {
+  display: flex;
+  // justify-content: flex-end;
+  gap: 8px;
+
+  button {
+    width: calc(50% - 4px);
+  }
+}
