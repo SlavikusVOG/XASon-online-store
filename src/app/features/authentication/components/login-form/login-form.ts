@@ -2,13 +2,13 @@ import { Component, output, signal } from '@angular/core';
 import { email, form, FormField, FormRoot, required } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
 import { PAGES } from '@core/router/pages.const';
-import { Input } from '@forms/signal';
+import { Input, PasswordInput } from '@forms/signal';
 import { LoginCredentials } from '@models/features/authentication';
 import { TuiButton } from '@taiga-ui/core';
 
 @Component({
   selector: 'xas-login-form',
-  imports: [FormRoot, Input, FormField, TuiButton, RouterLink],
+  imports: [FormRoot, Input, FormField, TuiButton, RouterLink, PasswordInput],
   templateUrl: './login-form.html',
   styleUrl: './login-form.scss',
 })

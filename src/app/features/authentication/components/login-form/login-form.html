@@ -4,7 +4,7 @@
 <form [formRoot]="loginForm">
   <xas-input [formField]="loginForm.email" label="Email" />
 
-  <xas-input [formField]="loginForm.password" label="Password" />
+  <xas-password-input [formField]="loginForm.password" label="Password" />
 
   <div class="form-buttons">
     <button tuiButton size="m" appearance="secondary" type="button" (click)="clearForm()">
