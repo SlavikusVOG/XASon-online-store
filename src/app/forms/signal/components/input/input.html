@@ -1,0 +1,20 @@
+<label tuiLabel class="input-label">
+  {{ label() }}
+  <tui-textfield tuiTextfieldSize="m">
+    <input
+      tuiInput
+      [value]="value()"
+      [invalid]="touched() && invalid()"
+      (input)="value.set($event.target.value)"
+      (blur)="touch.emit()"
+    />
+  </tui-textfield>
+</label>
+
+@if (touched() && invalid()) {
+  @let error = errors()[0];
+
+  @if (error) {
+    <div class="input-error">{{ error.message }}</div>
+  }
+}
