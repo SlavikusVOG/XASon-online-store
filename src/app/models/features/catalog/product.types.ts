@@ -39,7 +39,7 @@ export type ProductPagedQueryResponse = {
   offset: number;
   count: number;
   total: number;
-  results: Product[];
+  results: ProductDto[];
 };
 
 export type CatalogProductsGetQueries = {
@@ -47,7 +47,7 @@ export type CatalogProductsGetQueries = {
   offset: number;
 };
 
-export type ProductsDto = {
+export type ProductDto = {
   id: string;
   key: string;
   masterData: ProductCatalogData;
