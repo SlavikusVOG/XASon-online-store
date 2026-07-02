@@ -32,14 +32,6 @@ export class HighlightIfEmptyDirective implements OnInit {
   }
 
   ngOnInit(): void {
-    const control = this.ngControl?.control;
-    if (!control) {
-      return;
-    }
-
-    control.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-      this.updateEmptyState();
-    });
     this.updateEmptyState();
   }
 
