@@ -9,7 +9,7 @@ export class NetworkService {
 
   public readonly isOffline = this._isOffline.asReadonly();
 
-  public async init() {
+  public init() {
     this.window.addEventListener('offline', () => {
       this._isOffline.set(true);
     });

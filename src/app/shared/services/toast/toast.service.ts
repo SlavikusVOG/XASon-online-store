@@ -6,7 +6,7 @@ type ToastAppearance = 'info' | 'warning' | 'negative' | 'positive' | 'neutral';
 
 @Service()
 export class ToastService {
-  private readonly notificationService = inject(TuiNotificationService);
+  private readonly _notificationService = inject(TuiNotificationService);
 
   private readonly _closeAllToasts = new Subject<void>();
 
@@ -27,7 +27,7 @@ export class ToastService {
   }
 
   private showToast(text: string, appearance: ToastAppearance): void {
-    this.notificationService
+    this._notificationService
       .open(text, {
         appearance,
         autoClose: 3_000,
