@@ -32,7 +32,7 @@ export const CatalogStore = signalStore(
               },
               headers: {
                 Authorization: getBasicAuthHeader(),
-                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/json',
               },
             })
             .pipe(
