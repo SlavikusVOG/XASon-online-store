@@ -20,6 +20,7 @@
       "@environments/*": ["./src/environments/*"],
       "@models/*": ["./src/app/models/*"],
       "@features/*": ["./src/app/features/*"],
+      "@forms/*": ["./src/app/forms/*"],
       "@shared/*": ["./src/app/shared/*"]
     }
   },
