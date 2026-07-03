@@ -23,6 +23,7 @@ import {
   PutRequest,
 } from '../types/api.types';
 import { buildUrl } from '../utils/api.utils';
+import { CustomerGetQueries, CustomerGetResponse } from '@models/http/request/me.type';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -62,6 +63,10 @@ export class ApiService {
     request: GetRequest<{ Q: CatalogProductsGetQueries }>,
   ): Observable<ProductPagedQueryResponse> {
     return this.get(`${environment.apiUrl}/products`, request);
+  }
+
+  public getMe(request: GetRequest<{ Q: CustomerGetQueries }>): Observable<CustomerGetResponse> {
+    return this.get(`${environment.apiUrl}/me`, request);
   }
 
   private get<R>(url: string, request: GetRequest): Observable<R> {
