@@ -13,11 +13,10 @@ import { LoginCredentials } from '@models/features/authentication';
 })
 export class LoginPage {
   protected readonly PAGES = PAGES;
+
   private readonly authService = inject(AuthService);
+
   onLogin({ email, password }: LoginCredentials): void {
-    if (!email || !password) {
-      return;
-    }
     this.authService.login({ email, password });
   }
 }

@@ -1,20 +1,15 @@
-<div class="container">
-  <form (submit)="onSubmit($event)">
-    <xas-form-input
-      [formField]="loginForm.email"
-      [incomingType]="'email'"
-      [inputPlaceholder]="'example@example.com'"
-      [inputId]="'email'"
-      [inputLabel]="'Email'"
-    />
-    <xas-form-input
-      [formField]="loginForm.password"
-      [incomingType]="'password'"
-      [inputId]="'password'"
-      [inputLabel]="'Password'"
-    />
-    <button type="submit">Login</button>
-    <button type="button" (click)="clearForm()">Clear</button>
-    <p>Don't have an account? <a href="/register">Register</a></p>
-  </form>
-</div>
+<h1 class="login-title">Greetings, adventurer.</h1>
+<p class="register">Are you new here? <a [routerLink]="PAGES.REGISTER.link">Register.</a></p>
+
+<form [formRoot]="loginForm">
+  <xas-input [formField]="loginForm.email" label="Email" />
+
+  <xas-password-input [formField]="loginForm.password" label="Password" />
+
+  <div class="form-buttons">
+    <button tuiButton size="m" appearance="secondary" type="button" (click)="clearForm()">
+      Clear
+    </button>
+    <button tuiButton size="m" type="submit">Login</button>
+  </div>
+</form>
