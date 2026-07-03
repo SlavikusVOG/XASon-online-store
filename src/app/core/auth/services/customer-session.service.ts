@@ -19,6 +19,9 @@ export class CustomerSessionService {
   private refreshToken = signal<string | null>(
     this.localStorageService.getValue<string>(environment.LOCAL_STORAGE_KEYS.refreshToken),
   );
+  private user = signal<User | null>(
+    this.localStorageService.getValue<User | null>(environment.LOCAL_STORAGE_KEYS.user),
+  );
 
   constructor() {
     effect(() => {
@@ -32,6 +35,13 @@ export class CustomerSessionService {
       this.localStorageService.setValue(
         environment.LOCAL_STORAGE_KEYS.refreshToken,
         this.refreshToken(),
+      );
+    });
+
+    effect(() => {
+      this.localStorageService.setValue<User | null>(
+        environment.LOCAL_STORAGE_KEYS.user,
+        this.user(),
       );
     });
   }

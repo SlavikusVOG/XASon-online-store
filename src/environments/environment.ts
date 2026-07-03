@@ -37,5 +37,6 @@ export const environment = {
     refreshToken: 'refreshToken',
     anonymousToken: 'anonymousToken',
     anonymousId: 'anonymousId',
+    user: 'user',
   },
 };
