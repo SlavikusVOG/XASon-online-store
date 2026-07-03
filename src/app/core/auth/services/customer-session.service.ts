@@ -83,8 +83,6 @@ export class CustomerSessionService {
   }
 
   logout() {
-    // this.localStorageService.removeValue(environment.LOCAL_STORAGE_KEYS.accessToken);
-    // this.localStorageService.removeValue(environment.LOCAL_STORAGE_KEYS.refreshToken);
     this.accessToken.set(null);
     this.refreshToken.set(null);
   }
