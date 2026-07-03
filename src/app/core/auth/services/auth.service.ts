@@ -15,7 +15,7 @@ export class AuthService {
   }
 
   login(credentials: LoginCredentials) {
-    this.customerSessionService.login(credentials);
+    this.customerSessionService.login(credentials).subscribe();
     this.accessToken.set(this.customerSessionService.getAccessToken());
   }
 
