@@ -73,6 +73,8 @@ export class AnonymousSessionService {
       queries: {
         grant_type: 'client_credentials',
         scope: environment.commercetools.scopes.join(' '),
+      },
+      body: {
         anonymous_id: anonymousId,
       },
       headers: {
