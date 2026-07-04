@@ -1,13 +1,17 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AnonymousSessionService, CustomerSessionService } from '@core/auth';
 import { AnonymousSessionAccessTokenPostResponse } from '@models/http';
 import { switchMap } from 'rxjs';
 
-const ANONYMOUS_AUTH_PATH = '/auth/anonymous';
+const SKIP_PATHS = ['/auth/anonymous', '/auth/refresh', '/auth/login', '/auth/logout'];
+
+function shouldSkipPath(req: HttpRequest<unknown>): boolean {
+  return SKIP_PATHS.some((path) => req.url.includes(path));
+}
 
 export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
-  if (req.url.includes(ANONYMOUS_AUTH_PATH)) {
+  if (shouldSkipPath(req)) {
     return next(req);
   }
 
