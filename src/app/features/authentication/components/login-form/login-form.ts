@@ -2,8 +2,8 @@ import { Component, output, signal } from '@angular/core';
 import { email, form, FormField, FormRoot, required } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
 import { PAGES } from '@core/router/pages.const';
-import { Input, PasswordInput } from '@forms/signal';
 import { LoginCredentials } from '@models/features/authentication';
+import { Input, PasswordInput } from '@shared/forms/signal';
 import { TuiButton } from '@taiga-ui/core';
 
 @Component({

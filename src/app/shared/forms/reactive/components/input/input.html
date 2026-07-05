@@ -1,0 +1,7 @@
+<!-- добавить UI по аналогии с сигнальными формами -->
+
+<input [ngModel]="value()" (ngModelChange)="changeValue($event)" (blur)="onTouched()" />
+
+@if (hostControl) {
+  <tui-error [formControl]="hostControl" />
+}

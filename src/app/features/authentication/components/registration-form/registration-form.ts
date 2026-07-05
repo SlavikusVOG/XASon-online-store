@@ -1,11 +1,11 @@
 import { Component, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RegisterCredentials } from '@models/features/authentication';
-import { ReactiveFormInput } from '@shared/components/reactive-form/form-input/form-input';
+import { ReactiveInput } from '@shared/forms/reactive/components';
 
 @Component({
   selector: 'xas-registration-form',
-  imports: [ReactiveFormsModule, ReactiveFormInput],
+  imports: [ReactiveFormsModule, ReactiveInput],
   templateUrl: './registration-form.html',
   styleUrl: './registration-form.scss',
 })
@@ -108,17 +108,18 @@ export class RegistrationForm {
     // },
   ];
   onSubmit() {
-    if (this.registrationForm.invalid) {
-      return;
+    if (this.registrationForm.valid) {
+      const { email, password, firstName, lastName } = this.registrationForm.value;
+      const credentials: RegisterCredentials = {
+        email: email ?? '',
+        password: password ?? '',
+        firstName: firstName ?? '',
+        lastName: lastName ?? '',
+      };
+      this.register.emit(credentials);
+    } else {
+      this.registrationForm.markAllAsDirty();
+      this.registrationForm.markAllAsTouched();
     }
-
-    const { email, password, firstName, lastName } = this.registrationForm.value;
-    const credentials: RegisterCredentials = {
-      email: email ?? '',
-      password: password ?? '',
-      firstName: firstName ?? '',
-      lastName: lastName ?? '',
-    };
-    this.register.emit(credentials);
   }
 }
