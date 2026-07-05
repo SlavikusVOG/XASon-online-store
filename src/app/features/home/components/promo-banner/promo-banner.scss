@@ -1,43 +1,126 @@
+@use 'variables' as *;
+
 .banner {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 24px 0;
+  border-radius: 0 0 20px 20px;
+  overflow: hidden;
+  position: relative;
+  min-height: 480px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('/promo.jpg') center / cover no-repeat;
+    z-index: 0;
+  }
 
   &__slide {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 40px 48px;
-    border-radius: 16px;
+    padding: 48px 56px;
     text-decoration: none;
-    min-height: 200px;
-    color: #000;
+    min-height: 380px;
+    position: relative;
+    z-index: 2;
   }
 
   &__content {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    max-width: 60%;
+    gap: 18px;
+    max-width: 65%;
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-self: flex-start;
+    padding: 4px 14px;
+    border-radius: 20px;
+    background: rgba($purple-accent, 0.25);
+    color: $purple-light;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border: 1px solid rgba($purple-light, 0.3);
   }
 
   &__title {
-    font-size: 32px;
-    font-weight: 700;
     margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
   }
 
   &__subtitle {
-    font-size: 16px;
     margin: 0;
-    opacity: 0.9;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.6;
+  }
+
+  &__features {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__feature {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+
+    &::before {
+      content: '✓';
+      color: $lime;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
   }
 
   &__cta {
-    font-size: 14px;
-    font-weight: 600;
+    align-self: flex-start;
     margin-top: 8px;
+    background: $yellow;
+    color: $purple-deep;
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      animation: glow-shift 2s ease-in-out infinite;
+    }
+  }
+
+  @keyframes glow-shift {
+    0%,
+    100% {
+      box-shadow:
+        0 0 6px $purple-primary,
+        0 0 12px $purple-accent;
+    }
+    25% {
+      box-shadow:
+        0 0 6px $purple-accent,
+        0 0 12px $purple-medium;
+    }
+    50% {
+      box-shadow:
+        0 0 6px $purple-medium,
+        0 0 12px $purple-light;
+    }
+    75% {
+      box-shadow:
+        0 0 6px $purple-light,
+        0 0 12px $purple-warm;
+    }
   }
 
   &__image {
