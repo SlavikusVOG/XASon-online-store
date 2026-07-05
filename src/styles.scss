@@ -7,10 +7,20 @@
 
 :root {
   --bg-primary: #e2e2e2;
+  --color-on-accent: #1a0033;
+  --color-deep: #3b067a;
+  --color-brand: #6a0dad;
+  --color-brand-warm: #5b008b;
+  --color-muted: #9370db;
+  --color-highlight: #b388ff;
+  --color-accent: #9b30ff;
+  --color-cta: #ffd700;
+  --color-success: #32cd32;
 }
 
 :root.dark-mode {
   --bg-primary: #303030;
+  // TODO: подумать во время разработки темной темы
 }
 
 body {

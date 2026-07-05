@@ -1,10 +1,8 @@
-@use 'variables' as *;
-
 .promo-codes {
   padding: 48px 0;
 
   &__container {
-    border: 1px solid rgba($purple-medium, 0.2);
+    border: 1px solid color-mix(in srgb, var(--color-muted) 20%, transparent);
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.03);
     padding: 32px 36px;
@@ -51,7 +49,7 @@
     flex: 1;
     padding: 14px 14px 14px 0;
     border-radius: 12px;
-    border: 1.5px dashed rgba($purple-medium, 0.35);
+    border: 1.5px dashed color-mix(in srgb, var(--color-muted) 35%, transparent);
     background: rgba(255, 255, 255, 0.04);
     overflow: hidden;
   }
@@ -63,15 +61,15 @@
     flex-shrink: 0;
 
     .promo-codes__card:nth-child(1) & {
-      background: $yellow;
+      background: var(--color-cta);
     }
 
     .promo-codes__card:nth-child(2) & {
-      background: $lime;
+      background: var(--color-success);
     }
 
     .promo-codes__card:nth-child(3) & {
-      background: $purple-accent;
+      background: var(--color-accent);
     }
   }
 
