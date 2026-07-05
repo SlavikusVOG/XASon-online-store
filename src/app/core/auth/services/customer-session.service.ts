@@ -5,6 +5,9 @@ import { LocalStorage } from '@core/local-storage';
 import { environment } from '@environments/environment';
 import { LoginCredentials, RegisterCredentials } from '@models/features/authentication';
 import { AnonymousSessionService } from './anonymous-session.service';
+import { Observable, tap } from 'rxjs';
+import { LoginPostResponse, User } from '@models/http';
+import { CustomerGetResponse } from '@models/http/request/me.type';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +21,9 @@ export class CustomerSessionService {
   );
   private refreshToken = signal<string | null>(
     this.localStorageService.getValue<string>(environment.LOCAL_STORAGE_KEYS.refreshToken),
+  );
+  private user = signal<User | null>(
+    this.localStorageService.getValue<User | null>(environment.LOCAL_STORAGE_KEYS.user),
   );
 
   constructor() {
@@ -34,6 +40,13 @@ export class CustomerSessionService {
         this.refreshToken(),
       );
     });
+
+    effect(() => {
+      this.localStorageService.setValue<User | null>(
+        environment.LOCAL_STORAGE_KEYS.user,
+        this.user(),
+      );
+    });
   }
 
   fetchAccessToken(credentials: LoginCredentials) {
@@ -46,18 +59,26 @@ export class CustomerSessionService {
     });
   }
 
-  login(credentials: LoginCredentials) {
+  login(credentials: LoginCredentials): Observable<LoginPostResponse> {
     const anonymousToken = this.anonymousSessionService.getAccessToken();
     if (!anonymousToken) {
       throw new Error('Anonymous token not found');
     }
-    return this.apiService.loginPost({
-      queries: { ...credentials },
-      headers: {
-        Authorization: getBearerAuthHeader(anonymousToken),
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    });
+    return this.apiService
+      .loginPost({
+        queries: { ...credentials },
+        headers: {
+          Authorization: getBearerAuthHeader(anonymousToken),
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      })
+      .pipe(
+        tap((user) => {
+          this.accessToken.set(user.access_token);
+          this.refreshToken.set(user.refresh_token);
+          this.loadProfile();
+        }),
+      );
   }
 
   register(credentials: RegisterCredentials) {
@@ -73,10 +94,9 @@ export class CustomerSessionService {
   }
 
   logout() {
-    // this.localStorageService.removeValue(environment.LOCAL_STORAGE_KEYS.accessToken);
-    // this.localStorageService.removeValue(environment.LOCAL_STORAGE_KEYS.refreshToken);
     this.accessToken.set(null);
     this.refreshToken.set(null);
+    this.user.set(null);
   }
 
   refreshAccessToken() {
@@ -98,7 +118,37 @@ export class CustomerSessionService {
       });
   }
 
+  loadProfile() {
+    this.apiService
+      .getMe({
+        headers: {
+          Authorization: getBasicAuthHeader(),
+          'Content-Type': 'application/json',
+        },
+      })
+      .pipe(
+        tap((user) => {
+          const processedUserInfo = this.processUserInfo(user);
+          this.user.set(processedUserInfo);
+        }),
+      );
+  }
+
+  getUser() {
+    return this.user();
+  }
+
   getAccessToken() {
     return this.accessToken();
+  }
+
+  processUserInfo(customer: CustomerGetResponse): User {
+    return {
+      id: customer.id,
+      addresses: customer.addresses,
+      email: customer.email,
+      firstName: customer.firstName,
+      lastName: customer.lastName,
+    };
   }
 }
