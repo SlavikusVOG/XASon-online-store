@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Input } from './input';
+import { ReactiveInput } from './input';
 
 describe('Input', () => {
-  let component: Input;
-  let fixture: ComponentFixture<Input>;
+  let component: ReactiveInput;
+  let fixture: ComponentFixture<ReactiveInput>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Input],
+      imports: [ReactiveInput],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Input);
+    fixture = TestBed.createComponent(ReactiveInput);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

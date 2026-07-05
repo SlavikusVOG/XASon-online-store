@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PasswordInput } from './password-input';
+import { ReactivePasswordInput } from './password-input';
 
 describe('PasswordInput', () => {
-  let component: PasswordInput;
-  let fixture: ComponentFixture<PasswordInput>;
+  let component: ReactivePasswordInput;
+  let fixture: ComponentFixture<ReactivePasswordInput>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PasswordInput],
+      imports: [ReactivePasswordInput],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PasswordInput);
+    fixture = TestBed.createComponent(ReactivePasswordInput);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
