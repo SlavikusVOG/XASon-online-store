@@ -51,6 +51,14 @@ export const routes: Routes = [
         canActivate: [redirectIfAuthGuard],
         loadChildren: () => import('@features/authentication/routes').then((r) => r.registerRoutes),
       },
+      {
+        path: PAGES.NOT_FOUND.name,
+        loadChildren: () => import('@features/not-found/routes').then((r) => r.notFoundRoutes),
+      },
     ],
+  },
+  {
+    path: '**',
+    redirectTo: PAGES.NOT_FOUND.link,
   },
 ];

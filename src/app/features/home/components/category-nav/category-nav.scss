@@ -1,65 +1,80 @@
 .categories {
-  padding: 32px 0;
+  padding: 48px 0;
 
   &__title {
-    font-size: 24px;
-    font-weight: 600;
     margin: 0 0 24px;
-    color: #111;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--tui-text-primary, #fff);
   }
 
-  &__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 16px;
-  }
-
-  &__card {
+  &__row {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  &__chip {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-radius: 12px;
+    min-width: 140px;
     text-decoration: none;
     color: inherit;
-  }
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
 
-  &__card-image {
-    width: 100%;
-    height: 140px;
-    background: #f3f4f6;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(
+        105deg,
+        transparent 30%,
+        color-mix(in srgb, var(--color-highlight) 15%, transparent) 45%,
+        color-mix(in srgb, var(--color-cta) 10%, transparent) 50%,
+        color-mix(in srgb, var(--color-highlight) 15%, transparent) 55%,
+        transparent 70%
+      );
+      background-size: 250% 100%;
+      background-position: left center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    &:hover {
+      transform: translateY(-2px);
+
+      &::before {
+        opacity: 1;
+        animation: magic-shimmer 2s ease-in-out infinite;
+      }
     }
   }
 
-  &__card-placeholder {
-    font-size: 36px;
-    font-weight: 700;
-    color: #9ca3af;
-  }
-
-  &__card-info {
-    padding: 12px;
+  &__chip-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
     display: flex;
-    flex-direction: column;
-    gap: 4px;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #ffffffe6;
+    flex-shrink: 0;
+    user-select: none;
   }
 
-  &__card-name {
-    font-size: 14px;
-    font-weight: 600;
-    margin: 0;
-    color: #111;
-  }
-
-  &__card-count {
-    font-size: 12px;
-    font-weight: 400;
-    margin: 0;
-    color: #9ca3af;
+  &__chip-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--tui-text-primary, #fff);
   }
 }
