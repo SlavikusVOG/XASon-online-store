@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { TuiButton } from '@taiga-ui/core';
 import { type IconNode } from 'lucide';
-import { LucideIcon } from '@shared/components';
+import { LucideIcon } from '../lucide-icon/lucide-icon';
 
 @Component({
   selector: 'xas-data-placeholder',
