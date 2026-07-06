@@ -19,7 +19,7 @@ export class AuthService {
   }
 
   login(credentials: LoginCredentials) {
-    this.customerSessionService.login(credentials).subscribe();
+    return this.customerSessionService.login(credentials);
   }
 
   register(credentials: RegisterCredentials) {
