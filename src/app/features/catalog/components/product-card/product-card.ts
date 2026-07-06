@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { TuiAppearance, TuiButton, TuiIcon, TuiTitle } from '@taiga-ui/core';
 import { Product } from '@models/features/catalog';
-import { YesNoPipe } from '@shared/pipes';
 
 @Component({
   selector: 'xas-product-card',
-  imports: [YesNoPipe],
+  imports: [TuiAppearance, TuiButton, TuiIcon, TuiTitle],
   templateUrl: './product-card.html',
   styleUrl: './product-card.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

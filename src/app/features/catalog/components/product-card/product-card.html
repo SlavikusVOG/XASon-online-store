@@ -1,13 +1,32 @@
 @if (product(); as product) {
-  <div>
-    <div>Name: {{ product.name }}</div>
-    <div>Description: {{ product.description }}</div>
-    <div>Is in cart: {{ product.isInCart | yesNo }}</div>
+  <article tuiAppearance="floating" class="product-card">
+    <div class="product-card__media">
+      <img [src]="product.image" [alt]="product.name" class="product-card__image" loading="lazy" />
+    </div>
 
-    @if (product.isInCart) {
-      <button (click)="removeFromCart()">Remove from cart</button>
-    } @else {
-      <button (click)="addToCart()">Add to cart</button>
-    }
-  </div>
+    <div class="product-card__body">
+      <h3 tuiTitle class="product-card__name">{{ product.name }}</h3>
+      <p class="product-card__description">{{ product.description }}</p>
+
+      <div class="product-card__actions">
+        @if (product.isInCart) {
+          <button
+            tuiButton
+            type="button"
+            appearance="secondary"
+            size="s"
+            (click)="removeFromCart()"
+          >
+            <tui-icon icon="@tui.shopping-cart" />
+            Remove from cart
+          </button>
+        } @else {
+          <button tuiButton type="button" appearance="primary" size="s" (click)="addToCart()">
+            <tui-icon icon="@tui.shopping-cart" />
+            Add to cart
+          </button>
+        }
+      </div>
+    </div>
+  </article>
 }
