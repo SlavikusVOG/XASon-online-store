@@ -3,11 +3,20 @@
 <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
   @for (field of fields; track field.label) {
     <!-- todo добавить проброс label, placeholder, сделать кастомный текст ошибки -->
-    <xas-reactive-input
-      [formControl]="field.control"
-      [label]="field.label"
-      [placeholder]="field.placeholder"
-    />
+    @if (field.type === 'password') {
+      <xas-reactive-password-input
+        [formControl]="field.control"
+        [label]="field.label"
+        [placeholder]="field.placeholder || 'Enter your password'"
+      />
+    } @else {
+      <xas-reactive-input
+        [formControl]="field.control"
+        [label]="field.label"
+        [placeholder]="field.placeholder"
+        [type]="field.type"
+      />
+    }
   }
   <div class="form-buttons">
     <button tuiButton size="m" appearance="secondary" type="button" (click)="clearForm()">

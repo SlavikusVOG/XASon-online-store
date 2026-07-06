@@ -27,6 +27,7 @@ import {
 export class ReactiveInput extends ReactiveControl<string | null> implements AfterViewInit {
   public readonly label = input<string>('');
   public readonly placeholder = input<string>('');
+  public readonly type = input<string>('text');
   public hostControl?: FormControl;
 
   public ngAfterViewInit(): void {

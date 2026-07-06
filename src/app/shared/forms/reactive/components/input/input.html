@@ -3,9 +3,11 @@
   <tui-textfield tuiTextfieldSize="m">
     <input
       tuiInput
+      [type]="type()"
+      [placeholder]="placeholder()"
       [ngModel]="value()"
-      (ngModelChange)="changeValue($event)"
       (blur)="onTouched()"
+      (ngModelChange)="changeValue($event)"
     />
   </tui-textfield>
 </label>

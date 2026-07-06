@@ -1,14 +1,23 @@
-import { Component, output } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, DestroyRef, inject, output } from '@angular/core';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { RegisterCredentials } from '@models/features/authentication';
 import { ReactiveInput } from '@shared/forms/reactive/components';
 import { TuiButton } from '@taiga-ui/core';
 import { PAGES } from '@core/router/pages.const';
 import { RouterLink } from '@angular/router';
+import { ReactivePasswordInput } from '@shared/forms/reactive/components';
+import { ValidationError } from '@angular/forms/signals';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'xas-registration-form',
-  imports: [ReactiveFormsModule, ReactiveInput, TuiButton, RouterLink],
+  imports: [ReactiveFormsModule, ReactiveInput, TuiButton, RouterLink, ReactivePasswordInput],
   templateUrl: './registration-form.html',
   // TODO: standardize styles
   styleUrl: './registration-form.scss',
@@ -19,7 +28,11 @@ export class RegistrationForm {
   protected readonly registrationForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    confirmPassword: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+      passwordMatchValidator,
+    ]),
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
     // TODO: move to user profile page
@@ -112,6 +125,18 @@ export class RegistrationForm {
     //   errorMessage: 'Country is required',
     // },
   ];
+
+  private readonly destroyRef = inject(DestroyRef);
+
+  constructor() {
+    this.registrationForm.controls.password.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.registrationForm.controls.confirmPassword.updateValueAndValidity({
+          emitEvent: false,
+        });
+      });
+  }
   onSubmit() {
     if (this.registrationForm.valid) {
       const { email, password, firstName, lastName } = this.registrationForm.value;
@@ -131,4 +156,19 @@ export class RegistrationForm {
   clearForm(): void {
     this.registrationForm.reset();
   }
+}
+
+function passwordMatchValidator(control: AbstractControl): ValidationError | null {
+  const confirmPassword = control.value;
+  const password = control.parent?.get('password')?.value;
+  if (!password || !confirmPassword) {
+    return null;
+  }
+
+  return password === confirmPassword
+    ? null
+    : {
+        message: 'Passwords do not match',
+        kind: 'passwordMatch',
+      };
 }
