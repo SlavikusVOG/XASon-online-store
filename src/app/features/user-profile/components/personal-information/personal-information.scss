@@ -1,0 +1,28 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .card {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    &__content {
+      display: flex;
+      flex-direction: column;
+      &_avatar {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+.button-container {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+
+  button {
+    width: calc(50% - 4px);
+  }
+}
