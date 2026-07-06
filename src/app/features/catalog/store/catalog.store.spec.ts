@@ -72,15 +72,10 @@ describe('CatalogStore', () => {
 
     await vi.waitFor(() => store.loadStatus() === DATA_LOAD_STATUSES.WITH_DATA);
 
-    expect(getCatalogProducts).toHaveBeenCalledWith(
-      expect.objectContaining({
-        params: { limit: 10, offset: 0 },
-        headers: expect.objectContaining({
-          Authorization: expect.stringContaining('Basic '),
-          'Content-Type': 'application/json',
-        }),
-      }),
-    );
+    expect(getCatalogProducts).toHaveBeenCalledWith({
+      params: { limit: 10, offset: 0 },
+      headers: { 'Content-Type': 'application/json' },
+    });
 
     expect(store.products()).toEqual([
       {

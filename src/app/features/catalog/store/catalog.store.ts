@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { ApiService, getBasicAuthHeader } from '@core/http';
+import { ApiService } from '@core/http';
 import { Product, ProductDto } from '@models/features/catalog';
 import { tapResponse } from '@ngrx/operators';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
@@ -31,7 +31,6 @@ export const CatalogStore = signalStore(
                 offset: 0,
               },
               headers: {
-                Authorization: getBasicAuthHeader(),
                 'Content-Type': 'application/json',
               },
             })

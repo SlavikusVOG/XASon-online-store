@@ -1,13 +1,14 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable, inject, signal, effect } from '@angular/core';
-import { ApiService, getBasicAuthHeader, getBearerAuthHeader } from '@core/http';
+import { ApiService } from '@core/http';
 import { LocalStorage } from '@core/local-storage';
 import { environment } from '@environments/environment';
 import { LoginCredentials, RegisterCredentials } from '@models/features/authentication';
 import { AnonymousSessionService } from './anonymous-session.service';
-import { Observable, tap } from 'rxjs';
-import { LoginPostResponse, User } from '@models/http';
+import { map, Observable, tap } from 'rxjs';
+import { LoginPostResponse } from '@models/http';
 import { CustomerGetResponse } from '@models/http/request/me.type';
+import { Address, ProcessedUser } from '@models/features/user-profile';
 
 @Injectable({
   providedIn: 'root',
@@ -22,8 +23,8 @@ export class CustomerSessionService {
   private refreshToken = signal<string | null>(
     this.localStorageService.getValue<string>(environment.LOCAL_STORAGE_KEYS.refreshToken),
   );
-  private user = signal<User | null>(
-    this.localStorageService.getValue<User | null>(environment.LOCAL_STORAGE_KEYS.user),
+  private user = signal<ProcessedUser | null>(
+    this.localStorageService.getValue<ProcessedUser | null>(environment.LOCAL_STORAGE_KEYS.user),
   );
 
   constructor() {
@@ -42,7 +43,7 @@ export class CustomerSessionService {
     });
 
     effect(() => {
-      this.localStorageService.setValue<User | null>(
+      this.localStorageService.setValue<ProcessedUser | null>(
         environment.LOCAL_STORAGE_KEYS.user,
         this.user(),
       );
@@ -53,23 +54,17 @@ export class CustomerSessionService {
     return this.apiService.customersTokenPost({
       body: new HttpParams({ fromObject: credentials }),
       headers: {
-        Authorization: getBasicAuthHeader(),
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
       },
     });
   }
 
   login(credentials: LoginCredentials): Observable<LoginPostResponse> {
-    const anonymousToken = this.anonymousSessionService.getAccessToken();
-    if (!anonymousToken) {
-      throw new Error('Anonymous token not found');
-    }
     return this.apiService
       .loginPost({
-        queries: { ...credentials },
+        body: { ...credentials },
         headers: {
-          Authorization: getBearerAuthHeader(anonymousToken),
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
         },
       })
       .pipe(
@@ -82,11 +77,9 @@ export class CustomerSessionService {
   }
 
   register(credentials: RegisterCredentials) {
-    const anonymousAccessToken = this.anonymousSessionService.getAccessToken();
     const response = this.apiService.customersPost({
-      body: JSON.stringify(credentials),
+      body: new HttpParams({ fromObject: credentials }),
       headers: {
-        Authorization: getBearerAuthHeader(anonymousAccessToken),
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     });
@@ -102,13 +95,12 @@ export class CustomerSessionService {
   refreshAccessToken() {
     this.apiService
       .refreshTokenPost({
-        queries: {
+        body: {
           grant_type: 'refresh_token',
           refresh_token: this.refreshToken() ?? '',
         },
         headers: {
-          Authorization: getBasicAuthHeader(),
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
         },
       })
       .subscribe((response) => {
@@ -122,7 +114,6 @@ export class CustomerSessionService {
     this.apiService
       .getMe({
         headers: {
-          Authorization: getBasicAuthHeader(),
           'Content-Type': 'application/json',
         },
       })
@@ -134,21 +125,45 @@ export class CustomerSessionService {
       );
   }
 
-  getUser() {
-    return this.user();
+  getUser(): Observable<ProcessedUser> {
+    return this.apiService
+      .getMe({
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .pipe(
+        map((user): ProcessedUser => {
+          const processedUserInfo = this.processUserInfo(user);
+          this.user.set(processedUserInfo);
+          return processedUserInfo;
+        }),
+      );
   }
 
   getAccessToken() {
     return this.accessToken();
   }
 
-  processUserInfo(customer: CustomerGetResponse): User {
+  processUserInfo(customer: CustomerGetResponse): ProcessedUser {
+    const address = this.processAddress(customer.addresses);
     return {
       id: customer.id,
-      addresses: customer.addresses,
+      address: this.processAddress(customer.addresses) ?? null,
       email: customer.email,
       firstName: customer.firstName,
       lastName: customer.lastName,
+      // TODO: add date of birth
+      dateOfBirth: new Date(),
+      street: address?.streetName ?? '',
+      city: address?.city ?? '',
+      postalCode: address?.postalCode ?? '',
+      country: address?.country ?? '',
     };
+  }
+
+  processAddress(addresses: [string]): Address | null {
+    const addr = addresses[0];
+    return addr ? (JSON.parse(addr) as Address) : null;
   }
 }

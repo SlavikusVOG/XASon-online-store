@@ -1,10 +1,10 @@
 import { LoginCredentials, RegisterCredentials } from '@models/features/authentication';
-import { User } from '@models/features/user-profile';
+import { CustomerGetResponse } from '@models/http/request/me.type';
 import { Observable, of } from 'rxjs';
 
 export abstract class AuthServiceBase {
-  abstract register(credentials: RegisterCredentials): Observable<User>;
-  abstract login(credentials: LoginCredentials): Observable<User>;
+  abstract register(credentials: RegisterCredentials): Observable<CustomerGetResponse>;
+  abstract login(credentials: LoginCredentials): Observable<CustomerGetResponse>;
   abstract isAuthenticated(): boolean;
 }
 
@@ -16,7 +16,7 @@ export class MockAuthService implements AuthServiceBase {
       firstName: '',
       lastName: '',
     },
-  ): Observable<User> {
+  ): Observable<CustomerGetResponse> {
     return of({
       ...credentials,
       id: '1',
@@ -31,14 +31,14 @@ export class MockAuthService implements AuthServiceBase {
       city: 'Anytown',
       postalCode: '12345',
       country: 'USA',
-    } as User);
+    } as unknown as CustomerGetResponse);
   }
   login(
     credentials: LoginCredentials = {
       email: 'john.doe@example.com',
       password: 'password',
     },
-  ): Observable<User> {
+  ): Observable<CustomerGetResponse> {
     return of({
       ...credentials,
       id: '1',
@@ -53,7 +53,7 @@ export class MockAuthService implements AuthServiceBase {
       city: 'Anytown',
       postalCode: '12345',
       country: 'USA',
-    } as User);
+    } as unknown as CustomerGetResponse);
   }
   isAuthenticated(): boolean {
     return true;

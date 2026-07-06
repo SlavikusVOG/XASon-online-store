@@ -50,7 +50,7 @@ export class ApiService {
   }
 
   public customersPost(request: PostRequest): Observable<CustomersPostResponse> {
-    return this.post(`${environment.apiUrl}/signup`, request);
+    return this.post(`${environment.apiUrl}/auth/signup`, request);
   }
 
   public customersTokenPost(

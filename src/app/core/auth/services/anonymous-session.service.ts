@@ -1,5 +1,5 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { ApiService, getBasicAuthHeader } from '@core/http';
+import { ApiService } from '@core/http';
 import { LocalStorage } from '@core/local-storage';
 import { environment } from '@environments/environment';
 import { AnonymousSessionAccessTokenPostResponse } from '@models/http';
@@ -78,7 +78,6 @@ export class AnonymousSessionService {
         anonymous_id: anonymousId,
       },
       headers: {
-        Authorization: getBasicAuthHeader(),
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     });
@@ -92,7 +91,6 @@ export class AnonymousSessionService {
           refresh_token: this.refreshToken() ?? '',
         },
         headers: {
-          Authorization: getBasicAuthHeader(),
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       })

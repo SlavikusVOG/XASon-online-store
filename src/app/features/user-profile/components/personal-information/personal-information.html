@@ -1,99 +1,43 @@
 @if (isEditMode) {
   <form [formGroup]="editForm">
-    <xas-reactive-form-input
-      [inputLabel]="'Email'"
-      [incomingInputType]="'email'"
-      [inputId]="'email'"
-      [control]="editForm.controls.email"
-      [errorMessage]="editForm.controls.email.errors?.['required'] ? 'Email is required' : ''"
-      [inputPlaceholder]="'Enter your email'"
-      [value]="user().email"
-    />
-    <xas-reactive-form-input
-      [inputLabel]="'First Name'"
-      [incomingInputType]="'text'"
-      [inputId]="'firstName'"
-      [control]="editForm.controls.firstName"
-      [errorMessage]="
-        editForm.controls.firstName.errors?.['required'] ? 'First Name is required' : ''
-      "
-      [inputPlaceholder]="'Enter your first name'"
-      [value]="user().firstName"
-    />
-    <xas-reactive-form-input
-      [inputLabel]="'Last Name'"
-      [incomingInputType]="'text'"
-      [inputId]="'lastName'"
-      [control]="editForm.controls.lastName"
-      [errorMessage]="
-        editForm.controls.lastName.errors?.['required'] ? 'Last Name is required' : ''
-      "
-      [inputPlaceholder]="'Enter your last name'"
-      [value]="user().lastName"
-    />
-    <xas-reactive-form-input
-      [inputLabel]="'Date of Birth'"
-      [incomingInputType]="'date'"
-      [inputId]="'dateOfBirth'"
-      [control]="editForm.controls.dateOfBirth"
-      [errorMessage]="
-        editForm.controls.dateOfBirth.errors?.['required'] ? 'Date of Birth is required' : ''
-      "
-      [inputPlaceholder]="'Enter your date of birth'"
-      [value]="user().dateOfBirth.toISOString()"
-    />
-    <xas-reactive-form-input
-      [inputLabel]="'Street'"
-      [incomingInputType]="'text'"
-      [inputId]="'street'"
-      [control]="editForm.controls.street"
-      [errorMessage]="editForm.controls.street.errors?.['required'] ? 'Street is required' : ''"
-      [inputPlaceholder]="'Enter your street'"
-      [value]="user().street"
-    />
-    <xas-reactive-form-input
-      [inputLabel]="'City'"
-      [incomingInputType]="'text'"
-      [inputId]="'city'"
-      [control]="editForm.controls.city"
-      [errorMessage]="editForm.controls.city.errors?.['required'] ? 'City is required' : ''"
-      [inputPlaceholder]="'Enter your city'"
-      [value]="user().city"
-    />
-    <xas-reactive-form-input
-      [inputLabel]="'Postal Code'"
-      [incomingInputType]="'text'"
-      [inputId]="'postalCode'"
-      [control]="editForm.controls.postalCode"
-      [errorMessage]="
-        editForm.controls.postalCode.errors?.['required'] ? 'Postal Code is required' : ''
-      "
-      [inputPlaceholder]="'Enter your postal code'"
-      [value]="user().postalCode"
-    />
-    <xas-reactive-form-input
-      [inputLabel]="'Country'"
-      [incomingInputType]="'text'"
-      [inputId]="'country'"
-      [control]="editForm.controls.country"
-      [errorMessage]="editForm.controls.country.errors?.['required'] ? 'Country is required' : ''"
-      [inputPlaceholder]="'Enter your country'"
-      [value]="user().country"
-    />
-    <button type="submit">Save</button>
-    <button type="button" (click)="toggleEditMode()">Cancel</button>
+    @for (fields of inputFields; track fields.label) {
+      <xas-reactive-input
+        [formControl]="fields.control"
+        [label]="fields.label"
+        [placeholder]="fields.placeholder"
+        [type]="fields.type"
+      />
+    }
+    <div class="button-container">
+      <button tuiButton size="m" type="submit">Save</button>
+      <button tuiButton size="m" type="button" (click)="toggleEditMode()">Cancel</button>
+    </div>
   </form>
 } @else {
-  <div class="container">
+  <div tuiPlatform="web">
     <h1>Personal Information</h1>
-    <p>Email: {{ user().email }}</p>
-    <p>First Name: {{ user().firstName }}</p>
-    <p>Last Name: {{ user().lastName }}</p>
-    <p>Date of Birth: {{ user().dateOfBirth }}</p>
-    <p>Street: {{ user().street }}</p>
-    <p>City: {{ user().city }}</p>
-    <p>Postal Code: {{ user().postalCode }}</p>
-    <p>Country: {{ user().country }}</p>
+    <div class="card" appearance="primary" tuiCardLarge>
+      <section class="card__content">
+        <div class="card_avatar" tuiAvatar="@tui.user-round" size="xxl"></div>
+        <button tuiButton appearance="primary" size="m" type="button" disabled>
+          <tui-icon icon="@tui.edit" />
+          Change Avatar
+        </button>
+      </section>
+      <section class="card__content">
+        <p tuiDescription>Email: {{ user()?.email ?? 'N/A' }}</p>
+        <p tuiDescription>First Name: {{ user()?.firstName ?? 'N/A' }}</p>
+        <p tuiDescription>Last Name: {{ user()?.lastName ?? 'N/A' }}</p>
+        <p tuiDescription>Date of Birth: {{ user()?.dateOfBirth ?? 'N/A' }}</p>
+        <p tuiDescription>Street: {{ user()?.street ?? 'N/A' }}</p>
+        <p tuiDescription>City: {{ user()?.city ?? 'N/A' }}</p>
+        <p tuiDescription>Postal Code: {{ user()?.postalCode ?? 'N/A' }}</p>
+        <p tuiDescription>Country: {{ user()?.country ?? 'N/A' }}</p>
+      </section>
+    </div>
   </div>
-  <button (click)="toggleEditMode()">Edit</button>
+  <button tuiButton appearance="primary" size="m" type="button" (click)="toggleEditMode()">
+    <tui-icon icon="@tui.edit" />
+    Edit
+  </button>
 }
