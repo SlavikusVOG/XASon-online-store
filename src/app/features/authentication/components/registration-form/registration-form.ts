@@ -7,12 +7,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { RegisterCredentials } from '@models/features/authentication';
-import { ReactiveInput } from '@shared/forms/reactive/components';
+import { ReactiveInput, ReactivePasswordInput } from '@shared/forms/reactive/components';
 import { TuiButton } from '@taiga-ui/core';
 import { PAGES } from '@core/router/pages.const';
 import { RouterLink } from '@angular/router';
-import { ReactivePasswordInput } from '@shared/forms/reactive/components';
-import { ValidationError } from '@angular/forms/signals';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -158,7 +156,7 @@ export class RegistrationForm {
   }
 }
 
-function passwordMatchValidator(control: AbstractControl): ValidationError | null {
+function passwordMatchValidator(control: AbstractControl): Validators | null {
   const confirmPassword = control.value;
   const password = control.parent?.get('password')?.value;
   if (!password || !confirmPassword) {
@@ -168,7 +166,6 @@ function passwordMatchValidator(control: AbstractControl): ValidationError | nul
   return password === confirmPassword
     ? null
     : {
-        message: 'Passwords do not match',
-        kind: 'passwordMatch',
+        other: 'Passwords do not match',
       };
 }
