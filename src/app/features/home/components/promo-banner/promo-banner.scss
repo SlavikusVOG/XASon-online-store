@@ -96,31 +96,6 @@
       animation: glow-shift 2s ease-in-out infinite;
     }
   }
-
-  @keyframes glow-shift {
-    0%,
-    100% {
-      box-shadow:
-        0 0 6px var(--color-brand),
-        0 0 12px var(--color-accent);
-    }
-    25% {
-      box-shadow:
-        0 0 6px var(--color-accent),
-        0 0 12px var(--color-muted);
-    }
-    50% {
-      box-shadow:
-        0 0 6px var(--color-muted),
-        0 0 12px var(--color-highlight);
-    }
-    75% {
-      box-shadow:
-        0 0 6px var(--color-highlight),
-        0 0 12px var(--color-brand-warm);
-    }
-  }
-
   &__image {
     max-width: 200px;
     max-height: 160px;
