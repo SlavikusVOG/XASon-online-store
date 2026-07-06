@@ -1,34 +1,64 @@
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ProcessedUser } from '@models/features/user-profile';
+import { provideTaiga, TuiRoot } from '@taiga-ui/core';
 
-import { User } from '@models/features/user-profile';
 import { PersonalInformation } from './personal-information';
 
+const mockUser: ProcessedUser = {
+  id: '1',
+  email: 'test@example.com',
+  firstName: 'John',
+  lastName: 'Doe',
+  dateOfBirth: new Date('1990-01-01'),
+  street: 'Main St',
+  city: 'Springfield',
+  postalCode: '12345',
+  country: 'USA',
+  address: null,
+};
+
+@Component({
+  imports: [TuiRoot, PersonalInformation],
+  template: `
+    <tui-root>
+      <xas-personal-information [user]="user" />
+    </tui-root>
+  `,
+})
+class TestHostComponent {
+  user = mockUser;
+}
+
 describe('PersonalInformation', () => {
-  let component: PersonalInformation;
-  let fixture: ComponentFixture<PersonalInformation>;
+  let fixture: ComponentFixture<TestHostComponent>;
 
   beforeEach(async () => {
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      value: vi.fn().mockImplementation((query: string) => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+      })),
+    });
+
     await TestBed.configureTestingModule({
-      imports: [PersonalInformation],
+      imports: [TestHostComponent],
+      providers: [provideTaiga()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PersonalInformation);
-    fixture.componentRef.setInput('user', {
-      id: '1',
-      email: 'test@example.com',
-      firstName: 'John',
-      lastName: 'Doe',
-      dateOfBirth: new Date('1990-01-01'),
-      street: 'Main St',
-      city: 'Springfield',
-      postalCode: '12345',
-      country: 'USA',
-    } satisfies User);
-    component = fixture.componentInstance;
+    fixture = TestBed.createComponent(TestHostComponent);
+    fixture.detectChanges();
     await fixture.whenStable();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });
