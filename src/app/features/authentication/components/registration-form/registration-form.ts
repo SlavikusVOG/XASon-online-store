@@ -2,14 +2,19 @@ import { Component, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RegisterCredentials } from '@models/features/authentication';
 import { ReactiveInput } from '@shared/forms/reactive/components';
+import { TuiButton } from '@taiga-ui/core';
+import { PAGES } from '@core/router/pages.const';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'xas-registration-form',
-  imports: [ReactiveFormsModule, ReactiveInput],
+  imports: [ReactiveFormsModule, ReactiveInput, TuiButton, RouterLink],
   templateUrl: './registration-form.html',
+  // TODO: standardize styles
   styleUrl: './registration-form.scss',
 })
 export class RegistrationForm {
+  protected readonly PAGES = PAGES;
   protected readonly register = output<RegisterCredentials>();
   protected readonly registrationForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -121,5 +126,9 @@ export class RegistrationForm {
       this.registrationForm.markAllAsDirty();
       this.registrationForm.markAllAsTouched();
     }
+  }
+
+  clearForm(): void {
+    this.registrationForm.reset();
   }
 }
