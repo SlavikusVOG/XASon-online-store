@@ -15,7 +15,7 @@ export type CustomerGetResponse = {
   firstName: string;
   lastName: string;
   password: string;
-  addresses: string;
+  addresses: [string];
   shippingAddressIds: [];
   billingAddressIds: [];
   isEmailVerified: boolean;

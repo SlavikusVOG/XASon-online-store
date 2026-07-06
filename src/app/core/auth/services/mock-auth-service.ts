@@ -31,7 +31,7 @@ export class MockAuthService implements AuthServiceBase {
       city: 'Anytown',
       postalCode: '12345',
       country: 'USA',
-    } as User);
+    } as unknown as User);
   }
   login(
     credentials: LoginCredentials = {
@@ -53,7 +53,7 @@ export class MockAuthService implements AuthServiceBase {
       city: 'Anytown',
       postalCode: '12345',
       country: 'USA',
-    } as User);
+    } as unknown as User);
   }
   isAuthenticated(): boolean {
     return true;

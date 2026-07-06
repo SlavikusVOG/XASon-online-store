@@ -1,19 +1,24 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { PersonalInformation } from '@features/user-profile/components';
-import { User } from '@models/features/user-profile';
-import { ApiService } from '@core/http';
+import { ProcessedUser } from '@models/features/user-profile';
 import { DATA_LOAD_STATUSES, DataLoadStatus } from '@shared/const';
+import { CustomerSessionService } from '@core/auth';
+import { TuiLoader } from '@taiga-ui/core';
+import { ToastService } from '@shared/services';
 
 @Component({
   selector: 'xas-user-profile-page',
-  imports: [PersonalInformation],
+  imports: [PersonalInformation, TuiLoader],
   templateUrl: './user-profile-page.html',
   styleUrl: './user-profile-page.scss',
 })
 export class UserProfilePage implements OnInit {
-  private readonly apiService = inject(ApiService);
+  private readonly customerSessionService = inject(CustomerSessionService);
+  private readonly toastService = inject(ToastService);
+
+  protected readonly DATA_LOAD_STATUSES = DATA_LOAD_STATUSES;
   protected readonly loadStatus = signal<DataLoadStatus>(DATA_LOAD_STATUSES.INIT);
-  protected readonly user = signal<User | null>(null);
+  protected readonly user = signal<ProcessedUser | null>(null);
   // userMock: ProcessedUser = {
   //   id: '1',
   //   email: 'test@test.com',
@@ -26,18 +31,22 @@ export class UserProfilePage implements OnInit {
   //   country: 'USA',
   // };
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.loadStatus.set(DATA_LOAD_STATUSES.LOADING);
-    this.apiService
-      .getMe({
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .subscribe({
-        next: (user) => {
-          this.user.set(user);
-        },
-      });
+    this.customerSessionService.getUser().subscribe({
+      next: (user) => {
+        this.user.set(user);
+        this.loadStatus.set(DATA_LOAD_STATUSES.WITH_DATA);
+      },
+      error: (error) => {
+        const message = error.error.message ?? error.message ?? 'Failed to load Profile';
+        this.showErrorMessage(message);
+        this.loadStatus.set(DATA_LOAD_STATUSES.ERROR);
+      },
+    });
+  }
+
+  protected showErrorMessage(message: string) {
+    this.toastService.showErrorToast(message);
   }
 }

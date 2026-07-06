@@ -1,6 +1,6 @@
 import { Component, inject, model } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { User } from '@models/features/user-profile';
+import { ProcessedUser } from '@models/features/user-profile';
 import { ReactiveInput } from '@shared/forms/reactive/components';
 import { ToastService } from '@shared/services';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
@@ -25,7 +25,7 @@ export class PersonalInformation {
     postalCode: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
   });
-  user = model.required<User | null>();
+  user = model.required<ProcessedUser | null>();
   // TODO: switch to signal
   isEditMode = false;
 

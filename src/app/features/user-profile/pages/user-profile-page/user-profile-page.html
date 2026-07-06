@@ -1,1 +1,11 @@
-<xas-personal-information [user]="user()" />
+@switch (loadStatus()) {
+  @case (DATA_LOAD_STATUSES.LOADING) {
+    <tui-loader size="xxl" />
+  }
+  @case (DATA_LOAD_STATUSES.WITH_DATA) {
+    <xas-personal-information [user]="user()!" />
+  }
+  @case (DATA_LOAD_STATUSES.ERROR) {
+    {{ showErrorMessage('Failed to load Profile') }}
+  }
+}

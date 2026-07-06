@@ -5,9 +5,10 @@ import { LocalStorage } from '@core/local-storage';
 import { environment } from '@environments/environment';
 import { LoginCredentials, RegisterCredentials } from '@models/features/authentication';
 import { AnonymousSessionService } from './anonymous-session.service';
-import { Observable, tap } from 'rxjs';
-import { LoginPostResponse, User } from '@models/http';
+import { map, Observable, tap } from 'rxjs';
+import { LoginPostResponse } from '@models/http';
 import { CustomerGetResponse } from '@models/http/request/me.type';
+import { Address, ProcessedUser } from '@models/features/user-profile';
 
 @Injectable({
   providedIn: 'root',
@@ -22,8 +23,8 @@ export class CustomerSessionService {
   private refreshToken = signal<string | null>(
     this.localStorageService.getValue<string>(environment.LOCAL_STORAGE_KEYS.refreshToken),
   );
-  private user = signal<User | null>(
-    this.localStorageService.getValue<User | null>(environment.LOCAL_STORAGE_KEYS.user),
+  private user = signal<ProcessedUser | null>(
+    this.localStorageService.getValue<ProcessedUser | null>(environment.LOCAL_STORAGE_KEYS.user),
   );
 
   constructor() {
@@ -42,7 +43,7 @@ export class CustomerSessionService {
     });
 
     effect(() => {
-      this.localStorageService.setValue<User | null>(
+      this.localStorageService.setValue<ProcessedUser | null>(
         environment.LOCAL_STORAGE_KEYS.user,
         this.user(),
       );
@@ -124,21 +125,45 @@ export class CustomerSessionService {
       );
   }
 
-  getUser() {
-    return this.user();
+  getUser(): Observable<ProcessedUser> {
+    return this.apiService
+      .getMe({
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .pipe(
+        map((user): ProcessedUser => {
+          const processedUserInfo = this.processUserInfo(user);
+          this.user.set(processedUserInfo);
+          return processedUserInfo;
+        }),
+      );
   }
 
   getAccessToken() {
     return this.accessToken();
   }
 
-  processUserInfo(customer: CustomerGetResponse): User {
+  processUserInfo(customer: CustomerGetResponse): ProcessedUser {
+    const address = this.processAddress(customer.addresses);
     return {
       id: customer.id,
-      addresses: customer.addresses,
+      address: this.processAddress(customer.addresses) ?? null,
       email: customer.email,
       firstName: customer.firstName,
       lastName: customer.lastName,
+      // TODO: add date of birth
+      dateOfBirth: new Date(),
+      street: address?.streetName ?? '',
+      city: address?.city ?? '',
+      postalCode: address?.postalCode ?? '',
+      country: address?.country ?? '',
     };
+  }
+
+  processAddress(addresses: [string]): Address | null {
+    const addr = addresses[0];
+    return addr ? (JSON.parse(addr) as Address) : null;
   }
 }
