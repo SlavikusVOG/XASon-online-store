@@ -15,6 +15,5 @@ export const appConfig: ApplicationConfig = {
     provideTaiga(),
     provideNetwork(),
     { provide: AUTH_SERVICE_TOKEN, useClass: AuthService },
-    provideTaiga(),
   ],
 };
