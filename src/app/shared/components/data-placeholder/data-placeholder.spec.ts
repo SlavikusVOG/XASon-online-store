@@ -15,6 +15,7 @@ describe('DataPlaceholder', () => {
     fixture = TestBed.createComponent(DataPlaceholder);
     fixture.componentRef.setInput('icon', PackageSearch);
     fixture.componentRef.setInput('text', 'Nothing found');
+    fixture.componentRef.setInput('buttonText', 'Retry');
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
