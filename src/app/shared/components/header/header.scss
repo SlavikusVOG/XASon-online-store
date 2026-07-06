@@ -80,6 +80,14 @@
 
     transition: 0.3s;
 
+    &:is(button) {
+      border: none;
+      background: none;
+      font: inherit;
+      width: 100%;
+      font-size: 20px;
+    }
+
     &:hover {
       background-color: rgba(138, 43, 226, 0.3);
     }
