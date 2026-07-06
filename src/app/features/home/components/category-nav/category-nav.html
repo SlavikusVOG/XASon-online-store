@@ -1,17 +1,18 @@
 <section class="categories">
-  <h2 class="categories__title">Category</h2>
+  <h2 tuiTitle class="categories__title">Shop by Category</h2>
 
-  <div class="categories__grid">
+  <div class="categories__row">
     @for (category of categories(); track category.id) {
       <a
         [routerLink]="[PAGES.CATALOG.link]"
         [queryParams]="{ category: category.slug }"
-        class="categories__card"
+        class="categories__chip"
+        tuiAppearance="floating"
       >
-        <div class="categories__card-info">
-          <h3 class="categories__card-name">{{ category.name }}</h3>
-          <span class="categories__card-count">{{ category.productCount }} items</span>
-        </div>
+        <span class="categories__chip-icon" [style.background]="category.name | tuiAutoColor">
+          {{ category.name | tuiInitials }}
+        </span>
+        <span class="categories__chip-name">{{ category.name }}</span>
       </a>
     }
   </div>

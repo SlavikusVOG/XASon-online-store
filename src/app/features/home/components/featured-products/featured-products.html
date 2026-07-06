@@ -1,11 +1,13 @@
 <section class="featured">
   <div class="featured__header">
-    <h2 class="featured__title">Featured Products</h2>
-    <a [routerLink]="PAGES.CATALOG.link" class="featured__view-all">View All</a>
+    <h2 tuiTitle class="featured__title">Featured Products</h2>
+    <a [routerLink]="PAGES.CATALOG.link" class="featured__view-all">
+      View All
+      <span class="featured__view-arrow">&rarr;</span>
+    </a>
   </div>
 
   <div class="featured__grid">
-    <!-- TODO: Replace with actual product cards -->
     @for (product of products().slice(0, 4); track product.id) {
       <xas-product-card
         [product]="product"
