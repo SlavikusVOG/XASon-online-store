@@ -2,7 +2,6 @@
 <p class="register">You've been here before? <a [routerLink]="PAGES.LOGIN.link">Login.</a></p>
 <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
   @for (field of fields; track field.label) {
-    <!-- todo добавить проброс label, placeholder, сделать кастомный текст ошибки -->
     @if (field.type === 'password') {
       <xas-reactive-password-input
         [formControl]="field.control"
