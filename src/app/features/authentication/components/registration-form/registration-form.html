@@ -1,13 +1,26 @@
+<h1 class="title">We welcome you, adventurer.</h1>
+<p class="register">You've been here before? <a [routerLink]="PAGES.LOGIN.link">Login.</a></p>
 <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
   @for (field of fields; track field.label) {
-    <xas-reactive-form-input
-      [inputLabel]="field.label"
-      [incomingInputType]="field.type"
-      [inputId]="field.label"
-      [control]="field.control"
-      [errorMessage]="field.control.errors?.['required'] ? field.errorMessage : ''"
-      [inputPlaceholder]="field.placeholder"
-    />
+    @if (field.type === 'password') {
+      <xas-reactive-password-input
+        [formControl]="field.control"
+        [label]="field.label"
+        [placeholder]="field.placeholder || 'Enter your password'"
+      />
+    } @else {
+      <xas-reactive-input
+        [formControl]="field.control"
+        [label]="field.label"
+        [placeholder]="field.placeholder"
+        [type]="field.type"
+      />
+    }
   }
-  <button type="submit">Register</button>
+  <div class="form-buttons">
+    <button tuiButton size="m" appearance="secondary" type="button" (click)="clearForm()">
+      Clear
+    </button>
+    <button tuiButton size="m" type="submit">Register</button>
+  </div>
 </form>
