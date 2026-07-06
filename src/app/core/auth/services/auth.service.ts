@@ -1,26 +1,35 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { LoginCredentials, RegisterCredentials } from '@models/features/authentication';
 import { CustomerSessionService } from './customer-session.service';
+import { AnonymousSessionService } from './anonymous-session.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private readonly customerSessionService = inject(CustomerSessionService);
+  private readonly anonymousSessionService = inject(AnonymousSessionService);
 
-  private accessToken = signal<string | null>(this.customerSessionService.getAccessToken());
+  constructor() {
+    this.ensureAnonymousToken();
+  }
 
   isAuthenticated() {
-    return this.accessToken() !== null;
+    return this.customerSessionService.getAccessToken() !== null;
   }
 
   login(credentials: LoginCredentials) {
-    this.customerSessionService.login(credentials);
-    this.accessToken.set(this.customerSessionService.getAccessToken());
+    return this.customerSessionService.login(credentials);
   }
 
   register(credentials: RegisterCredentials) {
     const response = this.customerSessionService.register(credentials);
     return response;
+  }
+
+  private ensureAnonymousToken() {
+    if (!this.isAuthenticated()) {
+      this.anonymousSessionService.ensureAccessToken();
+    }
   }
 }

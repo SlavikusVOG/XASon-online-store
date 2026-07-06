@@ -1,12 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
-import { Product } from '@models/features/catalog';
+import { CatalogProductsGetQueries, ProductPagedQueryResponse } from '@models/features/catalog';
 import {
   AnonymousSessionAccessTokenPostQueries,
   AnonymousSessionAccessTokenPostResponse,
-  AppCredentialsAccessTokenPostQueries,
-  AppCredentialsAccessTokenPostResponse,
   CustomersPostResponse,
   CustomersTokenPostQueries,
   CustomersTokenPostResponse,
@@ -16,8 +14,7 @@ import {
   RefreshTokenPostQueries,
   RefreshTokenPostResponse,
 } from '@models/http';
-import { delay, Observable, of } from 'rxjs';
-import { catalogProducts } from '../../../mocks/catalog.mocks';
+import { Observable } from 'rxjs';
 import {
   DeleteRequest,
   GetRequest,
@@ -26,6 +23,7 @@ import {
   PutRequest,
 } from '../types/api.types';
 import { buildUrl } from '../utils/api.utils';
+import { CustomerGetQueries, CustomerGetResponse } from '@models/http/request/me.type';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -35,53 +33,40 @@ export class ApiService {
     return this.get('example/{{id}}', request);
   }
 
-  // TODO: move to backend for frontend
-  public appCredentialsAccessTokenPost(
-    request: PostRequest<{ Q: AppCredentialsAccessTokenPostQueries }>,
-  ): Observable<AppCredentialsAccessTokenPostResponse> {
-    return this.post(`${environment.commercetools.authUrl}/oauth/token`, request);
-  }
-
   public anonymousSessionAccessTokenPost(
     request: PostRequest<{ Q: AnonymousSessionAccessTokenPostQueries }>,
   ): Observable<AnonymousSessionAccessTokenPostResponse> {
-    return this.post(
-      `${environment.commercetools.authUrl}/oauth/${environment.commercetools.projectKey}/anonymous/token`,
-      request,
-    );
+    return this.post(`${environment.apiUrl}/auth/anonymous`, request);
   }
 
   public refreshTokenPost(
     request: PostRequest<{ Q: RefreshTokenPostQueries }>,
   ): Observable<RefreshTokenPostResponse> {
-    return this.post(`${environment.commercetools.authUrl}/oauth/token`, request);
+    return this.post(`${environment.apiUrl}/auth/refresh`, request);
   }
 
   public loginPost(request: PostRequest): Observable<LoginPostResponse> {
-    return this.post(
-      `${environment.commercetools.apiUrl}/${environment.commercetools.projectKey}/login`,
-      request,
-    );
+    return this.post(`${environment.apiUrl}/auth/login`, request);
   }
 
   public customersPost(request: PostRequest): Observable<CustomersPostResponse> {
-    return this.post(
-      `${environment.commercetools.apiUrl}/${environment.commercetools.projectKey}/customers`,
-      request,
-    );
+    return this.post(`${environment.apiUrl}/auth/signup`, request);
   }
 
   public customersTokenPost(
     request: PostRequest<{ Q: CustomersTokenPostQueries }>,
   ): Observable<CustomersTokenPostResponse> {
-    return this.post(
-      `${environment.commercetools.authUrl}/oauth/${environment.commercetools.projectKey}/customers/token`,
-      request,
-    );
+    return this.post(`${environment.apiUrl}/auth/login`, request);
   }
 
-  getCatalogProducts(): Observable<Product[]> {
-    return of(catalogProducts).pipe(delay(5_000));
+  public getCatalogProducts(
+    request: GetRequest<{ Q: CatalogProductsGetQueries }>,
+  ): Observable<ProductPagedQueryResponse> {
+    return this.get(`${environment.apiUrl}/products`, request);
+  }
+
+  public getMe(request: GetRequest<{ Q: CustomerGetQueries }>): Observable<CustomerGetResponse> {
+    return this.get(`${environment.apiUrl}/me`, request);
   }
 
   private get<R>(url: string, request: GetRequest): Observable<R> {

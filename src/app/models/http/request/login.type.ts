@@ -1,8 +1,7 @@
 export type LoginPostResponse = {
-  addresses: [];
-  email: string;
-  firstName: string;
-  id: string;
-  lastName: string;
-  password: string;
+  access_token: string;
+  expires_in: number;
+  token_type: string;
+  scope: string;
+  refresh_token: string;
 };

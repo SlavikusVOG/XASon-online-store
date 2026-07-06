@@ -64,4 +64,11 @@ export const promoCodes: PromoCode[] = [
     discount: '10%',
     isActive: true,
   },
+  {
+    id: '2',
+    code: 'ARTIFACT20',
+    description: '20% off on all accessories',
+    discount: '20%',
+    isActive: true,
+  },
 ];

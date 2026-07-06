@@ -1,6 +1,5 @@
 import { isPresent } from '@shared/utils';
 import { HttpParams, HttpQueries } from '../types/api.types';
-import { environment } from '@environments/environment';
 
 export const buildUrl = (
   url: string,
@@ -35,17 +34,3 @@ const createQueries = (queries: HttpQueries): string => {
     .map((key) => `${key}=${encodeURIComponent(queries[key])}`)
     .join('&');
 };
-
-export function getBasicAuthHeader(): string {
-  const { clientId, clientSecret } = environment.commercetools;
-  const encoded = btoa(`${clientId}:${clientSecret}`);
-  return `Basic ${encoded}`;
-}
-
-export function getBearerAuthHeader(token: string | null): string {
-  if (!token) {
-    throw new Error('Token is required');
-  }
-  const accessToken = token;
-  return `Bearer ${accessToken}`;
-}

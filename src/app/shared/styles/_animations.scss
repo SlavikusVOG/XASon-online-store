@@ -1,0 +1,41 @@
+@keyframes glow-shift {
+  0%,
+  100% {
+    box-shadow:
+      0 0 6px var(--color-brand),
+      0 0 12px var(--color-accent);
+  }
+  25% {
+    box-shadow:
+      0 0 6px var(--color-accent),
+      0 0 12px var(--color-muted);
+  }
+  50% {
+    box-shadow:
+      0 0 6px var(--color-muted),
+      0 0 12px var(--color-highlight);
+  }
+  75% {
+    box-shadow:
+      0 0 6px var(--color-highlight),
+      0 0 12px var(--color-brand-warm);
+  }
+}
+
+@keyframes magic-shimmer {
+  0% {
+    background-position: 150% center;
+  }
+  100% {
+    background-position: -50% center;
+  }
+}
+
+@keyframes text-shimmer {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 100% center;
+  }
+}

@@ -1,31 +1,48 @@
 import { Component, output, signal } from '@angular/core';
-import { form } from '@angular/forms/signals';
+import { email, form, FormField, FormRoot, required } from '@angular/forms/signals';
+import { RouterLink } from '@angular/router';
+import { PAGES } from '@core/router/pages.const';
 import { LoginCredentials } from '@models/features/authentication';
-import { SignalFormInput } from '@shared/components/signal-form/form-input/form-input';
+import { Input, PasswordInput } from '@shared/forms/signal';
+import { TuiButton } from '@taiga-ui/core';
 
 @Component({
   selector: 'xas-login-form',
-  imports: [SignalFormInput],
+  imports: [FormRoot, Input, FormField, TuiButton, RouterLink, PasswordInput],
   templateUrl: './login-form.html',
   styleUrl: './login-form.scss',
 })
 export class LoginForm {
+  public readonly PAGES = PAGES;
+
   private readonly INITIAL_LOGIN_MODEL: LoginCredentials = {
     email: '',
     password: '',
   };
-  loginModel = signal({ ...this.INITIAL_LOGIN_MODEL });
-  loginForm = form(this.loginModel);
+
+  loginModel = signal<LoginCredentials>({ ...this.INITIAL_LOGIN_MODEL });
+
+  loginForm = form(
+    this.loginModel,
+    (schemaPath) => {
+      required(schemaPath.email, { message: 'Email is required.' });
+      email(schemaPath.email, { message: 'Provide a valid email.' });
+
+      required(schemaPath.password, { message: 'Password is required.' });
+    },
+    {
+      submission: {
+        action: async (form) => {
+          this.loginSubmit.emit(form().value());
+          return;
+        },
+      },
+    },
+  );
+
   loginSubmit = output<LoginCredentials>();
 
-  onSubmit(event: SubmitEvent): void {
-    event.preventDefault();
-    this.loginSubmit.emit(this.loginModel());
-  }
-
   clearForm(): void {
-    this.loginForm().reset({
-      ...this.INITIAL_LOGIN_MODEL,
-    });
+    this.loginForm().reset({ ...this.INITIAL_LOGIN_MODEL });
   }
 }

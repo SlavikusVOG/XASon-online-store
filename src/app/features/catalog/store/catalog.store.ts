@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { ApiService } from '@core/http';
-import { Product } from '@models/features/catalog';
+import { Product, ProductDto } from '@models/features/catalog';
 import { tapResponse } from '@ngrx/operators';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
@@ -24,21 +24,32 @@ export const CatalogStore = signalStore(
       pipe(
         tap(() => patchState(store, { loadStatus: DATA_LOAD_STATUSES.LOADING })),
         switchMap(() =>
-          apiService.getCatalogProducts().pipe(
-            tapResponse({
-              next: (res) => {
-                patchState(store, {
-                  products: res,
-                  loadStatus: res.length
-                    ? DATA_LOAD_STATUSES.WITH_DATA
-                    : DATA_LOAD_STATUSES.NO_DATA,
-                });
+          apiService
+            .getCatalogProducts({
+              params: {
+                limit: 10,
+                offset: 0,
               },
-              error: () => {
-                patchState(store, { loadStatus: DATA_LOAD_STATUSES.ERROR });
+              headers: {
+                'Content-Type': 'application/json',
               },
-            }),
-          ),
+            })
+            .pipe(
+              tapResponse({
+                next: (res) => {
+                  const products = processDtoData(res.results);
+                  patchState(store, {
+                    products,
+                    loadStatus: products.length
+                      ? DATA_LOAD_STATUSES.WITH_DATA
+                      : DATA_LOAD_STATUSES.NO_DATA,
+                  });
+                },
+                error: () => {
+                  patchState(store, { loadStatus: DATA_LOAD_STATUSES.ERROR });
+                },
+              }),
+            ),
         ),
       ),
     ),
@@ -62,3 +73,16 @@ export const CatalogStore = signalStore(
     },
   })),
 );
+
+function processDtoData(productsDto: ProductDto[]): Product[] {
+  return productsDto.map(
+    (item) =>
+      ({
+        id: item.id,
+        name: item.name['en-US'],
+        image: item.masterVariant.images[0].url,
+        description: item.description['en-US'],
+        isInCart: false,
+      }) as unknown as Product,
+  );
+}

@@ -1,11 +1,16 @@
 @if (banners().length > 0) {
-  <section class="banner">
+  <section class="banner" tuiAppearance="floating">
     @for (banner of banners(); track banner.id) {
       <a [routerLink]="banner.link" class="banner__slide">
         <div class="banner__content">
-          <h2 class="banner__title">{{ banner.title }}</h2>
+          <span class="banner__badge">Hot Deal</span>
+          <h2 tuiTitle class="banner__title">{{ banner.title }}</h2>
           <p class="banner__subtitle">{{ banner.subtitle }}</p>
-          <span class="banner__cta">Shop Now →</span>
+          <ul class="banner__features">
+            <li class="banner__feature">Free shipping on orders over $50</li>
+            <li class="banner__feature">30-day easy returns</li>
+          </ul>
+          <button tuiButton type="button" size="m" class="banner__cta">Shop Now</button>
         </div>
 
         @if (banner.image) {

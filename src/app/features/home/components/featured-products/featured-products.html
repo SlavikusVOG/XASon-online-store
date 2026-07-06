@@ -1,17 +1,49 @@
 <section class="featured">
   <div class="featured__header">
-    <h2 class="featured__title">Featured Products</h2>
-    <a [routerLink]="PAGES.CATALOG.link" class="featured__view-all">View All</a>
+    <h2 tuiTitle class="featured__title">Featured Products</h2>
+    <a [routerLink]="PAGES.CATALOG.link" class="featured__view-all">
+      View All
+      <span class="featured__view-arrow">&rarr;</span>
+    </a>
   </div>
 
-  <div class="featured__grid">
-    <!-- TODO: Replace with actual product cards -->
-    @for (product of products().slice(0, 4); track product.id) {
-      <xas-product-card
-        [product]="product"
-        (addedToCart)="addToCart($event)"
-        (removedFromCart)="removeFromCart($event)"
+  @switch (catalogStore.loadStatus()) {
+    @case (DATA_LOAD_STATUSES.LOADING) {
+      <div class="featured__grid" aria-busy="true" aria-live="polite">
+        @for (item of skeletonItems; track item) {
+          <xas-product-card-skeleton />
+        }
+      </div>
+    }
+    @case (DATA_LOAD_STATUSES.WITH_DATA) {
+      <div class="featured__grid">
+        @for (
+          product of catalogStore.products().slice(0, featuredProductsCount);
+          track product.id
+        ) {
+          <xas-product-card
+            [product]="product"
+            (addedToCart)="addToCart($event)"
+            (removedFromCart)="removeFromCart($event)"
+          />
+        }
+      </div>
+    }
+    @case (DATA_LOAD_STATUSES.NO_DATA) {
+      <xas-data-placeholder
+        [icon]="emptyPlaceholderIcon"
+        text="Nothing found"
+        buttonText="Retry"
+        (retry)="retryLoad()"
       />
     }
-  </div>
+    @case (DATA_LOAD_STATUSES.ERROR) {
+      <xas-data-placeholder
+        [icon]="errorPlaceholderIcon"
+        text="Error occured. Retry later"
+        buttonText="Retry"
+        (retry)="retryLoad()"
+      />
+    }
+  }
 </section>

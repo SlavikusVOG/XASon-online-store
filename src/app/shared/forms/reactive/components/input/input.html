@@ -1,0 +1,17 @@
+<label tuiLabel class="input-label">
+  {{ label() }}
+  <tui-textfield tuiTextfieldSize="m">
+    <input
+      tuiInput
+      [type]="type()"
+      [placeholder]="placeholder()"
+      [ngModel]="value()"
+      (blur)="onTouched()"
+      (ngModelChange)="changeValue($event)"
+    />
+  </tui-textfield>
+</label>
+
+@if (hostControl) {
+  <tui-error [formControl]="hostControl" />
+}

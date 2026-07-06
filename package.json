@@ -26,6 +26,8 @@
     "@taiga-ui/core": "^5.10.0",
     "@taiga-ui/icons": "^5.10.0",
     "@taiga-ui/kit": "^5.10.0",
+    "@taiga-ui/layout": "^5.10.0",
+    "lucide": "^1.23.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },

@@ -1,17 +1,42 @@
 @if (promoCodes().length > 0) {
   <section class="promo-codes">
-    <h2 class="promo-codes__title">Active Promo Codes</h2>
-
-    <div class="promo-codes__list">
-      @for (promo of promoCodes(); track promo.id) {
-        <div class="promo-codes__card">
-          <div class="promo-codes__code">{{ promo.code }}</div>
-          <div class="promo-codes__info">
-            <span class="promo-codes__discount">{{ promo.discount }}</span>
-            <span class="promo-codes__description">{{ promo.description }}</span>
-          </div>
+    <div class="promo-codes__container">
+      <div class="promo-codes__inner">
+        <div class="promo-codes__info">
+          <h2 tuiTitle class="promo-codes__title">Active Promo Codes</h2>
+          <p class="promo-codes__desc">
+            Use these codes at checkout to get discounts on your favorite items.
+          </p>
         </div>
-      }
+
+        <div class="promo-codes__cards">
+          @for (promo of promoCodes(); track promo.id) {
+            <div class="promo-codes__card">
+              <span class="promo-codes__bar"></span>
+
+              <div class="promo-codes__card-body">
+                <span class="promo-codes__discount">{{ promo.description }}</span>
+                <strong class="promo-codes__code">{{ promo.code }}</strong>
+              </div>
+
+              <button
+                tuiButton
+                type="button"
+                size="xs"
+                appearance="flat"
+                class="promo-codes__copy"
+                (click)="copyCode(promo.code, promo.id)"
+              >
+                @if (copiedId() === promo.id) {
+                  <tui-icon icon="@tui.check" />
+                } @else {
+                  <tui-icon icon="@tui.copy" />
+                }
+              </button>
+            </div>
+          }
+        </div>
+      </div>
     </div>
   </section>
 }

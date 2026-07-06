@@ -1,51 +1,107 @@
 .promo-codes {
-  padding: 32px 0;
+  padding: 48px 0;
 
-  &__title {
-    font-size: 24px;
-    font-weight: 600;
-    margin: 0 0 24px;
-    color: #111;
+  &__container {
+    border: 1px solid color-mix(in srgb, var(--color-muted) 20%, transparent);
+    border-radius: 16px;
+    background: #ffffff08;
+    padding: 32px 36px;
   }
 
-  &__list {
+  &__inner {
     display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
+    align-items: center;
+    gap: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  &__info {
+    flex-shrink: 0;
+    max-width: 240px;
+  }
+
+  &__title {
+    margin: 0 0 8px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--tui-text-primary, #fff);
+  }
+
+  &__desc {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+  }
+
+  &__cards {
+    display: flex;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
   }
 
   &__card {
     display: flex;
     align-items: center;
-    gap: 16px;
-    border: 1px dashed #000;
+    gap: 14px;
+    flex: 1;
+    padding: 14px 14px 14px 0;
     border-radius: 12px;
-    padding: 16px 24px;
-    min-width: 240px;
+    border: 1.5px dashed color-mix(in srgb, var(--color-muted) 35%, transparent);
+    background: #ffffff0a;
+    overflow: hidden;
+  }
+
+  &__bar {
+    width: 4px;
+    align-self: stretch;
+    border-radius: 0 2px 2px 0;
+    flex-shrink: 0;
+
+    .promo-codes__card:nth-child(1) & {
+      background: var(--color-cta);
+    }
+
+    .promo-codes__card:nth-child(2) & {
+      background: var(--color-success);
+    }
+
+    .promo-codes__card:nth-child(3) & {
+      background: var(--color-accent);
+    }
+  }
+
+  &__card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__discount {
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
   }
 
   &__code {
     font-family: 'Courier New', Courier, monospace;
-    font-size: 18px;
+    font-size: 1.05rem;
     font-weight: 700;
-    padding: 6px 12px;
-    border-radius: 8px;
-    letter-spacing: 1px;
+    color: var(--color-text-primary);
+    letter-spacing: 0.5px;
   }
 
-  &__info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
+  &__copy {
+    flex-shrink: 0;
+    color: #ffffff73;
+    transition: color 0.2s ease;
 
-  &__discount {
-    font-size: 14px;
-    font-weight: 600;
-  }
-
-  &__description {
-    font-size: 12px;
-    color: #6b7280;
+    &:hover {
+      color: var(--color-text-primary);
+    }
   }
 }

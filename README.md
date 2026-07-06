@@ -15,3 +15,7 @@ Want to learn how to cook the best Krabby Patty in the ocean? Here is the formul
 ## Deploy
 
 https://xa-son-online-store.vercel.app/
+
+## Short video with demonstration
+
+https://www.youtube.com/watch?v=VU4BpF_d47Q

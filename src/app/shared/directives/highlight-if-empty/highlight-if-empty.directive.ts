@@ -7,8 +7,8 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgControl } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
   selector:
@@ -32,15 +32,10 @@ export class HighlightIfEmptyDirective implements OnInit {
   }
 
   ngOnInit(): void {
-    const control = this.ngControl?.control;
-    if (!control) {
-      return;
-    }
-
-    control.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-      this.updateEmptyState();
-    });
     this.updateEmptyState();
+    this.ngControl?.valueChanges
+      ?.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.updateEmptyState());
   }
 
   updateEmptyState(): void {

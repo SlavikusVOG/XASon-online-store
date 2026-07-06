@@ -1,0 +1,32 @@
+# Sprint 4: HTTP, RxJS & Testing (@angular/common/http, rxjs, @angular/core/testing)
+
+- **What was done:**
+  - connected the frontend to the BFF: added `apiUrl` to environments, refactored API and session services, removed the old app credentials flow — [PR #83](https://github.com/SlavikusVOG/XASon-online-store/pull/83)
+  - implemented `auth-token` HTTP interceptor with skip paths for anonymous auth requests
+  - improved anonymous and customer session management: fetch customer info, store user data in localStorage, return `Observable` from login
+  - added DTO processing to the catalog store and updated product types
+  - implemented the user profile page with personal information using Taiga UI layout and icons
+  - added logout button to the header and implemented logout functionality
+  - added toast notifications to login and registration pages
+  - improved registration form layout and implemented reactive password input
+  - enhanced user profile tests with `TestHostComponent` and mock user data
+  - refactored user model to `ProcessedUser` and updated customer session service
+- **Problems:**
+  - `highlight-if-empty` directive threw `Cannot read properties of undefined (reading pipe)`
+    - **Solution:** removed unnecessary RxJS subscription from the directive and switched to reactive empty-state updates
+  - anonymous token request sent `anonymous_id` in query params instead of the request body
+    - **Solution:** moved `anonymous_id` to the request body in `anonymous-session.service.ts`
+  - catalog API call failed because of wrong `Content-Type` header
+    - **Solution:** changed header from `application/x-www-form-urlencoded` to `application/json`
+  - signup URL and customer types were incorrect after connecting to the BFF
+    - **Solution:** fixed signup URL and updated customer types
+  - component tests failed after profile and auth refactoring
+    - **Solution:** updated tests and added proper mocks with `TestHostComponent`
+- **What I learned:**:
+  - how to attach Bearer tokens automatically with a functional HTTP interceptor and skip specific auth endpoints
+  - using `switchMap` in interceptors to fetch an anonymous token before sending protected requests
+  - connecting Angular services to a BFF instead of calling Commercetools directly from the SPA
+  - testing components with a host wrapper and mock user data
+  - Taiga UI layout, icons, and toast notifications for auth feedback
+  - RxJS patterns for login/logout flows and session state synchronization
+- **Time spent:** ~60 hours
