@@ -19,17 +19,6 @@ export class UserProfilePage implements OnInit {
   protected readonly DATA_LOAD_STATUSES = DATA_LOAD_STATUSES;
   protected readonly loadStatus = signal<DataLoadStatus>(DATA_LOAD_STATUSES.INIT);
   protected readonly user = signal<ProcessedUser | null>(null);
-  // userMock: ProcessedUser = {
-  //   id: '1',
-  //   email: 'test@test.com',
-  //   firstName: 'John',
-  //   lastName: 'Doe',
-  //   dateOfBirth: new Date(),
-  //   street: '123 Main St',
-  //   city: 'Anytown',
-  //   postalCode: '12345',
-  //   country: 'USA',
-  // };
 
   async ngOnInit(): Promise<void> {
     this.loadStatus.set(DATA_LOAD_STATUSES.LOADING);
