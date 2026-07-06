@@ -4,7 +4,7 @@
   &__container {
     border: 1px solid color-mix(in srgb, var(--color-muted) 20%, transparent);
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.03);
+    background: #ffffff08;
     padding: 32px 36px;
   }
 
@@ -32,7 +32,7 @@
     margin: 0;
     font-size: 0.85rem;
     line-height: 1.5;
-    color: rgba(255, 255, 255, 0.55);
+    color: var(--color-text-muted);
   }
 
   &__cards {
@@ -50,7 +50,7 @@
     padding: 14px 14px 14px 0;
     border-radius: 12px;
     border: 1.5px dashed color-mix(in srgb, var(--color-muted) 35%, transparent);
-    background: rgba(255, 255, 255, 0.04);
+    background: #ffffff0a;
     overflow: hidden;
   }
 
@@ -84,24 +84,24 @@
   &__discount {
     font-size: 0.72rem;
     font-weight: 400;
-    color: rgba(255, 255, 255, 0.55);
+    color: var(--color-text-muted);
   }
 
   &__code {
     font-family: 'Courier New', Courier, monospace;
     font-size: 1.05rem;
     font-weight: 700;
-    color: #fff;
+    color: var(--color-text-primary);
     letter-spacing: 0.5px;
   }
 
   &__copy {
     flex-shrink: 0;
-    color: rgba(255, 255, 255, 0.45);
+    color: #ffffff73;
     transition: color 0.2s ease;
 
     &:hover {
-      color: #fff;
+      color: var(--color-text-primary);
     }
   }
 }
