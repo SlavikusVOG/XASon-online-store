@@ -1,20 +1,36 @@
-import { Component, output } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, DestroyRef, inject, output } from '@angular/core';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { RegisterCredentials } from '@models/features/authentication';
-import { ReactiveFormInput } from '@shared/components/reactive-form/form-input/form-input';
+import { ReactiveInput, ReactivePasswordInput } from '@shared/forms/reactive/components';
+import { TuiButton } from '@taiga-ui/core';
+import { PAGES } from '@core/router/pages.const';
+import { RouterLink } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'xas-registration-form',
-  imports: [ReactiveFormsModule, ReactiveFormInput],
+  imports: [ReactiveFormsModule, ReactiveInput, TuiButton, RouterLink, ReactivePasswordInput],
   templateUrl: './registration-form.html',
+  // TODO: standardize styles
   styleUrl: './registration-form.scss',
 })
 export class RegistrationForm {
+  protected readonly PAGES = PAGES;
   protected readonly register = output<RegisterCredentials>();
   protected readonly registrationForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    confirmPassword: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+      passwordMatchValidator,
+    ]),
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
     // TODO: move to user profile page
@@ -107,18 +123,49 @@ export class RegistrationForm {
     //   errorMessage: 'Country is required',
     // },
   ];
-  onSubmit() {
-    if (this.registrationForm.invalid) {
-      return;
-    }
 
-    const { email, password, firstName, lastName } = this.registrationForm.value;
-    const credentials: RegisterCredentials = {
-      email: email ?? '',
-      password: password ?? '',
-      firstName: firstName ?? '',
-      lastName: lastName ?? '',
-    };
-    this.register.emit(credentials);
+  private readonly destroyRef = inject(DestroyRef);
+
+  constructor() {
+    this.registrationForm.controls.password.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.registrationForm.controls.confirmPassword.updateValueAndValidity({
+          emitEvent: false,
+        });
+      });
   }
+  onSubmit() {
+    if (this.registrationForm.valid) {
+      const { email, password, firstName, lastName } = this.registrationForm.value;
+      const credentials: RegisterCredentials = {
+        email: email ?? '',
+        password: password ?? '',
+        firstName: firstName ?? '',
+        lastName: lastName ?? '',
+      };
+      this.register.emit(credentials);
+    } else {
+      this.registrationForm.markAllAsDirty();
+      this.registrationForm.markAllAsTouched();
+    }
+  }
+
+  clearForm(): void {
+    this.registrationForm.reset();
+  }
+}
+
+function passwordMatchValidator(control: AbstractControl): Validators | null {
+  const confirmPassword = control.value;
+  const password = control.parent?.get('password')?.value;
+  if (!password || !confirmPassword) {
+    return null;
+  }
+
+  return password === confirmPassword
+    ? null
+    : {
+        other: 'Passwords do not match',
+      };
 }

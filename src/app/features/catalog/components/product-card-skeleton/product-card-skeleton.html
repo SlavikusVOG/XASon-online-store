@@ -1,0 +1,21 @@
+<article
+  tuiAppearance="floating"
+  class="product-card"
+  aria-busy="true"
+  aria-label="Loading product"
+>
+  <div class="product-card__media">
+    <div class="product-card__image" [tuiSkeleton]="true"></div>
+  </div>
+
+  <div class="product-card__body">
+    <h3 tuiTitle class="product-card__name" [tuiSkeleton]="true">Product name</h3>
+    <p class="product-card__description" [tuiSkeleton]="18">Description placeholder</p>
+
+    <div class="product-card__actions">
+      <button tuiButton type="button" appearance="primary" size="s" [tuiSkeleton]="true">
+        Add to cart
+      </button>
+    </div>
+  </div>
+</article>

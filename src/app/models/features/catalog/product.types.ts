@@ -47,8 +47,56 @@ export type CatalogProductsGetQueries = {
   offset: number;
 };
 
-export type ProductDto = {
+export type ProductDto2 = {
   id: string;
   key: string;
   masterData: ProductCatalogData;
+};
+
+export type ProductDto = {
+  id: string;
+  version: number;
+  productType: {
+    typeId: string;
+    id: string;
+  };
+  name: Record<string, string>;
+  description: Record<string, string>;
+  categories: { typeId: string; id: string }[];
+  slug: Record<string, string>;
+  masterVariant: {
+    id: number;
+    sku: string;
+    key: string;
+    prices: {
+      id: string;
+      value: {
+        type: string;
+        currencyCode: string;
+        centAmount: number;
+        fractionDigits: number;
+      };
+      key: string;
+      country: string;
+    }[];
+    images: {
+      url: string;
+      dimensions: { w: number; h: number };
+    }[];
+    availability: {
+      isOnStock: boolean;
+      availableQuantity: number;
+      version: number;
+      id: string;
+    };
+  };
+  hasStagedChanges: boolean;
+  published: boolean;
+  key: string;
+  taxCategory: {
+    typeId: string;
+    id: string;
+  };
+  createdAt: string;
+  lastModifiedAt: string;
 };

@@ -1,0 +1,11 @@
+<div class="data-placeholder">
+  <div class="data-placeholder__content">
+    <xas-lucide-icon [icon]="icon()" [size]="48" />
+
+    <p class="data-placeholder__text">{{ text() }}</p>
+
+    <button tuiButton type="button" appearance="secondary" size="s" (click)="onRetry()">
+      {{ buttonText() }}
+    </button>
+  </div>
+</div>
