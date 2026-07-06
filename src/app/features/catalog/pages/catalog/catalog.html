@@ -1,20 +1,38 @@
-@switch (catalogStore.loadStatus()) {
-  @case (DATA_LOAD_STATUSES.LOADING) {
-    <!-- скелетон -->
-  }
-  @case (DATA_LOAD_STATUSES.WITH_DATA) {
-    @for (product of catalogStore.products(); track product.id) {
-      <xas-product-card
-        [product]="product"
-        (addedToCart)="addToCart($event)"
-        (removedFromCart)="removeFromCart($event)"
+<section class="catalog">
+  @switch (catalogStore.loadStatus()) {
+    @case (DATA_LOAD_STATUSES.LOADING) {
+      <div class="catalog__grid" aria-busy="true" aria-live="polite">
+        @for (item of skeletonItems; track item) {
+          <xas-product-card-skeleton />
+        }
+      </div>
+    }
+    @case (DATA_LOAD_STATUSES.WITH_DATA) {
+      <div class="catalog__grid">
+        @for (product of catalogStore.products(); track product.id) {
+          <xas-product-card
+            [product]="product"
+            (addedToCart)="addToCart($event)"
+            (removedFromCart)="removeFromCart($event)"
+          />
+        }
+      </div>
+    }
+    @case (DATA_LOAD_STATUSES.NO_DATA) {
+      <xas-data-placeholder
+        [icon]="emptyPlaceholderIcon"
+        text="Nothing found"
+        buttonText="Retry"
+        (retry)="retryLoad()"
+      />
+    }
+    @case (DATA_LOAD_STATUSES.ERROR) {
+      <xas-data-placeholder
+        [icon]="errorPlaceholderIcon"
+        text="Error occured. Retry later"
+        buttonText="Retry"
+        (retry)="retryLoad()"
       />
     }
   }
-  @case (DATA_LOAD_STATUSES.NO_DATA) {
-    <!-- заглушка "продукты не найдены" -->
-  }
-  @case (DATA_LOAD_STATUSES.ERROR) {
-    <!-- заглушка "ошибка при загрузке" -->
-  }
-}
+</section>

@@ -79,9 +79,9 @@ function processDtoData(productsDto: ProductDto[]): Product[] {
     (item) =>
       ({
         id: item.id,
-        name: item.masterData.current.name,
-        image: item.masterData.current.variants.images[0],
-        description: '',
+        name: item.name['en-US'],
+        image: item.masterVariant.images[0].url,
+        description: item.description['en-US'],
         isInCart: false,
       }) as unknown as Product,
   );

@@ -4,7 +4,7 @@ import { offlineInterceptor } from '@core/http/interceptors/offline.interceptor'
 import { authTokenInterceptor } from './auth-token.interceptor';
 
 export const INTERCEPTORS: HttpInterceptorFn[] = [
+  authTokenInterceptor,
   errorInterceptor,
   offlineInterceptor,
-  authTokenInterceptor,
 ];

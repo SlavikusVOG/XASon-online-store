@@ -1,19 +1,3 @@
-import { CustomerGetResponse } from '@models/http/request/me.type';
-
-// export type User = {
-//   id: string;
-//   email: string;
-//   firstName: string;
-//   lastName: string;
-//   dateOfBirth: Date;
-//   street: string;
-//   city: string;
-//   postalCode: string;
-//   country: string;
-// };
-
-export type User = CustomerGetResponse;
-
 export type ProcessedUser = {
   id: string;
   address: Address | null;

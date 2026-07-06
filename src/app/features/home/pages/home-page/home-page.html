@@ -2,10 +2,6 @@
 
 <xas-category-nav [categories]="categories" />
 
-<xas-featured-products
-  [products]="products()"
-  (addedToCart)="addToCart($event)"
-  (removedFromCart)="removeFromCart($event)"
-/>
+<xas-featured-products />
 
 <xas-promo-codes-display [promoCodes]="promoCodes" />
