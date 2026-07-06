@@ -77,13 +77,4 @@
     font-weight: 500;
     color: var(--tui-text-primary, #fff);
   }
-
-  @keyframes magic-shimmer {
-    0% {
-      background-position: 150% center;
-    }
-    100% {
-      background-position: -50% center;
-    }
-  }
 }
