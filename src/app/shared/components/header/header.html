@@ -45,6 +45,10 @@
             <tui-icon icon="@tui.shopping-cart" />
             Cart
           </a>
+          <button class="header__link header__dropdown-item" type="button" (click)="onLogout()">
+            <tui-icon icon="@tui.log-out" />
+            Logout
+          </button>
         </ng-container>
 
         <ng-container *xasAuth="'guest'">
