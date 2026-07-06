@@ -4,7 +4,7 @@ import { AnonymousSessionService, CustomerSessionService } from '@core/auth';
 import { AnonymousSessionAccessTokenPostResponse } from '@models/http';
 import { switchMap } from 'rxjs';
 
-const SKIP_PATHS = ['/auth/anonymous', '/auth/refresh', '/auth/login', '/auth/logout'];
+const SKIP_PATHS = ['/auth/anonymous'];
 
 function shouldSkipPath(req: HttpRequest<unknown>): boolean {
   return SKIP_PATHS.some((path) => req.url.includes(path));

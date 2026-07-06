@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable, inject, signal, effect } from '@angular/core';
-import { ApiService, getBasicAuthHeader, getBearerAuthHeader } from '@core/http';
+import { ApiService } from '@core/http';
 import { LocalStorage } from '@core/local-storage';
 import { environment } from '@environments/environment';
 import { LoginCredentials, RegisterCredentials } from '@models/features/authentication';
@@ -53,23 +53,17 @@ export class CustomerSessionService {
     return this.apiService.customersTokenPost({
       body: new HttpParams({ fromObject: credentials }),
       headers: {
-        Authorization: getBasicAuthHeader(),
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
       },
     });
   }
 
   login(credentials: LoginCredentials): Observable<LoginPostResponse> {
-    const anonymousToken = this.anonymousSessionService.getAccessToken();
-    if (!anonymousToken) {
-      throw new Error('Anonymous token not found');
-    }
     return this.apiService
       .loginPost({
-        queries: { ...credentials },
+        body: { ...credentials },
         headers: {
-          Authorization: getBearerAuthHeader(anonymousToken),
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
         },
       })
       .pipe(
@@ -82,11 +76,9 @@ export class CustomerSessionService {
   }
 
   register(credentials: RegisterCredentials) {
-    const anonymousAccessToken = this.anonymousSessionService.getAccessToken();
     const response = this.apiService.customersPost({
-      body: JSON.stringify(credentials),
+      body: new HttpParams({ fromObject: credentials }),
       headers: {
-        Authorization: getBearerAuthHeader(anonymousAccessToken),
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     });
@@ -102,13 +94,12 @@ export class CustomerSessionService {
   refreshAccessToken() {
     this.apiService
       .refreshTokenPost({
-        queries: {
+        body: {
           grant_type: 'refresh_token',
           refresh_token: this.refreshToken() ?? '',
         },
         headers: {
-          Authorization: getBasicAuthHeader(),
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
         },
       })
       .subscribe((response) => {
@@ -122,7 +113,6 @@ export class CustomerSessionService {
     this.apiService
       .getMe({
         headers: {
-          Authorization: getBasicAuthHeader(),
           'Content-Type': 'application/json',
         },
       })
