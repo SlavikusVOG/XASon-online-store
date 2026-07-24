@@ -1,4 +1,4 @@
-@if (isEditMode) {
+@if (isEditMode()) {
   <form [formGroup]="editForm">
     @for (fields of inputFields; track fields.label) {
       <xas-reactive-input
@@ -9,7 +9,7 @@
       />
     }
     <div class="button-container">
-      <button tuiButton size="m" type="submit">Save</button>
+      <button tuiButton size="m" type="button" (click)="saveChanges()">Save</button>
       <button tuiButton size="m" type="button" (click)="toggleEditMode()">Cancel</button>
     </div>
   </form>

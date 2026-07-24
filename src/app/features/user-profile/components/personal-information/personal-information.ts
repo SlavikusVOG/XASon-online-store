@@ -1,4 +1,4 @@
-import { Component, inject, model } from '@angular/core';
+import { Component, OnInit, inject, model, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProcessedUser } from '@models/features/user-profile';
 import { ReactiveInput } from '@shared/forms/reactive/components';
@@ -13,21 +13,22 @@ import { TuiCardLarge } from '@taiga-ui/layout';
   templateUrl: './personal-information.html',
   styleUrl: './personal-information.scss',
 })
-export class PersonalInformation {
+export class PersonalInformation implements OnInit {
   private readonly toastService = inject(ToastService);
-  editForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+  readonly user = model.required<ProcessedUser>();
+
+  protected editForm = new FormGroup({
+    email: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.email]),
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
-    dateOfBirth: new FormControl('', [Validators.required]),
-    street: new FormControl('', [Validators.required]),
-    city: new FormControl('', [Validators.required]),
-    postalCode: new FormControl('', [Validators.required]),
-    country: new FormControl('', [Validators.required]),
+    dateOfBirth: new FormControl(new Date(), []),
+    street: new FormControl('', []),
+    city: new FormControl('', []),
+    postalCode: new FormControl('', []),
+    country: new FormControl('', []),
   });
-  user = model.required<ProcessedUser | null>();
-  // TODO: switch to signal
-  isEditMode = false;
+  protected readonly _isEditMode = signal(false);
+  protected readonly isEditMode = this._isEditMode.asReadonly();
 
   protected readonly inputFields = [
     {
@@ -80,7 +81,33 @@ export class PersonalInformation {
     },
   ];
 
+  ngOnInit() {
+    this.editForm.patchValue({
+      email: this.user().email,
+      firstName: this.user().firstName,
+      lastName: this.user().lastName,
+      dateOfBirth: this.user().dateOfBirth,
+      street: this.user().street,
+      city: this.user().city,
+    });
+    this.editForm.controls.email.disable();
+  }
+
   toggleEditMode() {
-    this.isEditMode = !this.isEditMode;
+    this._isEditMode.update((v) => !v);
+  }
+
+  saveChanges() {
+    if (this.editForm.invalid) {
+      this.toastService.showErrorToast('Please fill in all fields');
+      return;
+    }
+
+    const modifiedUser = this.editForm.value as Partial<ProcessedUser>;
+    this.user.set({
+      ...this.user(),
+      ...modifiedUser,
+    });
+    this.toggleEditMode();
   }
 }

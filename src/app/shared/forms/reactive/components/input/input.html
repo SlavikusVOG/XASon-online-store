@@ -5,6 +5,7 @@
       tuiInput
       [type]="type()"
       [placeholder]="placeholder()"
+      [disabled]="isDisabled()"
       [ngModel]="value()"
       (blur)="onTouched()"
       (ngModelChange)="changeValue($event)"

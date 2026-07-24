@@ -153,8 +153,7 @@ export class CustomerSessionService {
       email: customer.email,
       firstName: customer.firstName,
       lastName: customer.lastName,
-      // TODO: add date of birth
-      dateOfBirth: new Date(),
+      dateOfBirth: null,
       street: address?.streetName ?? '',
       city: address?.city ?? '',
       postalCode: address?.postalCode ?? '',

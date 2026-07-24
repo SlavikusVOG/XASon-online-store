@@ -4,7 +4,7 @@ export type ProcessedUser = {
   email: string;
   firstName: string;
   lastName: string;
-  dateOfBirth: Date;
+  dateOfBirth: Date | null;
   street: string;
   city: string;
   postalCode: string;
