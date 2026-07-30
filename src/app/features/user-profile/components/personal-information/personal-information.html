@@ -9,8 +9,12 @@
       />
     }
     <div class="button-container">
-      <button tuiButton size="m" type="button" (click)="saveChanges()">Save</button>
-      <button tuiButton size="m" type="button" (click)="toggleEditMode()">Cancel</button>
+      <button tuiButton size="m" type="button" [disabled]="isSaving()" (click)="saveChanges()">
+        Save
+      </button>
+      <button tuiButton size="m" type="button" [disabled]="isSaving()" (click)="toggleEditMode()">
+        Cancel
+      </button>
     </div>
   </form>
 } @else {
@@ -25,14 +29,14 @@
         </button>
       </section>
       <section class="card__content">
-        <p tuiDescription>Email: {{ user()?.email ?? 'N/A' }}</p>
-        <p tuiDescription>First Name: {{ user()?.firstName ?? 'N/A' }}</p>
-        <p tuiDescription>Last Name: {{ user()?.lastName ?? 'N/A' }}</p>
-        <p tuiDescription>Date of Birth: {{ user()?.dateOfBirth ?? 'N/A' }}</p>
-        <p tuiDescription>Street: {{ user()?.street ?? 'N/A' }}</p>
-        <p tuiDescription>City: {{ user()?.city ?? 'N/A' }}</p>
-        <p tuiDescription>Postal Code: {{ user()?.postalCode ?? 'N/A' }}</p>
-        <p tuiDescription>Country: {{ user()?.country ?? 'N/A' }}</p>
+        <p tuiDescription>Email: {{ user().email ?? 'N/A' }}</p>
+        <p tuiDescription>First Name: {{ user().firstName ?? 'N/A' }}</p>
+        <p tuiDescription>Last Name: {{ user().lastName ?? 'N/A' }}</p>
+        <p tuiDescription>Date of Birth: {{ user().dateOfBirth ?? 'N/A' }}</p>
+        <p tuiDescription>Street: {{ user().street ?? 'N/A' }}</p>
+        <p tuiDescription>City: {{ user().city ?? 'N/A' }}</p>
+        <p tuiDescription>Postal Code: {{ user().postalCode ?? 'N/A' }}</p>
+        <p tuiDescription>Country: {{ user().country ?? 'N/A' }}</p>
       </section>
     </div>
   </div>
