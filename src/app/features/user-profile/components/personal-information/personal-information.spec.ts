@@ -7,10 +7,11 @@ import { PersonalInformation } from './personal-information';
 
 const mockUser: ProcessedUser = {
   id: '1',
+  version: 1,
   email: 'test@example.com',
   firstName: 'John',
   lastName: 'Doe',
-  dateOfBirth: new Date('1990-01-01'),
+  dateOfBirth: new Date(1990, 0, 1),
   street: 'Main St',
   city: 'Springfield',
   postalCode: '12345',
