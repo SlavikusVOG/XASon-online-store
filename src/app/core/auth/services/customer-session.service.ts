@@ -75,7 +75,7 @@ export class CustomerSessionService {
         tap((user) => {
           this.accessToken.set(user.access_token);
           this.refreshToken.set(user.refresh_token);
-          this.loadProfile();
+          this.getUser().subscribe();
         }),
       );
   }
@@ -112,21 +112,6 @@ export class CustomerSessionService {
         this.accessToken.set(access_token);
         this.refreshToken.set(refresh_token);
       });
-  }
-
-  loadProfile() {
-    this.apiService
-      .getMe({
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .pipe(
-        tap((user) => {
-          const processedUserInfo = this.processUserInfo(user);
-          this.user.set(processedUserInfo);
-        }),
-      );
   }
 
   getUser(): Observable<ProcessedUser> {
