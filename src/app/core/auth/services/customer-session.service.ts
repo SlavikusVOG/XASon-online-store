@@ -5,10 +5,14 @@ import { LocalStorage } from '@core/local-storage';
 import { environment } from '@environments/environment';
 import { LoginCredentials, RegisterCredentials } from '@models/features/authentication';
 import { AnonymousSessionService } from './anonymous-session.service';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable, of, tap } from 'rxjs';
 import { LoginPostResponse } from '@models/http';
-import { CustomerGetResponse } from '@models/http/request/me.type';
-import { Address, ProcessedUser } from '@models/features/user-profile';
+import {
+  CustomerAddress,
+  CustomerGetResponse,
+  CustomerUpdateAction,
+} from '@models/http/request/me.type';
+import { Address, PersonalInfoUpdate, ProcessedUser } from '@models/features/user-profile';
 
 @Injectable({
   providedIn: 'root',
@@ -141,6 +145,36 @@ export class CustomerSessionService {
       );
   }
 
+  updateUser(updates: PersonalInfoUpdate): Observable<ProcessedUser> {
+    const currentUser = this.user();
+    if (!currentUser) {
+      throw new Error('No user loaded');
+    }
+
+    const actions = this.buildPersonalInfoActions(currentUser, updates);
+    if (actions.length === 0) {
+      return of(currentUser);
+    }
+
+    return this.apiService
+      .updateMe({
+        body: {
+          version: currentUser.version,
+          actions,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .pipe(
+        map((customer): ProcessedUser => {
+          const processedUser = this.processUserInfo(customer);
+          this.user.set(processedUser);
+          return processedUser;
+        }),
+      );
+  }
+
   getAccessToken() {
     return this.accessToken();
   }
@@ -149,11 +183,12 @@ export class CustomerSessionService {
     const address = this.processAddress(customer.addresses);
     return {
       id: customer.id,
-      address: this.processAddress(customer.addresses) ?? null,
+      version: customer.version,
+      address,
       email: customer.email,
       firstName: customer.firstName,
       lastName: customer.lastName,
-      dateOfBirth: null,
+      dateOfBirth: customer.dateOfBirth ? this.parseDateOfBirth(customer.dateOfBirth) : null,
       street: address?.streetName ?? '',
       city: address?.city ?? '',
       postalCode: address?.postalCode ?? '',
@@ -161,8 +196,72 @@ export class CustomerSessionService {
     };
   }
 
-  processAddress(addresses: [string]): Address | null {
+  processAddress(addresses: CustomerAddress[]): Address | null {
     const addr = addresses[0];
-    return addr ? (JSON.parse(addr) as Address) : null;
+    if (!addr) {
+      return null;
+    }
+
+    return {
+      id: addr.id,
+      key: addr.key,
+      title: addr.title,
+      firstName: addr.firstName,
+      lastName: addr.lastName,
+      streetName: addr.streetName,
+      streetNumber: addr.streetNumber,
+      postalCode: addr.postalCode,
+      city: addr.city,
+      country: addr.country,
+      phone: addr.phone,
+      mobile: addr.mobile,
+      email: addr.email,
+    };
+  }
+
+  private buildPersonalInfoActions(
+    current: ProcessedUser,
+    updates: PersonalInfoUpdate,
+  ): CustomerUpdateAction[] {
+    const actions: CustomerUpdateAction[] = [];
+
+    if (updates.firstName !== current.firstName) {
+      actions.push({ action: 'setFirstName', firstName: updates.firstName });
+    }
+
+    if (updates.lastName !== current.lastName) {
+      actions.push({ action: 'setLastName', lastName: updates.lastName });
+    }
+
+    const currentDob = this.toDateOfBirthString(current.dateOfBirth);
+    const nextDob = this.toDateOfBirthString(updates.dateOfBirth);
+    if (nextDob !== currentDob) {
+      actions.push({
+        action: 'setDateOfBirth',
+        ...(nextDob ? { dateOfBirth: nextDob } : {}),
+      });
+    }
+
+    return actions;
+  }
+
+  private toDateOfBirthString(date: Date | null): string | undefined {
+    if (!date || Number.isNaN(date.getTime())) {
+      return undefined;
+    }
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  private parseDateOfBirth(value: string): Date | null {
+    const [year, month, day] = value.split('-').map(Number);
+    if (!year || !month || !day) {
+      return null;
+    }
+
+    return new Date(year, month - 1, day);
   }
 }
