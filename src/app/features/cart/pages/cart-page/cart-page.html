@@ -1,1 +1,34 @@
-<p>cart-page works!</p>
+<section class="cart-page">
+  @switch (cartStore.loadStatus()) {
+    @case (DATA_LOAD_STATUSES.LOADING) {
+      <p class="cart-page__loading" aria-busy="true" aria-live="polite">Loading cart…</p>
+    }
+    @case (DATA_LOAD_STATUSES.WITH_DATA) {
+      @if (cartStore.cart(); as cart) {
+        <xas-cart
+          [cart]="cart"
+          [disabled]="cartStore.mutating()"
+          (quantityChange)="onQuantityChange($event)"
+          (removeItem)="onRemoveItem($event)"
+          (clearCart)="onClearCart()"
+        />
+      }
+    }
+    @case (DATA_LOAD_STATUSES.NO_DATA) {
+      <xas-data-placeholder
+        [icon]="emptyPlaceholderIcon"
+        text="Your cart is empty"
+        buttonText="Retry"
+        (retry)="retryLoad()"
+      />
+    }
+    @case (DATA_LOAD_STATUSES.ERROR) {
+      <xas-data-placeholder
+        [icon]="errorPlaceholderIcon"
+        text="Error occured. Retry later"
+        buttonText="Retry"
+        (retry)="retryLoad()"
+      />
+    }
+  }
+</section>
