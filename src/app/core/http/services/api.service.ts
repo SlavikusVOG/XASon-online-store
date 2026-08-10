@@ -5,6 +5,12 @@ import { CatalogProductsGetQueries, ProductPagedQueryResponse } from '@models/fe
 import {
   AnonymousSessionAccessTokenPostQueries,
   AnonymousSessionAccessTokenPostResponse,
+  CartDeleteQueries,
+  CartDraft,
+  CartGetResponse,
+  CartPagedQueryResponse,
+  CartPostResponse,
+  CartUpdateBody,
   CustomersPostResponse,
   CustomersTokenPostQueries,
   CustomersTokenPostResponse,
@@ -78,6 +84,30 @@ export class ApiService {
     request: PostRequest<{ B: CustomerUpdateBody }>,
   ): Observable<CustomerPatchResponse> {
     return this.post(`${environment.apiUrl}/me`, request);
+  }
+
+  public getActiveCart(request: GetRequest = {}): Observable<CartGetResponse> {
+    return this.get(`${environment.apiUrl}/me/active-cart`, request);
+  }
+
+  public getCarts(request: GetRequest = {}): Observable<CartPagedQueryResponse> {
+    return this.get(`${environment.apiUrl}/me/carts`, request);
+  }
+
+  public createCart(request: PostRequest<{ B: CartDraft }>): Observable<CartPostResponse> {
+    return this.post(`${environment.apiUrl}/me/carts`, request);
+  }
+
+  public getCart(request: GetRequest): Observable<CartGetResponse> {
+    return this.get(`${environment.apiUrl}/me/carts/{{id}}`, request);
+  }
+
+  public updateCart(request: PostRequest<{ B: CartUpdateBody }>): Observable<CartPostResponse> {
+    return this.post(`${environment.apiUrl}/me/carts/{{id}}`, request);
+  }
+
+  public deleteCart(request: DeleteRequest<{ Q: CartDeleteQueries }>): Observable<CartGetResponse> {
+    return this.delete(`${environment.apiUrl}/me/carts/{{id}}`, request);
   }
 
   private get<R>(url: string, request: GetRequest): Observable<R> {
