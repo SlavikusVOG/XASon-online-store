@@ -1,1 +1,34 @@
-<p>cart works!</p>
+<section class="cart">
+  <header class="cart__header">
+    <h2 class="cart__title">Your cart</h2>
+    <button
+      tuiButton
+      type="button"
+      appearance="secondary"
+      size="s"
+      [disabled]="disabled() || cart().lineItems.length === 0"
+      (click)="onClearCart()"
+    >
+      Clear cart
+    </button>
+  </header>
+
+  <div class="cart__items">
+    @for (item of cart().lineItems; track item.id) {
+      <xas-cart-item
+        [item]="item"
+        [disabled]="disabled()"
+        (quantityChange)="onQuantityChange($event)"
+        (removeItem)="onRemoveItem($event)"
+      />
+    }
+  </div>
+
+  @if (totalPrice(); as total) {
+    <footer class="cart__footer">
+      <p class="cart__total">
+        Total: <strong>{{ total | price }} {{ total.currencyCode }}</strong>
+      </p>
+    </footer>
+  }
+</section>
