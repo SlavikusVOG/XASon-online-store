@@ -5,7 +5,7 @@ import { LocalStorage } from '@core/local-storage';
 import { environment } from '@environments/environment';
 import { LoginCredentials, RegisterCredentials } from '@models/features/authentication';
 import { AnonymousSessionService } from './anonymous-session.service';
-import { map, Observable, of, tap } from 'rxjs';
+import { map, Observable, of, switchMap, tap } from 'rxjs';
 import { LoginPostResponse } from '@models/http';
 import {
   CustomerAddress,
@@ -75,8 +75,8 @@ export class CustomerSessionService {
         tap((user) => {
           this.accessToken.set(user.access_token);
           this.refreshToken.set(user.refresh_token);
-          this.getUser().subscribe();
         }),
+        switchMap((loginResponse) => this.getUser().pipe(map(() => loginResponse))),
       );
   }
 
