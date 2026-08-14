@@ -61,9 +61,7 @@ export type CustomerSetDateOfBirthAction = {
 };
 
 export type CustomerUpdateAction =
-  | CustomerSetFirstNameAction
-  | CustomerSetLastNameAction
-  | CustomerSetDateOfBirthAction;
+  CustomerSetFirstNameAction | CustomerSetLastNameAction | CustomerSetDateOfBirthAction;
 
 export type CustomerUpdateBody = {
   version: number;

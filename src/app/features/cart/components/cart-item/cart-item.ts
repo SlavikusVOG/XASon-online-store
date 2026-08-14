@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { LineItem } from '@models/features/cart';
 import { PricePipe } from '@shared/pipes';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
