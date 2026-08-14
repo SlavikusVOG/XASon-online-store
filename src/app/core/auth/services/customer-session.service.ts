@@ -4,7 +4,7 @@ import { ApiService } from '@core/http';
 import { LocalStorage } from '@core/local-storage';
 import { environment } from '@environments/environment';
 import { LoginCredentials, RegisterCredentials } from '@models/features/authentication';
-import { map, Observable, of, switchMap, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { LoginPostResponse } from '@models/http';
 import { CustomerGetResponse } from '@models/http/request/me.type';
 import { Address, ProcessedUser } from '@models/features/user-profile';

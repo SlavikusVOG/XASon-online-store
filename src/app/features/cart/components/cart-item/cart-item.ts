@@ -1,7 +1,4 @@
-import { Component, computed, input, output } from '@angular/core';
-import { LineItem } from '@models/features/cart';
-import { PricePipe } from '@shared/pipes';
-import { TuiButton, TuiIcon } from '@taiga-ui/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'xas-cart-item',
