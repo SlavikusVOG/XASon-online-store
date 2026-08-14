@@ -4,8 +4,7 @@ import { ApiService } from '@core/http';
 import { LocalStorage } from '@core/local-storage';
 import { environment } from '@environments/environment';
 import { LoginCredentials, RegisterCredentials } from '@models/features/authentication';
-import { AnonymousSessionService } from './anonymous-session.service';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable, of, switchMap, tap } from 'rxjs';
 import { LoginPostResponse } from '@models/http';
 import { CustomerGetResponse } from '@models/http/request/me.type';
 import { Address, ProcessedUser } from '@models/features/user-profile';
@@ -16,7 +15,6 @@ import { Address, ProcessedUser } from '@models/features/user-profile';
 export class CustomerSessionService {
   private readonly localStorageService = inject(LocalStorage);
   private readonly apiService = inject(ApiService);
-  private readonly anonymousSessionService = inject(AnonymousSessionService);
   private accessToken = signal<string | null>(
     this.localStorageService.getValue<string>(environment.LOCAL_STORAGE_KEYS.accessToken),
   );
@@ -29,24 +27,30 @@ export class CustomerSessionService {
 
   constructor() {
     effect(() => {
-      this.localStorageService.setValue(
-        environment.LOCAL_STORAGE_KEYS.accessToken,
-        this.accessToken(),
-      );
+      const token = this.accessToken();
+      if (token) {
+        this.localStorageService.setValue(environment.LOCAL_STORAGE_KEYS.accessToken, token);
+      } else {
+        this.localStorageService.removeValue(environment.LOCAL_STORAGE_KEYS.accessToken);
+      }
     });
 
     effect(() => {
-      this.localStorageService.setValue(
-        environment.LOCAL_STORAGE_KEYS.refreshToken,
-        this.refreshToken(),
-      );
+      const token = this.refreshToken();
+      if (token) {
+        this.localStorageService.setValue(environment.LOCAL_STORAGE_KEYS.refreshToken, token);
+      } else {
+        this.localStorageService.removeValue(environment.LOCAL_STORAGE_KEYS.refreshToken);
+      }
     });
 
     effect(() => {
-      this.localStorageService.setValue<ProcessedUser | null>(
-        environment.LOCAL_STORAGE_KEYS.user,
-        this.user(),
-      );
+      const user = this.user();
+      if (user) {
+        this.localStorageService.setValue<ProcessedUser>(environment.LOCAL_STORAGE_KEYS.user, user);
+      } else {
+        this.localStorageService.removeValue(environment.LOCAL_STORAGE_KEYS.user);
+      }
     });
   }
 

@@ -4,7 +4,7 @@ import { LocalStorage } from '@core/local-storage';
 import { environment } from '@environments/environment';
 import { AnonymousSessionAccessTokenPostResponse } from '@models/http';
 import { timeBasedId } from '@shared/utils';
-import { EMPTY, finalize, Observable, tap } from 'rxjs';
+import { finalize, map, Observable, of, shareReplay, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,15 +19,11 @@ export class AnonymousSessionService {
     this.localStorageService.getValue<string>(environment.LOCAL_STORAGE_KEYS.anonymousToken),
   );
   private readonly refreshToken = signal(
-    this.localStorageService.getValue<string>(environment.LOCAL_STORAGE_KEYS.refreshToken),
+    this.localStorageService.getValue<string>(environment.LOCAL_STORAGE_KEYS.anonymousRefreshToken),
   );
-  private tokenFetchStarted = false;
+  private tokenRequest$: Observable<string> | null = null;
 
-  constructor() {
-    this.ensureAccessToken();
-  }
-
-  ensureAccessToken(): Observable<void> | Observable<AnonymousSessionAccessTokenPostResponse> {
+  ensureAccessToken(): Observable<string> {
     if (!this.anonymousId()) {
       this.anonymousId.set(timeBasedId());
       this.localStorageService.setValue(
@@ -36,19 +32,21 @@ export class AnonymousSessionService {
       );
     }
 
-    if (this.accessToken() || this.tokenFetchStarted) {
-      return EMPTY;
+    const existing = this.accessToken();
+    if (existing) {
+      return of(existing);
+    }
+
+    if (this.tokenRequest$) {
+      return this.tokenRequest$;
     }
 
     const id = this.anonymousId();
     if (!id) {
       throw new Error('Cannot get an anonymous ID');
-      return EMPTY;
     }
 
-    this.tokenFetchStarted = true;
-
-    return this.fetchAccessToken(id).pipe(
+    this.tokenRequest$ = this.fetchAccessToken(id).pipe(
       tap((response) => {
         const { access_token, refresh_token } = response;
         this.localStorageService.setValue(
@@ -56,19 +54,25 @@ export class AnonymousSessionService {
           access_token,
         );
         this.localStorageService.setValue(
-          environment.LOCAL_STORAGE_KEYS.refreshToken,
+          environment.LOCAL_STORAGE_KEYS.anonymousRefreshToken,
           refresh_token,
         );
         this.accessToken.set(access_token);
-        return response;
+        this.refreshToken.set(refresh_token);
       }),
+      map((response) => response.access_token),
       finalize(() => {
-        this.tokenFetchStarted = false;
+        this.tokenRequest$ = null;
       }),
+      shareReplay(1),
     );
+
+    return this.tokenRequest$;
   }
 
-  fetchAccessToken(anonymousId: string): Observable<AnonymousSessionAccessTokenPostResponse> {
+  private fetchAccessToken(
+    anonymousId: string,
+  ): Observable<AnonymousSessionAccessTokenPostResponse> {
     return this.apiService.anonymousSessionAccessTokenPost({
       queries: {
         grant_type: 'client_credentials',
@@ -99,6 +103,7 @@ export class AnonymousSessionService {
           environment.LOCAL_STORAGE_KEYS.anonymousToken,
           response['access_token'],
         );
+        this.accessToken.set(response['access_token']);
       });
   }
 

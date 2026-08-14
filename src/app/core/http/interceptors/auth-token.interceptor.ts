@@ -1,7 +1,6 @@
 import { HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AnonymousSessionService, CustomerSessionService } from '@core/auth';
-import { AnonymousSessionAccessTokenPostResponse } from '@models/http';
 import { switchMap } from 'rxjs';
 
 const SKIP_PATHS = ['/auth/anonymous'];
@@ -19,23 +18,19 @@ export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
   const anonymousSessionService = inject(AnonymousSessionService);
 
   const customerToken = customerSessionService.getAccessToken();
-  const anonymousToken = anonymousSessionService.getAccessToken();
-
-  if (customerToken || anonymousToken) {
+  if (customerToken) {
     const clonedReq = req.clone({
-      headers: req.headers.set('Authorization', `Bearer ${customerToken || anonymousToken}`),
+      headers: req.headers.set('Authorization', `Bearer ${customerToken}`),
     });
     return next(clonedReq);
   }
 
-  return anonymousSessionService
-    .fetchAccessToken(anonymousSessionService.getAnonymousId() ?? '')
-    .pipe(
-      switchMap((response: AnonymousSessionAccessTokenPostResponse) => {
-        const clonedReq = req.clone({
-          headers: req.headers.set('Authorization', `Bearer ${response.access_token}`),
-        });
-        return next(clonedReq);
-      }),
-    );
+  return anonymousSessionService.ensureAccessToken().pipe(
+    switchMap((token) => {
+      const clonedReq = req.clone({
+        headers: req.headers.set('Authorization', `Bearer ${token}`),
+      });
+      return next(clonedReq);
+    }),
+  );
 };
