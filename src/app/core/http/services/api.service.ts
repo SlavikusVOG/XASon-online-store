@@ -23,7 +23,12 @@ import {
   PutRequest,
 } from '../types/api.types';
 import { buildUrl } from '../utils/api.utils';
-import { CustomerGetQueries, CustomerGetResponse } from '@models/http/request/me.type';
+import {
+  CustomerGetQueries,
+  CustomerGetResponse,
+  CustomerPatchResponse,
+  CustomerUpdateBody,
+} from '@models/http/request/me.type';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -67,6 +72,12 @@ export class ApiService {
 
   public getMe(request: GetRequest<{ Q: CustomerGetQueries }>): Observable<CustomerGetResponse> {
     return this.get(`${environment.apiUrl}/me`, request);
+  }
+
+  public updateMe(
+    request: PostRequest<{ B: CustomerUpdateBody }>,
+  ): Observable<CustomerPatchResponse> {
+    return this.post(`${environment.apiUrl}/me`, request);
   }
 
   private get<R>(url: string, request: GetRequest): Observable<R> {

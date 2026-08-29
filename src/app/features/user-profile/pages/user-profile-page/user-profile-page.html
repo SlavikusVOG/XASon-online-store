@@ -3,7 +3,11 @@
     <tui-loader size="xxl" />
   }
   @case (DATA_LOAD_STATUSES.WITH_DATA) {
-    <xas-personal-information [user]="user()!" />
+    <xas-personal-information
+      [user]="user()!"
+      [isSaving]="isSaving()"
+      (save)="onSavePersonalInfo($event)"
+    />
   }
   @case (DATA_LOAD_STATUSES.ERROR) {
     {{ showErrorMessage('Failed to load Profile') }}

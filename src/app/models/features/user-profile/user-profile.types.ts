@@ -1,10 +1,11 @@
 export type ProcessedUser = {
   id: string;
+  version: number;
   address: Address | null;
   email: string;
   firstName: string;
   lastName: string;
-  dateOfBirth: Date;
+  dateOfBirth: Date | null;
   street: string;
   city: string;
   postalCode: string;
@@ -12,16 +13,23 @@ export type ProcessedUser = {
 };
 
 export type Address = {
-  key: string;
-  title: string;
+  id?: string;
+  key?: string;
+  title?: string;
+  firstName?: string;
+  lastName?: string;
+  streetName?: string;
+  streetNumber?: string;
+  postalCode?: string;
+  city?: string;
+  country: string;
+  phone?: string;
+  mobile?: string;
+  email?: string;
+};
+
+export type PersonalInfoUpdate = {
   firstName: string;
   lastName: string;
-  streetName: string;
-  streetNumber: string;
-  postalCode: string;
-  city: string;
-  country: string;
-  phone: string;
-  mobile: string;
-  email: string;
+  dateOfBirth: Date | null;
 };

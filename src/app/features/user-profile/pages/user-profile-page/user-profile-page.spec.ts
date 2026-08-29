@@ -9,11 +9,12 @@ import { UserProfilePage } from './user-profile-page';
 
 const mockUser: ProcessedUser = {
   id: '1',
+  version: 1,
   address: null,
   email: 'test@example.com',
   firstName: 'John',
   lastName: 'Doe',
-  dateOfBirth: new Date('1990-01-01'),
+  dateOfBirth: new Date(1990, 0, 1),
   street: 'Main St',
   city: 'Springfield',
   postalCode: '12345',
@@ -56,6 +57,7 @@ describe('UserProfilePage', () => {
           provide: CustomerSessionService,
           useValue: {
             getUser: () => of(mockUser),
+            updateUser: () => of(mockUser),
           },
         },
       ],
