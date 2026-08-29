@@ -70,6 +70,9 @@
     },
     "@ngx-env/builder": {
       "@angular/build": "$@angular/build"
+    },
+    "@modelcontextprotocol/sdk": {
+      "@hono/node-server": "^2.0.5"
     }
   }
 }
