@@ -32,7 +32,9 @@
         <p tuiDescription>Email: {{ user().email | defaultValue }}</p>
         <p tuiDescription>First Name: {{ user().firstName | defaultValue }}</p>
         <p tuiDescription>Last Name: {{ user().lastName | defaultValue }}</p>
-        <p tuiDescription>Date of Birth: {{ (user().dateOfBirth | date: 'dd.MM.yyyy') | defaultValue }}</p>
+        <p tuiDescription>
+          Date of Birth: {{ user().dateOfBirth | date: 'dd.MM.yyyy' | defaultValue }}
+        </p>
         <p tuiDescription>Street: {{ user().street | defaultValue }}</p>
         <p tuiDescription>City: {{ user().city | defaultValue }}</p>
         <p tuiDescription>Postal Code: {{ user().postalCode | defaultValue }}</p>

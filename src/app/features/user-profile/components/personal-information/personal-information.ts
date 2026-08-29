@@ -11,7 +11,16 @@ import { DefaultValuePipe } from '@shared/pipes/default-value/default-value-pipe
 
 @Component({
   selector: 'xas-personal-information',
-  imports: [ReactiveFormsModule, ReactiveInput, TuiButton, TuiIcon, TuiCardLarge, TuiAvatar, DatePipe, DefaultValuePipe],
+  imports: [
+    ReactiveFormsModule,
+    ReactiveInput,
+    TuiButton,
+    TuiIcon,
+    TuiCardLarge,
+    TuiAvatar,
+    DatePipe,
+    DefaultValuePipe,
+  ],
   templateUrl: './personal-information.html',
   styleUrl: './personal-information.scss',
 })

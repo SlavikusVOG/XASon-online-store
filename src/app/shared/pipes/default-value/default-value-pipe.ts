@@ -6,6 +6,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class DefaultValuePipe implements PipeTransform {
   transform(value: unknown, defaultValue = 'N/A'): unknown {
     value ??= defaultValue;
-    return value
+    return value;
   }
 }
