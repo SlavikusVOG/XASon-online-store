@@ -1,4 +1,5 @@
 import { Component, effect, inject, input, output, signal, untracked } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PersonalInfoUpdate, ProcessedUser } from '@models/features/user-profile';
 import { ReactiveInput } from '@shared/forms/reactive/components';
@@ -6,10 +7,11 @@ import { ToastService } from '@shared/services';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
 import { TuiAvatar } from '@taiga-ui/kit';
 import { TuiCardLarge } from '@taiga-ui/layout';
+import { DefaultValuePipe } from '@shared/pipes/default-value/default-value-pipe';
 
 @Component({
   selector: 'xas-personal-information',
-  imports: [ReactiveFormsModule, ReactiveInput, TuiButton, TuiIcon, TuiCardLarge, TuiAvatar],
+  imports: [ReactiveFormsModule, ReactiveInput, TuiButton, TuiIcon, TuiCardLarge, TuiAvatar, DatePipe, DefaultValuePipe],
   templateUrl: './personal-information.html',
   styleUrl: './personal-information.scss',
 })
