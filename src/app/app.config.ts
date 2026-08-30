@@ -2,8 +2,9 @@ import { provideHttpClient, withInterceptors, withXhr } from '@angular/common/ht
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { AuthService } from '@core/auth';
-import { INTERCEPTORS, provideNetwork } from '@core/http';
+import { ApiService, INTERCEPTORS, MockApiService, provideNetwork } from '@core/http';
 import { routes } from '@core/router';
+import { environment } from '@environments/environment';
 import { provideTaiga } from '@taiga-ui/core';
 import { AUTH_SERVICE_TOKEN } from './tokens';
 
@@ -15,5 +16,6 @@ export const appConfig: ApplicationConfig = {
     provideTaiga(),
     provideNetwork(),
     { provide: AUTH_SERVICE_TOKEN, useClass: AuthService },
+    ...(environment.useMockApi ? [{ provide: ApiService, useClass: MockApiService }] : []),
   ],
 };
