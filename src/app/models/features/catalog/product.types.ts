@@ -1,3 +1,5 @@
+import { TypedMoney } from '@models/features/cart';
+
 type ProductCatalogData = {
   published?: boolean;
   current: ProductData;
@@ -32,6 +34,8 @@ export type Product = {
   image: string;
   description: string;
   isInCart: boolean;
+  productKey?: string;
+  price: TypedMoney;
 };
 
 export type ProductPagedQueryResponse = {

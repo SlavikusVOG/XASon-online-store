@@ -1,4 +1,10 @@
+import { FALLBACK_MONEY } from '../models/features/cart/cart.types';
 import { Product } from '../models/features/catalog/product.types';
+
+const defaultPrice = {
+  ...FALLBACK_MONEY,
+  centAmount: 4200,
+};
 
 export const catalogProducts: Product[] = [
   {
@@ -7,6 +13,7 @@ export const catalogProducts: Product[] = [
     image: '',
     description: 'Some description for a great item №1',
     isInCart: false,
+    price: defaultPrice,
   },
   {
     id: '2',
@@ -14,6 +21,7 @@ export const catalogProducts: Product[] = [
     image: '',
     description: 'Some description for a great item №2',
     isInCart: false,
+    price: defaultPrice,
   },
   {
     id: '3',
@@ -21,6 +29,7 @@ export const catalogProducts: Product[] = [
     image: '',
     description: 'Some description for a great item №3',
     isInCart: false,
+    price: defaultPrice,
   },
   {
     id: '4',
@@ -28,6 +37,7 @@ export const catalogProducts: Product[] = [
     image: '',
     description: 'Some description for a great item №4',
     isInCart: false,
+    price: defaultPrice,
   },
   {
     id: '5',
@@ -35,6 +45,7 @@ export const catalogProducts: Product[] = [
     image: '',
     description: 'Some description for a great item №5',
     isInCart: false,
+    price: defaultPrice,
   },
   {
     id: '6',
@@ -42,5 +53,6 @@ export const catalogProducts: Product[] = [
     image: '',
     description: 'Some description for a great item №6',
     isInCart: false,
+    price: defaultPrice,
   },
 ];

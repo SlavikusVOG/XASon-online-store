@@ -1,1 +1,79 @@
-<p>cart works!</p>
+<div class="cart">
+  <ul class="cart__list">
+    @for (item of lineItems(); track item.id) {
+      <li>
+        <xas-cart-item
+          [item]="item"
+          (quantityChanged)="onQuantityChanged(item.id, $event)"
+          (removed)="onItemRemoved(item.id)"
+        />
+      </li>
+    }
+  </ul>
+
+  <aside class="cart__summary" aria-label="Order summary">
+    <h2 tuiTitle class="cart__summary-title">Summary</h2>
+
+    <dl class="cart__totals">
+      <div class="cart__totals-row">
+        <dt>Subtotal</dt>
+        <dd>{{ asMoney(subtotal()) | price | currency: currencyCode() }}</dd>
+      </div>
+
+      @if (hasDiscount()) {
+        <div class="cart__totals-row cart__totals-row--discount">
+          <dt>Discount{{ discountCode() ? ' (' + discountCode() + ')' : '' }}</dt>
+          <dd>−{{ asMoney(discountAmount()) | price | currency: currencyCode() }}</dd>
+        </div>
+      }
+
+      <div class="cart__totals-row cart__totals-row--total">
+        <dt>Total</dt>
+        <dd>
+          @if (hasDiscount()) {
+            <s class="cart__original-total">
+              {{ asMoney(subtotal()) | price | currency: currencyCode() }}
+            </s>
+          }
+          <span>{{ asMoney(total()) | price | currency: currencyCode() }}</span>
+        </dd>
+      </div>
+    </dl>
+
+    <div class="cart__promo">
+      <label class="cart__promo-label" for="cart-promo-code">Promo code</label>
+      <div class="cart__promo-row">
+        <tui-textfield tuiTextfieldSize="m" class="cart__promo-field">
+          <input
+            id="cart-promo-code"
+            tuiInput
+            type="text"
+            autocomplete="off"
+            [value]="promoInput()"
+            [attr.aria-label]="'Promo code'"
+            (input)="onPromoInput($event)"
+            (keydown.enter)="applyPromo(); $event.preventDefault()"
+          />
+        </tui-textfield>
+        <button tuiButton type="button" size="s" (click)="applyPromo()">Apply</button>
+      </div>
+
+      @if (discountCode()) {
+        <button tuiButton type="button" appearance="flat" size="xs" (click)="removePromo()">
+          Remove promo code
+        </button>
+      }
+    </div>
+
+    <button
+      tuiButton
+      type="button"
+      appearance="secondary"
+      size="m"
+      class="cart__clear"
+      (click)="clearCart()"
+    >
+      Clear shopping cart
+    </button>
+  </aside>
+</div>
