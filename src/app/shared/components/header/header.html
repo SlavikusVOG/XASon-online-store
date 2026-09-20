@@ -22,6 +22,18 @@
         <tui-icon icon="@tui.package" />
         Catalog
       </a>
+      <a
+        class="header__link header__cart"
+        [routerLink]="PAGES.CART.link"
+        routerLinkActive="header__link-active"
+        [attr.aria-label]="cartAriaLabel()"
+      >
+        <tui-icon icon="@tui.shopping-cart" />
+        Cart
+        @if (cartStore.itemCount(); as count) {
+          <span class="header__badge" aria-hidden="true">{{ count }}</span>
+        }
+      </a>
       <a class="header__link" routerLink="/about-us" routerLinkActive="header__link-active">
         <tui-icon icon="@tui.users" />
         About us

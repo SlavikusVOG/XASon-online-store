@@ -67,7 +67,19 @@ describe('Catalog', () => {
   });
 
   it('should delegate addToCart to store', () => {
-    const product = { id: '1', name: 'A', image: '', description: '', isInCart: false };
+    const product = {
+      id: '1',
+      name: 'A',
+      image: '',
+      description: '',
+      isInCart: false,
+      price: {
+        type: 'centPrecision',
+        currencyCode: 'EUR',
+        centAmount: 1000,
+        fractionDigits: 2,
+      },
+    };
 
     component.addToCart(product);
 
@@ -75,7 +87,19 @@ describe('Catalog', () => {
   });
 
   it('should delegate removeFromCart to store', () => {
-    const product = { id: '1', name: 'A', image: '', description: '', isInCart: true };
+    const product = {
+      id: '1',
+      name: 'A',
+      image: '',
+      description: '',
+      isInCart: true,
+      price: {
+        type: 'centPrecision',
+        currencyCode: 'EUR',
+        centAmount: 1000,
+        fractionDigits: 2,
+      },
+    };
 
     component.removeFromCart(product);
 
@@ -95,8 +119,32 @@ describe('Catalog', () => {
     it('should render product cards when data is loaded', () => {
       store.loadStatus.set(DATA_LOAD_STATUSES.WITH_DATA);
       store.products.set([
-        { id: '1', name: 'A', image: 'a.jpg', description: 'Desc A', isInCart: false },
-        { id: '2', name: 'B', image: 'b.jpg', description: 'Desc B', isInCart: false },
+        {
+          id: '1',
+          name: 'A',
+          image: 'a.jpg',
+          description: 'Desc A',
+          isInCart: false,
+          price: {
+            type: 'centPrecision',
+            currencyCode: 'EUR',
+            centAmount: 1000,
+            fractionDigits: 2,
+          },
+        },
+        {
+          id: '2',
+          name: 'B',
+          image: 'b.jpg',
+          description: 'Desc B',
+          isInCart: false,
+          price: {
+            type: 'centPrecision',
+            currencyCode: 'EUR',
+            centAmount: 2000,
+            fractionDigits: 2,
+          },
+        },
       ]);
       fixture.detectChanges();
 

@@ -1,1 +1,23 @@
-<p>cart-page works!</p>
+<section class="cart-page" aria-labelledby="cart-page-title">
+  <h1 id="cart-page-title" tuiTitle class="cart-page__title">Cart</h1>
+
+  @if (cartStore.isEmpty()) {
+    <div class="cart-page__empty">
+      <p>Your cart is empty.</p>
+      <a tuiButton [routerLink]="PAGES.CATALOG.link">Continue shopping</a>
+    </div>
+  } @else {
+    <xas-cart
+      [lineItems]="cartStore.lineItems()"
+      [subtotal]="cartStore.subtotal()"
+      [discountAmount]="cartStore.discountAmount()"
+      [total]="cartStore.total()"
+      [discountCode]="cartStore.discountCode()"
+      (quantityChanged)="onQuantityChanged($event)"
+      (itemRemoved)="onItemRemoved($event)"
+      (cleared)="onCleared()"
+      (promoApplied)="onPromoApplied($event)"
+      (promoRemoved)="onPromoRemoved()"
+    />
+  }
+</section>

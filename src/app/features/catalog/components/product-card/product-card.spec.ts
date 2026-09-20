@@ -25,6 +25,12 @@ const mockProduct: Product = {
   image: 'test.jpg',
   description: 'A test product',
   isInCart: false,
+  price: {
+    type: 'centPrecision',
+    currencyCode: 'EUR',
+    centAmount: 4200,
+    fractionDigits: 2,
+  },
 };
 
 describe('ProductCard', () => {

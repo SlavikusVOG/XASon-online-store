@@ -33,12 +33,20 @@ function createMockStore() {
   };
 }
 
+const mockPrice = {
+  type: 'centPrecision' as const,
+  currencyCode: 'EUR',
+  centAmount: 4200,
+  fractionDigits: 2,
+};
+
 const mockProduct: Product = {
   id: '1',
   name: 'Test Product',
   image: 'test.jpg',
   description: 'A test product',
   isInCart: false,
+  price: mockPrice,
 };
 
 describe('FeaturedProducts', () => {
@@ -91,11 +99,46 @@ describe('FeaturedProducts', () => {
     it('should render up to 4 product cards when data is loaded', () => {
       store.loadStatus.set(DATA_LOAD_STATUSES.WITH_DATA);
       store.products.set([
-        { id: '1', name: 'A', image: 'a.jpg', description: 'Desc A', isInCart: false },
-        { id: '2', name: 'B', image: 'b.jpg', description: 'Desc B', isInCart: false },
-        { id: '3', name: 'C', image: 'c.jpg', description: 'Desc C', isInCart: false },
-        { id: '4', name: 'D', image: 'd.jpg', description: 'Desc D', isInCart: false },
-        { id: '5', name: 'E', image: 'e.jpg', description: 'Desc E', isInCart: false },
+        {
+          id: '1',
+          name: 'A',
+          image: 'a.jpg',
+          description: 'Desc A',
+          isInCart: false,
+          price: mockPrice,
+        },
+        {
+          id: '2',
+          name: 'B',
+          image: 'b.jpg',
+          description: 'Desc B',
+          isInCart: false,
+          price: mockPrice,
+        },
+        {
+          id: '3',
+          name: 'C',
+          image: 'c.jpg',
+          description: 'Desc C',
+          isInCart: false,
+          price: mockPrice,
+        },
+        {
+          id: '4',
+          name: 'D',
+          image: 'd.jpg',
+          description: 'Desc D',
+          isInCart: false,
+          price: mockPrice,
+        },
+        {
+          id: '5',
+          name: 'E',
+          image: 'e.jpg',
+          description: 'Desc E',
+          isInCart: false,
+          price: mockPrice,
+        },
       ]);
       fixture.detectChanges();
 
@@ -106,8 +149,22 @@ describe('FeaturedProducts', () => {
     it('should render product cards only up to featuredProductsCount', () => {
       store.loadStatus.set(DATA_LOAD_STATUSES.WITH_DATA);
       store.products.set([
-        { id: '1', name: 'A', image: 'a.jpg', description: 'Desc A', isInCart: false },
-        { id: '2', name: 'B', image: 'b.jpg', description: 'Desc B', isInCart: false },
+        {
+          id: '1',
+          name: 'A',
+          image: 'a.jpg',
+          description: 'Desc A',
+          isInCart: false,
+          price: mockPrice,
+        },
+        {
+          id: '2',
+          name: 'B',
+          image: 'b.jpg',
+          description: 'Desc B',
+          isInCart: false,
+          price: mockPrice,
+        },
       ]);
       fixture.detectChanges();
 

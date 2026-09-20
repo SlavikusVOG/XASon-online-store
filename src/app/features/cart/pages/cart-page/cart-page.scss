@@ -1,0 +1,23 @@
+.cart-page {
+  padding: 32px 0 48px;
+
+  &__title {
+    margin: 0 0 24px;
+    font-size: 1.75rem;
+    font-weight: 700;
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 32px 0;
+
+    p {
+      margin: 0;
+      font-size: 1.05rem;
+      color: var(--color-text-muted);
+    }
+  }
+}

@@ -108,6 +108,23 @@
     }
   }
 
+  &__cart {
+    position: relative;
+  }
+
+  &__badge {
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 8px;
+    background: var(--color-cta);
+    color: var(--color-on-accent);
+    font-size: 0.65rem;
+    font-weight: 700;
+    line-height: 16px;
+    text-align: center;
+  }
+
   &__profile {
     width: 32px;
     height: 32px;
