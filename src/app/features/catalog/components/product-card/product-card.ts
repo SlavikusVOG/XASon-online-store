@@ -1,10 +1,12 @@
+import { CurrencyPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { TuiAppearance, TuiButton, TuiIcon, TuiTitle } from '@taiga-ui/core';
 import { Product } from '@models/features/catalog';
+import { PricePipe } from '@shared/pipes';
+import { TuiAppearance, TuiButton, TuiIcon, TuiTitle } from '@taiga-ui/core';
 
 @Component({
   selector: 'xas-product-card',
-  imports: [TuiAppearance, TuiButton, TuiIcon, TuiTitle],
+  imports: [CurrencyPipe, PricePipe, TuiAppearance, TuiButton, TuiIcon, TuiTitle],
   templateUrl: './product-card.html',
   styleUrl: './product-card.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

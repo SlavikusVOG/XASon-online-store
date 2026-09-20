@@ -38,5 +38,6 @@ export const environment = {
     anonymousToken: 'anonymousToken',
     anonymousId: 'anonymousId',
     user: 'user',
+    cart: 'cart',
   },
 };

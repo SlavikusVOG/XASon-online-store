@@ -1,9 +1,19 @@
 import { TestBed } from '@angular/core/testing';
 import { ApiService } from '@core/http';
+import { LocalStorage } from '@core/local-storage';
+import { CartStore } from '@features/cart/store';
+import { FALLBACK_MONEY } from '@models/features/cart';
 import { ProductDto, ProductPagedQueryResponse } from '@models/features/catalog';
 import { DATA_LOAD_STATUSES } from '@shared/const';
 import { of, Subject, throwError } from 'rxjs';
 import { CatalogStore } from './catalog.store';
+
+const defaultMoney = {
+  type: 'centPrecision',
+  currencyCode: 'EUR',
+  centAmount: 4200,
+  fractionDigits: 2,
+};
 
 function createProductDto(overrides: Partial<ProductDto> = {}): ProductDto {
   return {
@@ -18,7 +28,14 @@ function createProductDto(overrides: Partial<ProductDto> = {}): ProductDto {
       id: 1,
       sku: 'SKU-1',
       key: 'variant-1',
-      prices: [],
+      prices: [
+        {
+          id: 'price-1',
+          value: defaultMoney,
+          key: 'default',
+          country: 'US',
+        },
+      ],
       images: [{ url: 'https://example.com/image.jpg', dimensions: { w: 100, h: 100 } }],
       availability: { isOnStock: true, availableQuantity: 10, version: 1, id: 'avail-1' },
     },
@@ -34,6 +51,7 @@ function createProductDto(overrides: Partial<ProductDto> = {}): ProductDto {
 
 describe('CatalogStore', () => {
   let store: InstanceType<typeof CatalogStore>;
+  let cartStore: InstanceType<typeof CartStore>;
   let getCatalogProducts: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
@@ -42,14 +60,20 @@ describe('CatalogStore', () => {
     TestBed.configureTestingModule({
       providers: [
         CatalogStore,
+        CartStore,
         {
           provide: ApiService,
           useValue: { getCatalogProducts },
+        },
+        {
+          provide: LocalStorage,
+          useValue: { getValue: vi.fn().mockReturnValue(null), setValue: vi.fn() },
         },
       ],
     });
 
     store = TestBed.inject(CatalogStore);
+    cartStore = TestBed.inject(CartStore);
   });
 
   it('should start with empty products and INIT status', () => {
@@ -84,8 +108,38 @@ describe('CatalogStore', () => {
         image: 'https://example.com/image.jpg',
         description: 'Test description',
         isInCart: false,
+        productKey: 'test-product',
+        price: defaultMoney,
       },
     ]);
+  });
+
+  it('should mark products already in the cart as isInCart when loading', async () => {
+    cartStore.addProduct({
+      id: 'prod-1',
+      name: 'Test Product',
+      image: 'https://example.com/image.jpg',
+      description: 'Test description',
+      isInCart: false,
+      productKey: 'test-product',
+      price: defaultMoney,
+    });
+
+    getCatalogProducts.mockReturnValue(
+      of({
+        limit: 10,
+        offset: 0,
+        count: 1,
+        total: 1,
+        results: [createProductDto()],
+      }),
+    );
+
+    store.loadProducts();
+
+    await vi.waitFor(() => store.loadStatus() === DATA_LOAD_STATUSES.WITH_DATA);
+
+    expect(store.products()[0].isInCart).toBe(true);
   });
 
   it('should set NO_DATA when API returns empty results', async () => {
@@ -120,6 +174,35 @@ describe('CatalogStore', () => {
     response$.complete();
   });
 
+  it('should use fallback money when a product has no prices', async () => {
+    getCatalogProducts.mockReturnValue(
+      of({
+        limit: 10,
+        offset: 0,
+        count: 1,
+        total: 1,
+        results: [
+          createProductDto({
+            masterVariant: {
+              id: 1,
+              sku: 'SKU-1',
+              key: 'variant-1',
+              prices: [],
+              images: [{ url: 'https://example.com/image.jpg', dimensions: { w: 100, h: 100 } }],
+              availability: { isOnStock: true, availableQuantity: 10, version: 1, id: 'avail-1' },
+            },
+          }),
+        ],
+      }),
+    );
+
+    store.loadProducts();
+
+    await vi.waitFor(() => store.loadStatus() === DATA_LOAD_STATUSES.WITH_DATA);
+
+    expect(store.products()[0].price).toEqual(FALLBACK_MONEY);
+  });
+
   describe('addToCart', () => {
     beforeEach(async () => {
       getCatalogProducts.mockReturnValue(
@@ -138,13 +221,15 @@ describe('CatalogStore', () => {
       await vi.waitFor(() => store.loadStatus() === DATA_LOAD_STATUSES.WITH_DATA);
     });
 
-    it('should mark only the selected product as in cart', () => {
+    it('should mark only the selected product as in cart and add it to CartStore', () => {
       const product = store.products()[0];
 
       store.addToCart(product);
 
       expect(store.products()[0].isInCart).toBe(true);
       expect(store.products()[1].isInCart).toBe(false);
+      expect(cartStore.hasProduct('1')).toBe(true);
+      expect(cartStore.itemCount()).toBe(1);
     });
   });
 
@@ -164,10 +249,12 @@ describe('CatalogStore', () => {
       store.addToCart(store.products()[0]);
     });
 
-    it('should mark the product as not in cart', () => {
+    it('should mark the product as not in cart and remove it from CartStore', () => {
       store.removeFromCart(store.products()[0]);
 
       expect(store.products()[0].isInCart).toBe(false);
+      expect(cartStore.hasProduct('prod-1')).toBe(false);
+      expect(cartStore.isEmpty()).toBe(true);
     });
   });
 });

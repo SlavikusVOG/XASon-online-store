@@ -5,6 +5,13 @@ export type TypedMoney = {
   fractionDigits: number;
 };
 
+export const FALLBACK_MONEY: TypedMoney = {
+  type: 'centPrecision',
+  currencyCode: 'EUR',
+  centAmount: 0,
+  fractionDigits: 2,
+};
+
 export type Price = {
   id: string;
   key: string;
@@ -13,20 +20,15 @@ export type Price = {
 
 export type LineItem = {
   id: string;
-  key: string;
   productId: string;
-  productKey: string;
+  productKey?: string;
   name: string;
-  productType: string;
+  image: string;
+  quantity: number;
   price: Price;
 };
 
 export type CartModel = {
-  id: string;
-  version: number;
-  key: string;
-  customerId: string;
-  customerEmail: string;
-  store: string;
   lineItems: LineItem[];
+  discountCode: string | null;
 };

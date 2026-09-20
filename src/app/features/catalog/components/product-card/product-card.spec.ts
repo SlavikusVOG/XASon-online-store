@@ -25,6 +25,12 @@ const mockProduct: Product = {
   image: 'test.jpg',
   description: 'A test product',
   isInCart: false,
+  price: {
+    type: 'centPrecision',
+    currencyCode: 'EUR',
+    centAmount: 4200,
+    fractionDigits: 2,
+  },
 };
 
 describe('ProductCard', () => {
@@ -55,6 +61,7 @@ describe('ProductCard', () => {
 
     expect(el.querySelector('.product-card__name')?.textContent).toContain('Test Product');
     expect(el.querySelector('.product-card__description')?.textContent).toContain('A test product');
+    expect(el.querySelector('.product-card__price')?.textContent).toContain('€42.00');
 
     const img = el.querySelector('img');
     expect(img?.getAttribute('src')).toBe('test.jpg');

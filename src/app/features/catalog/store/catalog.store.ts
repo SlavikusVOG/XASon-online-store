@@ -1,5 +1,7 @@
 import { inject } from '@angular/core';
 import { ApiService } from '@core/http';
+import { CartStore } from '@features/cart/store';
+import { FALLBACK_MONEY } from '@models/features/cart';
 import { Product, ProductDto } from '@models/features/catalog';
 import { tapResponse } from '@ngrx/operators';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
@@ -19,7 +21,7 @@ const initialState: CatalogState = {
 
 export const CatalogStore = signalStore(
   withState(initialState),
-  withMethods((store, apiService = inject(ApiService)) => ({
+  withMethods((store, apiService = inject(ApiService), cartStore = inject(CartStore)) => ({
     loadProducts: rxMethod<void>(
       pipe(
         tap(() => patchState(store, { loadStatus: DATA_LOAD_STATUSES.LOADING })),
@@ -37,7 +39,7 @@ export const CatalogStore = signalStore(
             .pipe(
               tapResponse({
                 next: (res) => {
-                  const products = processDtoData(res.results);
+                  const products = processDtoData(res.results, cartStore.productIds());
                   patchState(store, {
                     products,
                     loadStatus: products.length
@@ -54,35 +56,32 @@ export const CatalogStore = signalStore(
       ),
     ),
     addToCart(product: Product): void {
-      patchState(store, (state) => {
-        const products = state.products.map((e) =>
-          e.id === product.id ? { ...e, isInCart: true } : e,
-        );
-
-        return { products };
-      });
+      cartStore.addProduct(product);
+      patchState(store, (state) => ({
+        products: state.products.map((item) =>
+          item.id === product.id ? { ...item, isInCart: true } : item,
+        ),
+      }));
     },
     removeFromCart(product: Product): void {
-      patchState(store, (state) => {
-        const products = state.products.map((e) =>
-          e.id === product.id ? { ...e, isInCart: false } : e,
-        );
-
-        return { products };
-      });
+      cartStore.removeProduct(product.id);
+      patchState(store, (state) => ({
+        products: state.products.map((item) =>
+          item.id === product.id ? { ...item, isInCart: false } : item,
+        ),
+      }));
     },
   })),
 );
 
-function processDtoData(productsDto: ProductDto[]): Product[] {
-  return productsDto.map(
-    (item) =>
-      ({
-        id: item.id,
-        name: item.name['en-US'],
-        image: item.masterVariant.images[0]?.url ?? '',
-        description: item.description['en-US'],
-        isInCart: false,
-      }) as unknown as Product,
-  );
+function processDtoData(productsDto: ProductDto[], cartProductIds: Set<string>): Product[] {
+  return productsDto.map((item) => ({
+    id: item.id,
+    name: item.name['en-US'],
+    image: item.masterVariant.images[0]?.url ?? '',
+    description: item.description['en-US'],
+    isInCart: cartProductIds.has(item.id),
+    productKey: item.key,
+    price: item.masterVariant.prices[0]?.value ?? FALLBACK_MONEY,
+  }));
 }
