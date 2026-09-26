@@ -29,52 +29,57 @@ import {
   CustomerPatchResponse,
   CustomerUpdateBody,
 } from '@models/http/request/me.type';
+import { ApiServiceBase } from './api-service.base';
 
 @Injectable({ providedIn: 'root' })
-export class ApiService {
+export class ApiService extends ApiServiceBase {
   private readonly httpClient = inject(HttpClient);
 
-  exampleGet(request: GetRequest<{ Q: ExampleGetQueries }>): Observable<ExampleGetResponse> {
+  public override exampleGet(
+    request: GetRequest<{ Q: ExampleGetQueries }>,
+  ): Observable<ExampleGetResponse> {
     return this.get('example/{{id}}', request);
   }
 
-  public anonymousSessionAccessTokenPost(
+  public override anonymousSessionAccessTokenPost(
     request: PostRequest<{ Q: AnonymousSessionAccessTokenPostQueries }>,
   ): Observable<AnonymousSessionAccessTokenPostResponse> {
     return this.post(`${environment.apiUrl}/auth/anonymous`, request);
   }
 
-  public refreshTokenPost(
+  public override refreshTokenPost(
     request: PostRequest<{ Q: RefreshTokenPostQueries }>,
   ): Observable<RefreshTokenPostResponse> {
     return this.post(`${environment.apiUrl}/auth/refresh`, request);
   }
 
-  public loginPost(request: PostRequest): Observable<LoginPostResponse> {
+  public override loginPost(request: PostRequest): Observable<LoginPostResponse> {
     return this.post(`${environment.apiUrl}/auth/login`, request);
   }
 
-  public customersPost(request: PostRequest): Observable<CustomersPostResponse> {
+  public override customersPost(request: PostRequest): Observable<CustomersPostResponse> {
     return this.post(`${environment.apiUrl}/auth/signup`, request);
   }
 
-  public customersTokenPost(
+  public override customersTokenPost(
     request: PostRequest<{ Q: CustomersTokenPostQueries }>,
   ): Observable<CustomersTokenPostResponse> {
     return this.post(`${environment.apiUrl}/auth/login`, request);
   }
 
-  public getCatalogProducts(
+  public override getCatalogProducts(
     request: GetRequest<{ Q: CatalogProductsGetQueries }>,
   ): Observable<ProductPagedQueryResponse> {
     return this.get(`${environment.apiUrl}/products`, request);
   }
 
-  public getMe(request: GetRequest<{ Q: CustomerGetQueries }>): Observable<CustomerGetResponse> {
+  public override getMe(
+    request: GetRequest<{ Q: CustomerGetQueries }>,
+  ): Observable<CustomerGetResponse> {
     return this.get(`${environment.apiUrl}/me`, request);
   }
 
-  public updateMe(
+  public override updateMe(
     request: PostRequest<{ B: CustomerUpdateBody }>,
   ): Observable<CustomerPatchResponse> {
     return this.post(`${environment.apiUrl}/me`, request);
